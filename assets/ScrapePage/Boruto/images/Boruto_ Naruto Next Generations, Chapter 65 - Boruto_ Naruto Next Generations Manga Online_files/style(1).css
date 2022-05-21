@@ -1,0 +1,198 @@
+/*
+Theme Name: Madara Onepage
+Description:  Madara Child-Theme for building onepage manga site
+Author:       Madara
+Author URI:   http://demo.mangabooth.com/
+Template: madara
+Tags: one-column, two-columns, right-sidebar, custom-header, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, translation-ready
+Version: 1.0.4
+*/
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-bookmark a.wp-manga-action-button i{font-size:36px; color: #ec3649}
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-bookmark{text-align: center}
+
+.selectpicker_version{display: none !important}
+
+body.manga-page .page-content-listing.single-page .listing-chapters_wrap>ul.main.version-chap li:first-of-type:after {
+    height: 0px;
+}
+
+
+.button-rd{
+  color: #666;
+  font-weight: 600;
+  display: inline-block;
+  padding: 5px 15px;
+  border: 2px solid #666;
+  border-radius: 30px;
+  background: #fff;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+@media (max-width: 992px) {
+  .button-rd{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+.button-rd:focus{
+  outline: none;
+}
+.button-rd:hover {
+  cursor: pointer;
+  background-color: #0f0f0f;
+  border-color: #0f0f0f;
+  color: #fff;
+}
+
+
+
+
+
+
+.button-next{
+  color: #999999;
+  font-weight: 600;
+  display: inline-block;
+  padding: 12px 25px;
+  border: 3px solid  #999999;
+  border-radius: 25px;
+  background: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+@media (max-width: 992px) {
+  .button-next{
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+.button-next:focus{
+  outline: none;
+}
+.button-next:hover {
+  cursor: pointer;
+  background-color: #0f0f0f;
+  border-color: #0f0f0f;
+  color: #fff;
+}
+
+
+
+
+
+.containerdiv {
+  border: 0;
+  float: left;
+  position: center;
+} 
+.cornerimage {
+  border: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+ } 
+
+
+.testo{
+	
+
+position:absolute; 
+opacity:100;
+text-align:center;
+top:50%;
+left:50%;
+transform: translate(-50%, -50%);
+	
+}
+
+.site-header .main-navigation .main-navigation_wrap{padding:10px 0}
+body.text-ui-light .site-footer{border-bottom: none}
+ .site-header .main-navigation.style-1 .wrap_branding a img {
+      max-height: auto;
+    }
+@media (max-width: 480px) {
+  .site-header .main-navigation.style-1 .wrap_branding a img {
+      max-height: 40px;
+    }
+}
+
+
+.row1 {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.page-header1 {
+    padding-bottom: 5px;
+     margin:0px auto;
+    border-bottom: 0px solid #65d3bf;
+}
+
+.tips-rtl1 {
+    font-size: 16px;
+}
+
+
+.alert-warning1 {
+    background: -webkit-linear-gradient(left,#212121 15%,#353535);
+    color: #ffffff;
+}
+
+
+.alert1 {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.pager-cnt1 {
+  margin:0px auto;
+}
+
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download{
+  width: 50%;
+  float: right;
+  padding: 0 15px;
+}
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download .action_icon,
+
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download  .action_detail {
+  text-align: center;
+  line-height: 1.35;
+}
+
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download .action_icon a,
+
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download .action_detail a {
+  display: inline-block;
+}
+
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download .action_icon a i,
+
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download .action_detail a i {
+  font-size: 36px;
+  color: #ec3649;
+}
+
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download a.wp-manga-action-button i{font-size:36px; color: #ec3649}
+body.manga-page .profile-manga .tab-summary .summary_content_wrap .summary_content .post-status .manga-action .add-download{text-align: center}
+
+.selectpicker_version{display: none !important}
+
+body.manga-page .page-content-listing.single-page .listing-chapters_wrap>ul.main.version-chap li:first-of-type:after {
+    height: 0px;
+}
+
+
+opc {
+  opacity: 100;
+  height: 0px;
+
+}
+
+
