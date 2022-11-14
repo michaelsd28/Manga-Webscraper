@@ -60,7 +60,7 @@
                     </Grid.RowDefinitions>
                     <Frame x:Name="RootFrame" Grid.Row="1" />
                     <ui:Breadcrumb
-                     
+                     Visibility="Collapsed"
                         Grid.Row="0"
                         Margin="56,36"
                         HorizontalAlignment="Left"

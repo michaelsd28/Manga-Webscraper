@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Media.Imaging;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
@@ -39,10 +40,12 @@ namespace WPF_MangaScrapper.ViewModels
 
             new NavigationItem()
                 {
-                    Content = "Main",
+                    Content = new System.Windows.Controls. TextBlock { Text  = "Main",FontSize = 12},
                     PageTag = "LandingPage",
-                    Icon = SymbolRegular.AnimalCat16,
-                    PageType = typeof(Views.Pages.LandingPage)
+                    
+                    PageType = typeof(Views.Pages.LandingPage),
+                    Image =new BitmapImage(
+    new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\boruto-uzumaki-icon.png"))
                 },
                 new NavigationItem()
                 {
