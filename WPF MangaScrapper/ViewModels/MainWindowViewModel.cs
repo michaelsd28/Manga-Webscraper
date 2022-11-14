@@ -36,6 +36,14 @@ namespace WPF_MangaScrapper.ViewModels
 
             NavigationItems = new ObservableCollection<INavigationControl>
             {
+
+            new NavigationItem()
+                {
+                    Content = "Main",
+                    PageTag = "LandingPage",
+                    Icon = SymbolRegular.AnimalCat16,
+                    PageType = typeof(Views.Pages.LandingPage)
+                },
                 new NavigationItem()
                 {
                     Content = "Home",

@@ -14,7 +14,7 @@
     d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"
 
-   
+      
 
     ExtendsContentIntoTitleBar="True"
     WindowBackdropType="Mica"
@@ -38,18 +38,20 @@
 
             <!--  This is the main navigation of the application.  -->
             <ui:NavigationStore
-                Visibility="Collapsed"
+              
                 x:Name="RootNavigation"
                 Grid.Column="0"
                 Margin="6,0,6,0"
                 Footer="{Binding ViewModel.NavigationFooter, Mode=TwoWay}"
                 Frame="{Binding ElementName=RootFrame, Mode=OneWay}"
-                Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}" />
+                Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}" 
+                
+                />
 
             <!--  We display our pages inside this element.  -->
             <Border
                 Grid.Column="1"
-                Background="Black"
+            
                 CornerRadius="0 ,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -58,7 +60,7 @@
                     </Grid.RowDefinitions>
                     <Frame x:Name="RootFrame" Grid.Row="1" />
                     <ui:Breadcrumb
-                        Visibility="Collapsed"
+                     
                         Grid.Row="0"
                         Margin="56,36"
                         HorizontalAlignment="Left"

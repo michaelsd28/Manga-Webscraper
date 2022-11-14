@@ -47,6 +47,8 @@ namespace WPF_MangaScrapper
                 services.AddScoped<ViewModels.MainWindowViewModel>();
 
                 // Views and ViewModels
+                services.AddScoped<Views.Pages.LandingPage>();
+                services.AddScoped<ViewModels.LandingPageViewModel>();
                 services.AddScoped<Views.Pages.DashboardPage>();
                 services.AddScoped<ViewModels.DashboardViewModel>();
                 services.AddScoped<Views.Pages.DataPage>();
