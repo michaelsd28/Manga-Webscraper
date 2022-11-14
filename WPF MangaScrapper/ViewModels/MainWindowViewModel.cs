@@ -37,29 +37,27 @@ namespace WPF_MangaScrapper.ViewModels
 
             NavigationItems = new ObservableCollection<INavigationControl>
             {
-
-            new NavigationItem()
-                {
-                    Content = new System.Windows.Controls. TextBlock { Text  = "Main",FontSize = 12},
-                    PageTag = "LandingPage",
-                    
-                    PageType = typeof(Views.Pages.LandingPage),
-                    Image =new BitmapImage(
-    new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\boruto-uzumaki-icon.png"))
-                },
                 new NavigationItem()
                 {
-                    Content = "Home",
+                    Content = new System.Windows.Controls.TextBlock{ Text = "Home", FontSize= 12},
                     PageTag = "dashboard",
-                    Icon = SymbolRegular.Home24,
-                    PageType = typeof(Views.Pages.DashboardPage)
+                    PageType = typeof(Views.Pages.DashboardPage),
+                      Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\boruto-uzumaki-icon.png"))
+
                 },
+                //new NavigationItem()
+                //{
+                //    Content = new System.Windows.Controls.TextBlock{ Text = "Data", FontSize= 12},
+                //    PageTag = "data",
+                //    Icon = SymbolRegular.DataHistogram24,
+                //    PageType = typeof(Views.Pages.DataPage)
+                //},
                 new NavigationItem()
                 {
-                    Content = "Data",
-                    PageTag = "data",
-                    Icon = SymbolRegular.DataHistogram24,
-                    PageType = typeof(Views.Pages.DataPage)
+                    Content = new System.Windows.Controls.TextBlock{ Text = "Gallery", FontSize= 12},
+                    PageTag = "gallery",
+                    PageType = typeof(Views.Pages.GalleryPage),
+                         Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\galleryIcon.png"))
                 }
             };
 

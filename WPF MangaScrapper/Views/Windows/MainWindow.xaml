@@ -14,7 +14,6 @@
     d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"
 
-      
 
     ExtendsContentIntoTitleBar="True"
     WindowBackdropType="Mica"

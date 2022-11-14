@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Wpf.Ui.Common.Interfaces;
 
 namespace WPF_MangaScrapper.ViewModels
 {
-    public partial class LandingPageViewModel : ObservableObject, INavigationAware
+    public partial class GalleryViewModel : ObservableObject, INavigationAware
     {
-
- 
 
         public void OnNavigatedTo()
         {
@@ -16,6 +15,10 @@ namespace WPF_MangaScrapper.ViewModels
         {
         }
 
-
+        [RelayCommand]
+        private void OnCounterIncrement()
+        {
+         
+        }
     }
 }

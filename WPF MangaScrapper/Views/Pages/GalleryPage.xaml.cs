@@ -5,18 +5,17 @@ namespace WPF_MangaScrapper.Views.Pages
     /// <summary>
     /// Interaction logic for DashboardPage.xaml
     /// </summary>
-    public partial class LandingPage : INavigableView<ViewModels.DashboardViewModel>
+    public partial class GalleryPage : INavigableView<ViewModels.DashboardViewModel>
     {
         public ViewModels.DashboardViewModel ViewModel
         {
             get;
         }
 
-        public LandingPage(ViewModels.DashboardViewModel viewModel)
+        public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
-            ViewModel = viewModel;
+            ViewModel = viewModel; InitializeComponent();
 
-            InitializeComponent();
         }
     }
 }
