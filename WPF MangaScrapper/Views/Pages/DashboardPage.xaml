@@ -32,7 +32,7 @@
 
         <Grid Grid.Row="1" >
             
-            <ui:Button Margin="0" Padding="0 5 0 5" BorderBrush="Transparent" Appearance="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ui:Button Margin="0" Padding="0 5 0 5" Margin="3" BorderBrush="Transparent" Appearance="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel   Orientation="Horizontal">
                 <lottie:LottieAnimationView
     Width="80"
@@ -43,8 +43,9 @@
     AutoPlay="True"
                     
     FileName="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Animation\RocketFly.json"
-    RepeatCount="-1"
-                    
+    RepeatCount="3"
+                 
+                  
                     />
                 <!--<TextBlock Margin="10"  VerticalAlignment="Center"   Text="Refresh" FontSize="18"/>-->
             </StackPanel>
