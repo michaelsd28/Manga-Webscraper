@@ -1,108 +1,95 @@
-﻿<UserControl 
-    x:Class="WPF_MangaScrapper.Views.Components.MangaCard"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ui="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
-    mc:Ignorable="d" 
-    
-    >
+﻿<UserControl
+  x:Class="WPF_MangaScrapper.Views.Components.MangaCard" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ui="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+  mc:Ignorable="d">
     <Grid
-            Margin="10"
-            Width="300"
-            Height="400">
-
-
-
+    Margin="10"
+    Width="300"
+    Height="400">
         <Border
-                      
-                          BorderBrush="#1A0101"
-                          BorderThickness="3"
-                          CornerRadius="10">
+      BorderBrush="#1A0101"
+      BorderThickness="3"
+      CornerRadius="10">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="10" ShadowDepth="5"  Opacity="0.8" />
+                <DropShadowEffect
+          BlurRadius="10"
+          ShadowDepth="5"
+          Opacity="0.8" />
             </Border.Effect>
             <Border.Background>
                 <ImageBrush
-                  Opacity="0.1"
-                  ImageSource="https://i.pinimg.com/originals/eb/85/c4/eb85c4376b474030b80afa80ad1cd13a.jpg" />
+          Opacity="0.1"
+          ImageSource="https://i.pinimg.com/originals/eb/85/c4/eb85c4376b474030b80afa80ad1cd13a.jpg" />
             </Border.Background>
-
-
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition
+            Height="50" />
+                    <RowDefinition
+            Height="1*" />
                 </Grid.RowDefinitions>
-
-                <Grid    Grid.Row="0" Margin="2">
-
-                    <Border CornerRadius="10" >
-
+                <Grid
+          Grid.Row="0"
+          Margin="2">
+                    <Border
+            CornerRadius="10">
                         <Border.Background>
-                            <SolidColorBrush Color="#1A0101" Opacity="0.4"/>
+                            <SolidColorBrush
+                Color="#1A0101"
+                Opacity="0.4" />
                         </Border.Background>
                         <Border.Effect>
                             <DropShadowEffect />
                         </Border.Effect>
-                        <Image  Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\one piece logo.png"/>
-
+                        <Image
+              Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\one piece logo.png" />
                     </Border>
-
-
                 </Grid>
-                <Grid Grid.Row="1">
-                    <ScrollViewer  >
+                <Grid
+          Grid.Row="1">
+                    <ScrollViewer>
                         <StackPanel
-                                   
-                  HorizontalAlignment="Center"
-                  Margin="10">
-
-
-
+              HorizontalAlignment="Center"
+              Margin="10">
                             <ui:Button
-                                              
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                             <ui:Button
-                    Margin="10"
-                    Content="One piece chapter 1034" />
+                Margin="10"
+                Content="One piece chapter 1034" />
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
             </Grid>
-
-
         </Border>
     </Grid>
 </UserControl>
