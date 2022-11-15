@@ -10,49 +10,112 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GalleryPage">
 
+    <ScrollViewer>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition
-                Width="1*" />
-        </Grid.ColumnDefinitions>
-        <!--
-                <ui:Button 
-            Grid.Column="0" 
-                   Command="{Binding ViewModel.CounterIncrementCommand, Mode=OneWay}" 
-                   Content="Click me!" 
-            Icon="Fluent24" />
-        <TextBlock 
-            Grid.Column="1"
-            Margin="12,0,0,0" 
-            VerticalAlignment="Center" 
-                   Text="{Binding ViewModel.Counter, Mode=OneWay}" />
         
-        -->
-        <ScrollViewer
-            Grid.Column="1">
-            <Grid>
-                <!--
-                <ComboBox SelectedIndex="0">
-                    <ComboBoxItem>One piece 1035</ComboBoxItem>
-                    <ComboBoxItem>One piece 1034</ComboBoxItem>
-                </ComboBox>
-                
-                -->
-                <StackPanel>
-                    <Image
-                        StretchDirection="DownOnly"
-                        UseLayoutRounding="True"
-                        Source="https://by3302files.storage.live.com/y4mZoLGhjeRnQzrIAwAinb-1HERVFCBbkhh0GPrxmC8BFaeZ9FOmlnSia-GknrRxtXBQ8UjY1ORhXFhOo5tuRejwK1X-NylXWe2yQhopUbIYkWqMaekPb_huH9ULPDbqk-RwlNJGChRxXsRJ--b24eV6o8g0DpHfk2N5gSYj9bqYquEweAI9mrk67ksmETWiKpo?width=1100&amp;height=1611&amp;cropmode=none" />
-                    <Image
-                        UseLayoutRounding="True"
-                        Stretch="None"
-                        Source="https://by3302files.storage.live.com/y4mZoLGhjeRnQzrIAwAinb-1HERVFCBbkhh0GPrxmC8BFaeZ9FOmlnSia-GknrRxtXBQ8UjY1ORhXFhOo5tuRejwK1X-NylXWe2yQhopUbIYkWqMaekPb_huH9ULPDbqk-RwlNJGChRxXsRJ--b24eV6o8g0DpHfk2N5gSYj9bqYquEweAI9mrk67ksmETWiKpo?width=1100&amp;height=1611&amp;cropmode=none" />
-                    <Image
-                        StretchDirection="DownOnly"
-                        UseLayoutRounding="True"
-                        Source="https://public.by.files.1drv.com/y4mmoFalJA_I1M4U19PkjkVwcuYuyfIJ8wXMhkDbhH-KDRDEGC8eOD77gpZbPcu0DxsoQFJKK_abL8BPqDo2VY8nZHdpO3m86X9xWF72vlLVtJViEnt_WyrCtsZVpyyIDhS40dxpV8YVSpQKyBQA3gGhFi2FdlzNC5UQRtP7ttw5Iadtpkeg1Xz20mEwXaemd4mNLxW1uEuecnfQORaGUxTP_Yyov-GXJYd-r3Ah7ktWs0" />
-                </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+
+        <!--#region Header -->
+        <Grid Margin="20" Grid.Row="0">
+            <TextBlock Text="Manga gallery" FontSize="22"/>
+        </Grid>
+        <!--#endregion-->
+
+        <!--#region Combobox -->
+            <Grid Margin="20" Grid.Row="1" MaxWidth="300">
+            <ComboBox SelectedIndex="1">
+                <ComboBoxItem Content="One piece chapter 1034" />
+                <ComboBoxItem Content="One piece chapter 1034" />
+                <ComboBoxItem Content="One piece chapter 1034" />
+                <ComboBoxItem Content="One piece chapter 1034" />
+                <ComboBoxItem Content="One piece chapter 1034" />
+            </ComboBox>
+        </Grid>
+            <!--#endregion-->
+
+
+        <!--#region PageController -->
+            <Grid Margin="20" Grid.Row="2">
+                <Border   MaxWidth="400"  Margin="10" Padding="10" CornerRadius="10">
+                    <Border.Background>
+                        <SolidColorBrush Opacity="0.4" Color="#202020"/>
+                    </Border.Background>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" />
+                    </Border.Effect>
+                    <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button  >
+                            <ui:SymbolIcon Symbol="ChevronLeft20"/>
+                        </Button>
+                        <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
+                            <Border.Background>
+                                <SolidColorBrush Opacity="0.6" Color="#292b30"/>
+                            </Border.Background>
+                            <TextBlock   VerticalAlignment="Center" Text="One piece chapter 1034"/>
+                        </Border>
+
+                        <Button  >
+                            <ui:SymbolIcon Symbol="ChevronRight20"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
             </Grid>
-        </ScrollViewer>
+        <!--#endregion-->
+
+
+        <!--#region Manga Gallery -->
+        <Grid Grid.Row="3">
+            <StackPanel Orientation="Vertical">
+                <Image 
+                    Margin="0 0 0 60"
+                   StretchDirection="DownOnly"
+                    UseLayoutRounding="True"
+                    Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\manga1.png"/>
+                    <Image 
+                   StretchDirection="DownOnly"
+                    UseLayoutRounding="True"
+                    Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\manga1.png"/>
+                </StackPanel>
+        </Grid>
+        <!--#endregion-->
+
+        <!--#region PageController -->
+
+        <Grid Grid.Row="4">
+                <Border   MaxWidth="400"  Margin="10" Padding="10" CornerRadius="10">
+                    <Border.Background>
+                        <SolidColorBrush Opacity="0.4" Color="#202020"/>
+                    </Border.Background>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" />
+                    </Border.Effect>
+                    <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button  >
+                            <ui:SymbolIcon Symbol="ChevronLeft20"/>
+                        </Button>
+                        <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
+                            <Border.Background>
+                                <SolidColorBrush Opacity="0.6" Color="#292b30"/>
+                            </Border.Background>
+                            <TextBlock   VerticalAlignment="Center" Text="One piece chapter 1034"/>
+                        </Border>
+
+                        <Button  >
+                            <ui:SymbolIcon Symbol="ChevronRight20"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        <!--#endregion-->
+
+
     </Grid>
+    </ScrollViewer>
 </ui:UiPage>

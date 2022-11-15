@@ -33,8 +33,6 @@
 
   <ItemGroup>
     <Folder Include="Assets\Dashboard\" />
-    <Folder Include="Assets\Gallery\" />
-    <Folder Include="Assets\Other\" />
   </ItemGroup>
 
 </Project>

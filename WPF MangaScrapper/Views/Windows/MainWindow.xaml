@@ -74,12 +74,28 @@
         <!--  You can put additional controls in the header, such as a search bar.  -->
         <!--  <ui:TitleBar.Header />  -->
         <ui:TitleBar
-     
+  
             Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
             Grid.Row="0"
             Icon="pack://application:,,,/Assets/applicationIcon-256.png"
-            UseSnapLayout="True">
+            UseSnapLayout="True"
+   
+            >
+            <ui:TitleBar.Header>
+                <ui:Button Margin="0 0 0 20" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" >
+                    <Image 
+                      Margin="0"
+                        Width="20"
+                        Height="20"
+                        Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Components\fullscreenICon.png"/>
+
+                </ui:Button>
+            </ui:TitleBar.Header>
+            
+           
             <ui:TitleBar.Tray>
+       
+               
                 <ui:NotifyIcon
                     FocusOnLeftClick="True"
                     Icon="pack://application:,,,/Assets/applicationIcon-256.png"
@@ -88,6 +104,7 @@
                     <ui:NotifyIcon.Menu>
                         <ContextMenu>
                             <MenuItem Header="Home" Tag="home" />
+                       
                         </ContextMenu>
                     </ui:NotifyIcon.Menu>
                 </ui:NotifyIcon>

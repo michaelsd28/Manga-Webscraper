@@ -32,7 +32,8 @@
 
         <Grid Grid.Row="1" >
             
-            <ui:Button Margin="0" Padding="0 5 0 5" Margin="3" BorderBrush="Transparent" Appearance="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ui:Button Margin="3" Padding="0 5 0 5"  BorderBrush="Transparent" Appearance="Transparent" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel   Orientation="Horizontal">
                 <lottie:LottieAnimationView
     Width="80"
