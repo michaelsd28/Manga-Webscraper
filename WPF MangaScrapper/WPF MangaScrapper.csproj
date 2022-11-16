@@ -15,9 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.17.1" />
     <PackageReference Include="LottieSharp" Version="2.0.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
+    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.18.0" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
   </ItemGroup>
 

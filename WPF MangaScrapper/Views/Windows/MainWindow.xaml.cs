@@ -1,8 +1,11 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using WPF_MangaScrapper.Services;
 
 namespace WPF_MangaScrapper.Views.Windows
 {
@@ -58,6 +61,13 @@ namespace WPF_MangaScrapper.Views.Windows
 
             // Make sure that closing this window will begin the process of closing the application.
             Application.Current.Shutdown();
+        }
+
+        private void BFullScreen(object sender, RoutedEventArgs e)
+        {
+
+    
+
         }
     }
 }

@@ -51,7 +51,7 @@
                         <DropShadowEffect BlurRadius="10" />
                     </Border.Effect>
                     <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button  >
+                        <Button Click="PreviusButton"  >
                             <ui:SymbolIcon Symbol="ChevronLeft20"/>
                         </Button>
                         <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
@@ -61,7 +61,7 @@
                             <TextBlock   VerticalAlignment="Center" Text="One piece chapter 1034"/>
                         </Border>
 
-                        <Button  >
+                        <Button  Click="NextButton" >
                             <ui:SymbolIcon Symbol="ChevronRight20"/>
                         </Button>
                     </StackPanel>
@@ -72,8 +72,8 @@
 
         <!--#region Manga Gallery -->
         <Grid Grid.Row="3">
-            <StackPanel Orientation="Vertical">
-                <Image 
+            <StackPanel x:Name="imgStackPanel" Orientation="Vertical">
+                <!--<Image 
                     Margin="0 0 0 60"
                    StretchDirection="DownOnly"
                     UseLayoutRounding="True"
@@ -81,7 +81,7 @@
                     <Image 
                    StretchDirection="DownOnly"
                     UseLayoutRounding="True"
-                    Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\manga1.png"/>
+                    Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\manga1.png"/>-->
                 </StackPanel>
         </Grid>
         <!--#endregion-->
