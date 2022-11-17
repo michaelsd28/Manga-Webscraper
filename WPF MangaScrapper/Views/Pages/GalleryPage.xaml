@@ -31,12 +31,14 @@
 
         <!--#region Header -->
         <Grid Margin="20" Grid.Row="0">
-         
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"> 
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Manga gallery" FontSize="22"/>
-                    <ui:Button Background="Transparent" Click="BGoHome" Margin="220 0 0 0"  HorizontalAlignment="Center"  BorderBrush="Transparent">
+                    <ui:Button Margin="10"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
                         <Image Width="30"  Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\boruto-uzumaki-icon.png"/>
                     </ui:Button>
-                <components:FullScreenButton x:Name="FullScreenButton"/>
+                </StackPanel>
+                <components:FullScreenButton Margin="0 0 0 80" HorizontalAlignment="Right" x:Name="FullScreenButton"  />
 
             </Grid>
         <!--#endregion-->
