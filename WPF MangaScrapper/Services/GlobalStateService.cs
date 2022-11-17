@@ -10,12 +10,10 @@ namespace WPF_MangaScrapper.Services
 
         private static GlobalStateService? globalStateService;
 
-
         private GlobalStateService() { }
 
 
-
-        public static GlobalStateService getInstance() {
+        public static GlobalStateService GetInstance() {
 
 
             if (globalStateService == null)

@@ -1,11 +1,13 @@
-﻿using MongoDB.Bson;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Media;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using WPF_MangaScrapper.Services;
+using WPF_MangaScrapper.Views.Pages;
 
 namespace WPF_MangaScrapper.Views.Windows
 {
@@ -19,10 +21,15 @@ namespace WPF_MangaScrapper.Views.Windows
             get;
         }
 
+
+        public static MainWindow mainWindowCONTEXT { get; set; }
         public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
         {
             ViewModel = viewModel;
             DataContext = this;
+            mainWindowCONTEXT = this;
+
+
 
             InitializeComponent();
             SetPageService(pageService);
@@ -66,7 +73,7 @@ namespace WPF_MangaScrapper.Views.Windows
         private void BFullScreen(object sender, RoutedEventArgs e)
         {
 
-    
+            UtilServices.ToggleFullScreen(this);
 
         }
     }

@@ -6,9 +6,9 @@
   d:DesignWidth="800"
   d:Background="{DynamicResource ApplicationBackgroundBrush}"
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-    
+
   mc:Ignorable="d">
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition
         Height="50" />
@@ -22,28 +22,38 @@
         <!--#region Header -->
         <Grid
       Grid.Row="0">
+  
             <TextBlock
         Padding="5"
         Text="Manga Webscrapper"
         FontSize="28" />
+                <components:FullScreenButton 
+                    x:Name="FullScreenButton" 
+                    HorizontalAlignment="Right"  
+                    Visibility="Collapsed"  
+                    Margin="10"
+                    
+                    />
+
         </Grid>
         <!--#endregion-->
 
 
         <Grid Grid.Row="1" >
             
-            <ui:Button Margin="3" Padding="0 5 0 5"  BorderBrush="Transparent" Appearance="Transparent" 
+            <ui:Button Click="BRefreshCH" Margin="3" Padding="0 5 0 5"  BorderBrush="Transparent" Appearance="Transparent" 
                        VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel   Orientation="Horizontal">
                 <lottie:LottieAnimationView
     Width="80"
     Height="80"
-               Margin="10"
+                   
+               Margin="0"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
     AutoPlay="True"
                     
-    FileName="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Animation\RocketFly.json"
+    FileName="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Animation\rocket 2.json"
     RepeatCount="3"
                  
                   

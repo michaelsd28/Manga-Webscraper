@@ -5,13 +5,20 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Pages"
-      mc:Ignorable="d" 
+      xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Pages" xmlns:components="clr-namespace:WPF_MangaScrapper.Views.Components"
+            mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="GalleryPage">
+      Title="GalleryPage"
+      
+       
+            >
 
-    <ScrollViewer>
-    <Grid>
+    <ScrollViewer  VerticalScrollBarVisibility="Auto" >
+
+
+
+        <Grid    x:Name="MangaGalleryGrid"    >
+           
         
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -24,8 +31,14 @@
 
         <!--#region Header -->
         <Grid Margin="20" Grid.Row="0">
-            <TextBlock Text="Manga gallery" FontSize="22"/>
-        </Grid>
+         
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Manga gallery" FontSize="22"/>
+                    <ui:Button Background="Transparent" Click="BGoHome" Margin="220 0 0 0"  HorizontalAlignment="Center"  BorderBrush="Transparent">
+                        <Image Width="30"  Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\boruto-uzumaki-icon.png"/>
+                    </ui:Button>
+                <components:FullScreenButton x:Name="FullScreenButton"/>
+
+            </Grid>
         <!--#endregion-->
 
         <!--#region Combobox -->
@@ -39,13 +52,13 @@
             </ComboBox>
         </Grid>
             <!--#endregion-->
+            
 
-
-        <!--#region PageController -->
+            <!--#region PageController -->
             <Grid Margin="20" Grid.Row="2">
                 <Border   MaxWidth="400"  Margin="10" Padding="10" CornerRadius="10">
                     <Border.Background>
-                        <SolidColorBrush Opacity="0.4" Color="#202020"/>
+                        <SolidColorBrush Color="#282c34" Opacity="0.4" />
                     </Border.Background>
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="10" />
@@ -58,7 +71,7 @@
                             <Border.Background>
                                 <SolidColorBrush Opacity="0.6" Color="#292b30"/>
                             </Border.Background>
-                            <TextBlock   VerticalAlignment="Center" Text="One piece chapter 1034"/>
+                            <TextBlock FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
                         </Border>
 
                         <Button  Click="NextButton" >
@@ -73,7 +86,9 @@
         <!--#region Manga Gallery -->
         <Grid Grid.Row="3">
             <StackPanel x:Name="imgStackPanel" Orientation="Vertical">
-                <!--<Image 
+
+                    <Image  Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Animation\98488-bot-error-404.gif" />
+                    <!--<Image 
                     Margin="0 0 0 60"
                    StretchDirection="DownOnly"
                     UseLayoutRounding="True"
@@ -88,34 +103,36 @@
 
         <!--#region PageController -->
 
-        <Grid Grid.Row="4">
+            <Grid Margin="20" Grid.Row="5">
                 <Border   MaxWidth="400"  Margin="10" Padding="10" CornerRadius="10">
                     <Border.Background>
-                        <SolidColorBrush Opacity="0.4" Color="#202020"/>
+                        <SolidColorBrush Color="#282c34" Opacity="0.4" />
                     </Border.Background>
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="10" />
                     </Border.Effect>
                     <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button  >
+                        <Button Click="PreviusButton"  >
                             <ui:SymbolIcon Symbol="ChevronLeft20"/>
                         </Button>
                         <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
                             <Border.Background>
                                 <SolidColorBrush Opacity="0.6" Color="#292b30"/>
                             </Border.Background>
-                            <TextBlock   VerticalAlignment="Center" Text="One piece chapter 1034"/>
+                            <TextBlock FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
                         </Border>
 
-                        <Button  >
+                        <Button  Click="NextButton" >
                             <ui:SymbolIcon Symbol="ChevronRight20"/>
                         </Button>
                     </StackPanel>
                 </Border>
             </Grid>
-        <!--#endregion-->
+            <!--#endregion-->
 
+           
+        </Grid>
 
-    </Grid>
     </ScrollViewer>
+
 </ui:UiPage>

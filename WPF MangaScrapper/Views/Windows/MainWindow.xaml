@@ -6,21 +6,29 @@
     xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:WPF_MangaScrapper.Views.Pages"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:components="clr-namespace:WPF_MangaScrapper.Views.Components"
     Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
     Width="1100"
     Height="650"
- 
+
+
+
     d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"
-
+x:Name="MainWindowRoot"
 
     ExtendsContentIntoTitleBar="True"
-    WindowBackdropType="Mica"
 
+WindowBackdropType="Mica"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
-    <Grid>
+    mc:Ignorable="d"
+
+    >
+
+  
+
+    
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -37,7 +45,7 @@
 
             <!--  This is the main navigation of the application.  -->
             <ui:NavigationStore
-              
+
                 x:Name="RootNavigation"
                 Grid.Column="0"
                 Margin="6,0,6,0"
@@ -57,8 +65,9 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Frame x:Name="RootFrame" Grid.Row="1" />
+                    <Frame  x:Name="RootFrame" Grid.Row="1" />
                     <ui:Breadcrumb
+                        x:Name="BreadcrumbTitle"
                      Visibility="Collapsed"
                         Grid.Row="0"
                         Margin="56,36"
@@ -74,7 +83,8 @@
         <!--  You can put additional controls in the header, such as a search bar.  -->
         <!--  <ui:TitleBar.Header />  -->
         <ui:TitleBar
-  
+
+                x:Name="uiTitleBar"
             Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
             Grid.Row="0"
             Icon="pack://application:,,,/Assets/applicationIcon-256.png"
@@ -82,19 +92,8 @@
    
             >
             <ui:TitleBar.Header>
-                <ui:Button 
-                    Click="BFullScreen"
-                    Margin="0 0 0 20" 
-                    Background="Transparent" 
-                           BorderBrush="Transparent" 
-                           HorizontalAlignment="Right" >
-                    <Image 
-                      Margin="0"
-                        Width="20"
-                        Height="20"
-                        Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Components\fullscreenICon.png"/>
 
-                </ui:Button>
+                <components:FullScreenButton  Margin="0 0 0 20" />
             </ui:TitleBar.Header>
             
            

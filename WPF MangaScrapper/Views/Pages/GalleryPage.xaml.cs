@@ -5,9 +5,12 @@ using System.Diagnostics;
 using Wpf.Ui.Common.Interfaces;
 using System.Windows.Controls;
 using WPF_MangaScrapper.Services;
+using WPF_MangaScrapper.Views.Windows;
+using System.Windows;
+using Wpf.Ui.Appearance;
 
 /// chapters
-//String onePieceUrl = "https://ww8.readonepiece.com/chapter/";
+//String onePieceUrl = "https://readtcbscans.com/mangas/5/one-piece";
 //String BorutoURL = "https://ww1.read-boruto.online/manga/";
 //String BokuNoURL = "https://muheroacademia.com/";
 
@@ -27,10 +30,12 @@ namespace WPF_MangaScrapper.Views.Pages
             get;
         }
 
+        public static GalleryPage galleryPageCONTEXT { get; set; }
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
-            ViewModel = viewModel; InitializeComponent();
-
+            ViewModel = viewModel; 
+            InitializeComponent();
+            galleryPageCONTEXT = this;
         }
 
         private  async void PreviusButton(object sender, System.Windows.RoutedEventArgs e)
@@ -47,15 +52,15 @@ namespace WPF_MangaScrapper.Views.Pages
             //Debug.WriteLine($"id:: -> {id}");
 
 
-            var webscraper = new WebscrapeService();
+            //var webscraper = new WebscrapeService();
 
-             string OnePiece_Chapters = "http://127.0.0.1:5500/Read%20My%20Hero%20Academia%20Manga%20Online%20[FREE]%E2%9C%85.html";
-            string BorutoQuery = "#manga-chapters-holder > div.page-content-listing.single-page > div > ul > li:nth-child(n) > div:nth-child(1) > a";
-
-
-            await webscraper.GetElementsAsync(OnePiece_Chapters, BorutoQuery);
+            //string OnePiece_Chapters = "http://127.0.0.1:5501/mushoku%20tensei,%20Chapter%2057%20-%20English%20Scans.html";
+            //string BorutoQuery = ".entry-content div.separator img";
 
 
+            //await webscraper.GetElementsAsync(OnePiece_Chapters, BorutoQuery);
+
+      
 
 
 
@@ -82,11 +87,24 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
             for (int x = 0; x<20; x++) {
-                imgStackPanel.Children.Add(new Image { Source = UtilServices.ByteToBitmapIMG(byteIMG), Width = 300 });
+                imgStackPanel.Children.Add(new Image { Source = UtilServices.ByteToBitmapIMG(byteIMG),UseLayoutRounding = true, StretchDirection = StretchDirection.DownOnly});
             }
 
            
 
+
+
+
+        }
+
+        private void BGoHome(object sender, RoutedEventArgs e)
+        {
+
+
+
+            MainWindow.mainWindowCONTEXT.Navigate(typeof(DashboardPage));
+
+  
 
 
 
