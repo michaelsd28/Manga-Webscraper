@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Media;
-using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using WPF_MangaScrapper.Services;
-using WPF_MangaScrapper.Views.Pages;
 
 namespace WPF_MangaScrapper.Views.Windows
 {

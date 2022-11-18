@@ -1,0 +1,16 @@
+﻿<ui:UiPage  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+                 d:DataContext="{d:DesignInstance local:GalleryPage, IsDesignTimeCreatable=False}"
+            x:Class="WPF_MangaScrapper.Views.Pages.MangaManager"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MangaManager">
+
+    <Grid>
+        <TextBlock FontSize="28" Text="Manga manager"/>
+    </Grid>
+</ui:UiPage>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AngleSharp.Dom;
+using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +10,19 @@ namespace WPF_MangaScrapper.Models
 {
     class MangaList
     {
-        public string? KeyName { get; set; }
-        public List<String>? Titles { get; set; }
-        public List<String>? Links { get; set; }
-        
 
+
+        public String? KeyName { get; set; } 
+        public IEnumerable<object>? Titles { get; set; }
+        public IEnumerable<object>? Links { get; set; }
+
+
+
+        public MangaList(String? keyName, IEnumerable<object>? titles, IEnumerable<object>? links)
+        {
+            KeyName = keyName;
+            Titles = titles;
+            Links = links;
+        }
     }
 }

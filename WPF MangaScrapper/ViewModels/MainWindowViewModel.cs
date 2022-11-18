@@ -58,6 +58,13 @@ namespace WPF_MangaScrapper.ViewModels
                     PageTag = "gallery",
                     PageType = typeof(Views.Pages.GalleryPage),
                          Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\galleryIcon.png"))
+                },
+                 new NavigationItem()
+                {
+                    Content = new System.Windows.Controls.TextBlock{ Text = "Admin", FontSize= 12},
+                    PageTag = "manager",
+                    PageType = typeof(Views.Pages.MangaManager),
+                         Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Dashboard\\magicStick icon.png"))
                 }
             };
 

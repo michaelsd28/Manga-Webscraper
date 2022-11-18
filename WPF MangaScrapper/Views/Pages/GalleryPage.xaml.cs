@@ -52,16 +52,14 @@ namespace WPF_MangaScrapper.Views.Pages
             //Debug.WriteLine($"id:: -> {id}");
 
 
-            //var webscraper = new WebscrapeService();
-
-            //string OnePiece_Chapters = "http://127.0.0.1:5501/mushoku%20tensei,%20Chapter%2057%20-%20English%20Scans.html";
-            //string BorutoQuery = ".entry-content div.separator img";
+    
 
 
-            //await webscraper.GetElementsAsync(OnePiece_Chapters, BorutoQuery);
+            //string OnePiece_Chapters = "http://127.0.0.1:5500/Read%20Mushoku%20Tensei%20Manga%20Online%20-%20English%20Scans.html";
+            //string BorutoQuery = "div.su-expand-content ul.su-posts-list-loop li a";
 
-      
 
+            //await WebscrapeService.GetElementsAsync(OnePiece_Chapters, BorutoQuery);
 
 
         }
