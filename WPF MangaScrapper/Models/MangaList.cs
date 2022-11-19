@@ -15,14 +15,26 @@ namespace WPF_MangaScrapper.Models
         public String? KeyName { get; set; } 
         public IEnumerable<object>? Titles { get; set; }
         public IEnumerable<object>? Links { get; set; }
+        public string ColorTheme { get; set; }
+        public string PosterLink { get; set; }
+        public string LogoIMG { get; set; }
 
-
-
-        public MangaList(String? keyName, IEnumerable<object>? titles, IEnumerable<object>? links)
+        public MangaList
+            (
+            string? keyName, 
+            IEnumerable<object>? titles, 
+            IEnumerable<object>? links, 
+            string colorTheme, 
+            string posterLink, 
+            string logoIMG
+            )
         {
             KeyName = keyName;
             Titles = titles;
             Links = links;
+            ColorTheme = colorTheme;
+            PosterLink = posterLink;
+            LogoIMG = logoIMG;
         }
     }
 }

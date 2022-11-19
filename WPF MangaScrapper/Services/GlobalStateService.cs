@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Dom;
 using MongoDB.Bson;
+using System.Collections.Generic;
+using WPF_MangaScrapper.Models;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -12,6 +14,7 @@ namespace WPF_MangaScrapper.Services
 
         private GlobalStateService() { }
 
+        public static Dictionary<string,MangaCaller> ChapterCallerDic { get;  set; }
 
         public static GlobalStateService GetInstance() {
 

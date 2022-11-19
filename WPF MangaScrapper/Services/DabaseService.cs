@@ -13,6 +13,7 @@ using WPF_MangaScrapper.Views.Windows;
 using System.Diagnostics;
 using Wpf.Ui.Controls;
 using System.Threading.Tasks;
+using WPF_MangaScrapper.Services;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -26,21 +27,19 @@ namespace WPF_MangaScrapper.Services
         internal static void GetChaptersDB()
         {
 
-            try {
+            try
+            {
 
                 var chaperList = DatabaseServiceUTILS.GetListInventory();
 
-                Debug.WriteLine($"GetChaptersDB():: {chaperList.ToJson()}");
-
                 DatabaseServiceUTILS.UpdateDashBoard(chaperList);
             }
-            catch (Exception ex) 
-                {
-
-                Debug.WriteLine($"GetChaptersDB:: {ex.Message}");
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception ex -> GetChaptersDB:: {ex.Message}");
             }
 
-            }
+        }
 
         internal static async void InsertMangaFetcher(MangaCaller mangaFetch)
         {
@@ -56,9 +55,9 @@ namespace WPF_MangaScrapper.Services
 
 
 
-        //public static IMongoCollection<BsonDocument> GetCollection(string CollecName)
+    //public static IMongoCollection<BsonDocument> GetCollection(string CollecName)
 
-        //   => DatabaseServiceUTILS.MongoCollection(CollecName);
+    //   => DatabaseServiceUTILS.MongoCollection(CollecName);
 
 
 
@@ -77,47 +76,59 @@ namespace WPF_MangaScrapper.Services
 
 
 
+}
+
+
+
+
+internal class DatabaseServiceUTILS
+{
+
+    static string ConnectionString = "mongodb://localhost:6082";
+
+    public static IMongoCollection<BsonDocument> MongoCollection(string collecName)
+    {
+
+        var client = new MongoClient(ConnectionString);
+        var database = client.GetDatabase("MangaWebscrapeDB");
+        var collection = database.GetCollection<BsonDocument>(collecName);
+
+
+
+
+        return collection;
     }
 
 
-
-
-    internal class DatabaseServiceUTILS
+    public static void UpdateDashBoard(List<MangaList> mangaList)
     {
 
-        static string ConnectionString = "mongodb://localhost:6082";
 
-        public static IMongoCollection<BsonDocument> MongoCollection(string collecName)
+
+
+
+
+
+        foreach (var manga in mangaList)
         {
+            //var cardInfo = GlobalStateService.ChapterCallerDic[manga.KeyName];
 
-            var client = new MongoClient(ConnectionString);
-            var database = client.GetDatabase("MangaWebscrapeDB");
-            var collection = database.GetCollection<BsonDocument>(collecName);
-
-
-
-
-            return collection;
-        }
-
-
-        public static void UpdateDashBoard(List<MangaList> mangaList) 
-        {
-
-
-            foreach (var manga in mangaList) 
+            MangaCard mangaCard = new MangaCard
             {
 
 
-              MangaCard mangaCard = new MangaCard 
-                {
 
-                    BackgroundPoster = "https://i.pinimg.com/originals/eb/85/c4/eb85c4376b474030b80afa80ad1cd13a.jpg",
-                    CardColor = "#1A0101",
-                    TopIMG = "/Assets/one piece logo.png",
-                    KeyName = manga.KeyName
-             
-              };
+                BackgroundPoster = manga.PosterLink,
+                CardColor = manga.ColorTheme,
+                TopIMG = manga.LogoIMG,
+                KeyName = manga.KeyName
+
+                //BackgroundPoster = "https://i.pinimg.com/originals/eb/85/c4/eb85c4376b474030b80afa80ad1cd13a.jpg",
+                //CardColor = "#1A0101",
+                //TopIMG = "/Assets/one piece logo.png",
+                //KeyName = manga.KeyName
+
+            };
 
 
 
@@ -126,82 +137,82 @@ namespace WPF_MangaScrapper.Services
             if (manga.Titles == null) return;
 
             foreach (object title in manga.Titles)
-                {
-
-                    var button = new System.Windows.Controls.Button { Content = title, Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Center };
-                    button.Click += (sender, EventArgs) => { NavigateToGallery(sender, EventArgs, manga); };
-                    mangaCard.ChaptersSTACKPANEL.Children.Add (  button );
-                }
-
-                
-
-                #endregion
-
-                #region clear and add cards
-
-                DashboardPage
-                    .DashboardPageCONTEXT
-                    .WrapPanel.Children.Clear();
-
-                DashboardPage
-                    .DashboardPageCONTEXT
-                    .WrapPanel
-                    .Children
-                    .Add(mangaCard);
-
-                #endregion
-
-            }
-
-        }
-
-        //private static RoutedEventHandler NavigateToGallery(string? keyName)
-        //{
-           
-        //}
-
-        private static void NavigateToGallery(object sender, RoutedEventArgs e, MangaList manga)
-        {
-            MainWindow.mainWindowCONTEXT.Navigate(typeof(GalleryPage));
-        }
-
-
-
-        public static List<MangaList> GetListInventory()
-        {
-
-
-            var list = new List<MangaList>();
-            var collection = MongoCollection("ChapterList");
-            var documents = collection.Find(new BsonDocument()).ToList();
-
-
-
-            foreach (var document in documents)
             {
 
-      
-            
-                var filter = new BsonDocument { { "KeyName", document["KeyName"] } };
-
-                var current = collection.Find(filter).FirstOrDefault();
-             
-
-                if (current != null)
-                {
-                    current.Remove("_id");
-                    var mangaList = JsonSerializer.Deserialize<MangaList>(current.ToString());
-                    list.Add(mangaList);
-                }
+                var button = new System.Windows.Controls.Button { Content = title, Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Center };
+                button.Click += (sender, EventArgs) => { NavigateToGallery(sender, EventArgs, manga); };
+                mangaCard.ChaptersSTACKPANEL.Children.Add(button);
             }
-            return list;
-        }
 
 
-        public static FilterDefinition<BsonDocument> BSONFilter(string key, object value)
-        {
-            return Builders<BsonDocument>.Filter.Eq(key, value); ;
+
+            #endregion
+
+            #region clear and add cards
+
+            DashboardPage
+                .DashboardPageCONTEXT
+                .WrapPanel.Children.Clear();
+
+            DashboardPage
+                .DashboardPageCONTEXT
+                .WrapPanel
+                .Children
+                .Add(mangaCard);
+
+            #endregion
+
         }
 
     }
+
+    //private static RoutedEventHandler NavigateToGallery(string? keyName)
+    //{
+
+    //}
+
+    private static void NavigateToGallery(object sender, RoutedEventArgs e, MangaList manga)
+    {
+        MainWindow.mainWindowCONTEXT.Navigate(typeof(GalleryPage));
+    }
+
+
+
+    public static List<MangaList> GetListInventory()
+    {
+
+
+        var list = new List<MangaList>();
+        var collection = MongoCollection("ChapterList");
+        var documents = collection.Find(new BsonDocument()).ToList();
+
+
+
+        foreach (var document in documents)
+        {
+
+
+
+            var filter = new BsonDocument { { "KeyName", document["KeyName"] } };
+
+            var current = collection.Find(filter).FirstOrDefault();
+
+
+            if (current != null)
+            {
+                current.Remove("_id");
+                var mangaList = JsonSerializer.Deserialize<MangaList>(current.ToString());
+                list.Add(mangaList);
+            }
+        }
+        return list;
+    }
+
+
+    public static FilterDefinition<BsonDocument> BSONFilter(string key, object value)
+    {
+        return Builders<BsonDocument>.Filter.Eq(key, value); ;
+    }
+
+}
 

@@ -154,7 +154,7 @@ namespace WPF_MangaScrapper.Views.Pages
                       );
 
                     DatabaseService.InsertMangaFetcher(mangaFetch);
-                    QuickMessage("Succefully saved","Please press ok to continue").Show();
+              
                 }
  
             }

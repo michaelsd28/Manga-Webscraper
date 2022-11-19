@@ -60,46 +60,47 @@ namespace WPF_MangaScrapper.Services
 
             IEnumerable<String?>? elementsSelected = null;
 
-            try { 
+            try
+            {
 
-            //Create a new context for evaluating webpages with the default config
-            IBrowsingContext context = BrowsingContext.New(Configuration.Default);
+                //Create a new context for evaluating webpages with the default config
+                IBrowsingContext context = BrowsingContext.New(Configuration.Default);
 
                 //Create a document from a virtual request / response pattern
 
                 string content = GetWebContent(url);
 
-            IDocument document = await context.OpenAsync(req => req.Content(content));
+                IDocument document = await context.OpenAsync(req => req.Content(content));
 
-    
 
-  
 
-            // directly with CSS selectors
-            //IHtmlCollection<IElement> elementsSelected = document.QuerySelectorAll(query);
 
-            if (attribute == null)
-            {
-                elementsSelected = document.QuerySelectorAll(query).Select(m => m.TextContent.Replace("\n","").Replace("                       ","")).Take(50);
+
+                // directly with CSS selectors
+                //IHtmlCollection<IElement> elementsSelected = document.QuerySelectorAll(query);
+
+                if (attribute == null)
+                {
+                    elementsSelected = document.QuerySelectorAll(query).Select(m => m.TextContent.Replace("\n", "").Replace("                       ", "")).Take(50);
+                }
+                else
+                {
+                    elementsSelected = document.QuerySelectorAll(query).Select(m => m.GetAttribute(attribute)).Take(50);
+                }
+
+
+
+
+                foreach (var element in elementsSelected)
+                {
+                    Debug.WriteLine($"GetElementsAsync element:: {element}");
+                }
+
+
             }
-            else
+            catch (Exception ex)
             {
-                elementsSelected = document.QuerySelectorAll(query).Select(m => m.GetAttribute(attribute)).Take(50);
-            }
-
-
-
-
-            foreach (var element in elementsSelected)
-            {
-                Debug.WriteLine($"GetElementsAsync element:: {element}");
-            }
-
-
-            }
-            catch (Exception ex) 
-            {
-            Debug.WriteLine($"GetElementsAsync:: {ex.Message}  **** url:: {url} -> query:: {query} -> attribute:: {attribute}"); 
+                Debug.WriteLine($"GetElementsAsync:: {ex.Message}  **** url:: {url} -> query:: {query} -> attribute:: {attribute}");
             }
 
             return elementsSelected;
@@ -118,10 +119,10 @@ namespace WPF_MangaScrapper.Services
 
             foreach (var document in documents)
             {
-                
+
                 document.Remove("_id");
-                Debug.WriteLine($"UpdateChapterList1 -> document:: {document.ToString()}");
-                var current =  JsonSerializer.Deserialize<MangaCaller>(document.ToString());
+                var current = JsonSerializer.Deserialize<MangaCaller>(document.ToString());
+        
                 mangaCallerList.Add(current);
             }
 
@@ -136,7 +137,15 @@ namespace WPF_MangaScrapper.Services
                 var titles = await GetElementsAsync(mangaCaller.ChatersLink, mangaCaller.ChapterQuery);
                 var callerLinks = await GetElementsAsync(mangaCaller.ChatersLink, mangaCaller.ChapterQuery, "href");
 
-                MangaList? mangaList = new MangaList(mangaCaller.KeyName, titles, callerLinks);
+                MangaList? mangaList = new MangaList
+                    (
+                   keyName: mangaCaller.KeyName, 
+                   titles:  titles, 
+                    links:callerLinks , 
+                    colorTheme: mangaCaller.ColorTheme,
+                    posterLink: mangaCaller.PosterLink,
+                    logoIMG: mangaCaller.LogoIMG
+                    );
 
                 var fetchCollection = DatabaseServiceUTILS.MongoCollection("ChapterList");
 
@@ -148,8 +157,8 @@ namespace WPF_MangaScrapper.Services
                     );
             }
 
-   
-      
+
+
 
 
         }
@@ -188,7 +197,7 @@ namespace WPF_MangaScrapper.Services
         //            //case "OnePieceList":
 
         //            //    mangaList = new MangaList(new BsonElement($"_{search}", search), OnePiece, OnePieceLinks);
-         
+
         //            //    collection.FindOneAndReplace(filter, mangaList.ToBsonDocument());
         //            //    break;
 
@@ -210,7 +219,7 @@ namespace WPF_MangaScrapper.Services
 
         //                mangaList = new MangaList($"_{search}", Mushoku, MushokuLinks);
 
-               
+
 
         //                await collection.ReplaceOneAsync
         //                    (  
@@ -247,24 +256,26 @@ namespace WPF_MangaScrapper.Services
         {
 
             string? content = null;
-            try { 
-
-            Debug.WriteLine($"GetWebContent:: {url}");
-
-
-       
-
-            using (WebClient client = new WebClient())
+            try
             {
-                content = client.DownloadString(url);
-            }
+
+                Debug.WriteLine($"GetWebContent:: {url}");
+
+
+
+
+                using (WebClient client = new WebClient())
+                {
+                    content = client.DownloadString(url);
+                }
 
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 Debug.WriteLine($"GetWebContent:: {ex.Message}");
-            
+
                 return "";
             }
 

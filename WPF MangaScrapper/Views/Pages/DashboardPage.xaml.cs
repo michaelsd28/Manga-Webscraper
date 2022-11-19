@@ -33,9 +33,6 @@ namespace WPF_MangaScrapper.Views.Pages
             DatabaseService.GetChaptersDB();
 
 
-
-
-
         }
         LottieAnimationView? lottie = null;
         private async void BRefreshCH(object sender, System.Windows.RoutedEventArgs e)
