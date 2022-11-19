@@ -43,13 +43,13 @@
 
                             <!--KeyName-->
                             <TextBlock Text="Key name" FontSize="16" Margin="10"/>
-                            <ui:TextBox  PlaceholderText="Ej: _OnePiece" Width="400"/>
+                            <ui:TextBox x:Name="TboxKey"  PlaceholderText="Ej: _OnePiece" Width="400"/>
 
                             <!--Color Theme-->
                             <TextBlock Text="Color Theme" FontSize="16" Margin="10"/>
                             <StackPanel Orientation="Horizontal">
 
-                                <ui:TextBox x:Name="TextBoxColor" Text="#000000"  PlaceholderText="Ej: #000000" Width="300"/>
+                                <ui:TextBox x:Name="TBoxColor" Text="#000000"  PlaceholderText="Ej: #000000" Width="300"/>
 
                                 <Button Margin="15 0 0 0" Padding="7"  Click="BOpenColorPicker">
 
@@ -61,7 +61,7 @@
 
                             <!--Chapers link-->
                             <TextBlock   Text="Chapers link" FontSize="16" Margin="10"/>
-                            <ui:TextBox  PlaceholderText="Ej: www.manga.com/episodes" Width="400"/>
+                            <ui:TextBox x:Name="TBoxChapers"  PlaceholderText="Ej: www.manga.com/episodes" Width="400"/>
                         </StackPanel>
                         
                         
@@ -72,15 +72,15 @@
                             
                             <!--gallery base link-->
                             <TextBlock Text="Gallery base link" FontSize="16" Margin="10"/>
-                            <ui:TextBox  PlaceholderText="Ej: www.manga.com/gallery" Width="400"/>
+                            <ui:TextBox x:Name="TBoxGallery"  PlaceholderText="Ej: www.manga.com/gallery" Width="400"/>
 
                             <!--Poster url-->
                             <TextBlock Text="Poster url" FontSize="16" Margin="10"/>
-                            <ui:TextBox  PlaceholderText="Ej: www.poster.com" Width="400"/>
+                            <ui:TextBox x:Name="TBoxPoster"  PlaceholderText="Ej: www.poster.com" Width="400"/>
 
                             <!--Logo url-->
                             <TextBlock Text="Logo url" FontSize="16" Margin="10"/>
-                            <ui:TextBox  PlaceholderText="Ej: www.logo.com" Width="400"/>
+                            <ui:TextBox x:Name="TBoxLogo"   PlaceholderText="Ej: www.logo.com" Width="400"/>
                             
                             
                         </StackPanel>

@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows;
 using WPF_MangaScrapper.Views.Windows;
 using System.Diagnostics;
+using Wpf.Ui.Controls;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -46,9 +47,10 @@ namespace WPF_MangaScrapper.Services
 
            => DabaseServiceUTILS.MongoCollection(CollecName);
 
-
-
-
+        internal static void SaveMangaFetch(MangaFetch mangaFetch)
+        {
+            return;
+        }
     }
 
 
@@ -83,28 +85,29 @@ namespace WPF_MangaScrapper.Services
 
               MangaCard mangaCard = new MangaCard 
                 {
+
                     BackgroundPoster = "https://i.pinimg.com/originals/eb/85/c4/eb85c4376b474030b80afa80ad1cd13a.jpg",
                     CardColor = "#1A0101",
                     TopIMG = "/Assets/one piece logo.png",
-         
-
+                    KeyName = manga.KeyName
+             
               };
 
-
+         
 
                 #region add buttons to card
 
                 foreach (object title in manga.Titles)
                 {
 
-                    var button = new Button { Content = title, Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Center };
-                    button.Click += NavigateToGallery;
+                    var button = new System.Windows.Controls.Button { Content = title, Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Center };
+                    button.Click += (sender, EventArgs) => { NavigateToGallery(sender, EventArgs, manga); };
                     mangaCard.ChaptersSTACKPANEL.Children.Add (  button );
-
                 }
 
-                #endregion
+                
 
+                #endregion
 
                 #region clear and add cards
 
@@ -124,9 +127,14 @@ namespace WPF_MangaScrapper.Services
 
         }
 
+        //private static RoutedEventHandler NavigateToGallery(string? keyName)
+        //{
+           
+        //}
 
-        private static void NavigateToGallery(object sender, RoutedEventArgs e)
+        private static void NavigateToGallery(object sender, RoutedEventArgs e, MangaList manga)
         {
+            Debug.WriteLine($"manga:: {manga.ToJson()}");
             MainWindow.mainWindowCONTEXT.Navigate(typeof(GalleryPage));
         }
 

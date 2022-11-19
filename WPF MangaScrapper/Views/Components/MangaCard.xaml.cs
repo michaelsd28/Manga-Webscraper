@@ -11,9 +11,6 @@ namespace WPF_MangaScrapper.Views.Components
     {
 
 
-
-
-
         public string CardColor
         {
             get { return (string)GetValue(CardColorProperty); }
@@ -23,9 +20,6 @@ namespace WPF_MangaScrapper.Views.Components
         // Using a DependencyProperty as the backing store for CardColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CardColorProperty =
             DependencyProperty.Register("CardColor", typeof(string), typeof(MangaCard), new PropertyMetadata(String.Empty));
-
-
-
 
 
 
@@ -51,7 +45,7 @@ namespace WPF_MangaScrapper.Views.Components
         public static readonly DependencyProperty TopIMGProperty =
             DependencyProperty.Register("TopIMG", typeof(string), typeof(MangaCard), new PropertyMetadata(String.Empty));
 
-
+        public  string KeyName =  null;
         public MangaCard()
         {
             InitializeComponent();
