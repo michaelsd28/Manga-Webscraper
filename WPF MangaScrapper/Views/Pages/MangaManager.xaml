@@ -18,6 +18,10 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
         <!--#region Header Grid -->
 
         <Grid Grid.Row="0" >
@@ -26,9 +30,10 @@
         
         <!--#endregion-->
 
-        <ScrollViewer Grid.Row="1">
-        <Grid   Margin="40 0 0 0">
-            <StackPanel HorizontalAlignment="Left" >
+
+        <Grid Grid.Column="0" Grid.Row="1"   Margin="40 0 0 0">
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" Grid.Column="0"   Grid.Row="1" >
+                <StackPanel HorizontalAlignment="Left" >
 
                     <StackPanel Orientation="Horizontal">
 
@@ -81,8 +86,16 @@
                         </StackPanel>
                         
                     </StackPanel>
-                
-              
+
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+
+
+                        <ui:Button Click="SaveButton" Appearance="Light" Margin="20" Content="Save"/>
+
+                        <Button Click="CancelButton" Margin="20"  Content="Cancel"/>
+
+
+                    </StackPanel>
 
 
 
@@ -90,9 +103,9 @@
             </StackPanel>
 
 
-
+            </ScrollViewer>
         </Grid>
-        </ScrollViewer>
+ 
         <Grid Grid.Row="2" />
 
  

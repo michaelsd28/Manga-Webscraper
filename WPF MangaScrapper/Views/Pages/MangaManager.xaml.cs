@@ -87,5 +87,15 @@ namespace WPF_MangaScrapper.Views.Pages
             }
         
         }
+
+        private void SaveButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelButton(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
