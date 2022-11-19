@@ -98,7 +98,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 Debug.WriteLine($"GetHexValue:: {hexColor}");
 
-                return "#"+hexColor;
+                return $"#{hexColor}";
             }
         
         }
@@ -130,7 +130,9 @@ namespace WPF_MangaScrapper.Views.Pages
                     mangaManager.TBoxChapers.Text == string.Empty ||
                     mangaManager.TBoxGallery.Text == string.Empty ||
                     mangaManager.TBoxPoster.Text == string.Empty ||
-                    mangaManager.TBoxLogo.Text == string.Empty
+                    mangaManager.TBoxLogo.Text == string.Empty ||
+                    mangaManager.TBoxChapersQuery.Text == string.Empty ||
+                    mangaManager.TBoxGalleryQuery.Text == string.Empty 
                     )
                 {
                     QuickMessage("Please enter data", "Please press ok to continue").Show();
@@ -138,17 +140,20 @@ namespace WPF_MangaScrapper.Views.Pages
                 }
                 else 
                 {
-                    MangaFetch mangaFetch = new MangaFetch
+                    MangaCaller mangaFetch = new MangaCaller
                       (
                       keyName: mangaManager.TboxKey.Text,
                       colorTheme: mangaManager.TBoxColor.Text,
                       chatersLink: mangaManager.TBoxChapers.Text,
                       galleryLink: mangaManager.TBoxGallery.Text,
                       posterLink: mangaManager.TBoxPoster.Text,
-                      logoIMG: mangaManager.TBoxLogo.Text
+                      logoIMG: mangaManager.TBoxLogo.Text,
+                      chapterQuery: mangaManager.TBoxChapersQuery.Text,
+                      galleryQuery: mangaManager.TBoxGalleryQuery.Text
+
                       );
 
-                    DatabaseService.SaveMangaFetch(mangaFetch);
+                    DatabaseService.InsertMangaFetcher(mangaFetch);
                     QuickMessage("Succefully saved","Please press ok to continue").Show();
                 }
  

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPF_MangaScrapper.Models
 {
-    internal class MangaFetch
+    internal class MangaCaller
     {
 
         public string KeyName { get; set; }
@@ -15,8 +15,21 @@ namespace WPF_MangaScrapper.Models
         public string GalleryLink { get; set; }
         public string PosterLink { get; set; }
         public string LogoIMG{ get; set;}
-
-        public MangaFetch(string keyName, string colorTheme, string chatersLink, string galleryLink, string posterLink, string logoIMG)
+        public string ChapterQuery { get; set; }    
+        public string GalleryQuery { get; set; }
+       
+        //constructor 
+        public MangaCaller
+            (
+            string keyName, 
+            string colorTheme, 
+            string chatersLink, 
+            string galleryLink, 
+            string posterLink, 
+            string logoIMG, 
+            string chapterQuery, 
+            string galleryQuery
+            )
         {
             KeyName = keyName;
             ColorTheme = colorTheme;
@@ -24,6 +37,8 @@ namespace WPF_MangaScrapper.Models
             GalleryLink = galleryLink;
             PosterLink = posterLink;
             LogoIMG = logoIMG;
+            ChapterQuery = chapterQuery;
+            GalleryQuery = galleryQuery;
         }
     }
 }

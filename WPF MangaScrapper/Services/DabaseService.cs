@@ -12,6 +12,7 @@ using System.Windows;
 using WPF_MangaScrapper.Views.Windows;
 using System.Diagnostics;
 using Wpf.Ui.Controls;
+using System.Threading.Tasks;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -25,38 +26,63 @@ namespace WPF_MangaScrapper.Services
         internal static void GetChaptersDB()
         {
 
-            try 
-            { 
+            try {
 
-            } catch (Exception ex) 
-            {
-                Debug.Write($"Exception GetChaptersDB {ex.Message}");
+                var chaperList = DatabaseServiceUTILS.GetListInventory();
+
+                Debug.WriteLine($"GetChaptersDB():: {chaperList.ToJson()}");
+
+                DatabaseServiceUTILS.UpdateDashBoard(chaperList);
+            }
+            catch (Exception ex) 
+                {
+
+                Debug.WriteLine($"GetChaptersDB:: {ex.Message}");
             }
 
-            var searchList = new List<string> { "OnePieceList", "BorutoList", "BokuNoHeroList", "Mushoku" };
-            var chaperList = DabaseServiceUTILS.GetListInventory(searchList);
-            DabaseServiceUTILS.UpdateDashBoard(chaperList);
+            }
 
-
-        }
-
-
-
-
-        public static IMongoCollection<BsonDocument> getCollection(string CollecName)
-
-           => DabaseServiceUTILS.MongoCollection(CollecName);
-
-        internal static void SaveMangaFetch(MangaFetch mangaFetch)
+        internal static async void InsertMangaFetcher(MangaCaller mangaFetch)
         {
-            return;
+            var collection = DatabaseServiceUTILS.MongoCollection("ChaptersFetcher");
+            await collection.ReplaceOneAsync
+                      (
+                      filter: new BsonDocument("KeyName", mangaFetch.KeyName),
+                      options: new ReplaceOptions { IsUpsert = true },
+                      replacement: mangaFetch.ToBsonDocument()
+                      );
         }
     }
 
 
 
+        //public static IMongoCollection<BsonDocument> GetCollection(string CollecName)
 
-    internal class DabaseServiceUTILS
+        //   => DatabaseServiceUTILS.MongoCollection(CollecName);
+
+
+
+    //internal static async void InsertMangaFetcher(MangaCaller mangaCaller)
+    //    {
+    //    var collection =    DatabaseServiceUTILS.MongoCollection("ChaptersFetcher");
+
+    //        await collection.ReplaceOneAsync
+    //        (
+    //        filter: new BsonDocument("KeyName", mangaCaller.KeyName),
+    //        options: new ReplaceOptions { IsUpsert = true },
+    //        replacement: mangaCaller.ToBsonDocument()
+    //        );
+
+    //    }
+
+
+
+    }
+
+
+
+
+    internal class DatabaseServiceUTILS
     {
 
         static string ConnectionString = "mongodb://localhost:6082";
@@ -93,11 +119,13 @@ namespace WPF_MangaScrapper.Services
              
               };
 
-         
 
-                #region add buttons to card
 
-                foreach (object title in manga.Titles)
+            #region add buttons to card
+
+            if (manga.Titles == null) return;
+
+            foreach (object title in manga.Titles)
                 {
 
                     var button = new System.Windows.Controls.Button { Content = title, Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Center };
@@ -134,28 +162,30 @@ namespace WPF_MangaScrapper.Services
 
         private static void NavigateToGallery(object sender, RoutedEventArgs e, MangaList manga)
         {
-            Debug.WriteLine($"manga:: {manga.ToJson()}");
             MainWindow.mainWindowCONTEXT.Navigate(typeof(GalleryPage));
         }
 
 
 
-        public static List<MangaList> GetListInventory(List<String> searchList)
+        public static List<MangaList> GetListInventory()
         {
 
 
             var list = new List<MangaList>();
+            var collection = MongoCollection("ChapterList");
+            var documents = collection.Find(new BsonDocument()).ToList();
 
 
 
-            foreach (var search in searchList)
+            foreach (var document in documents)
             {
 
-                var collection = MongoCollection("ChapterList");
-                var filter = new BsonDocument { { "KeyName", $"_{search}" } };
+      
+            
+                var filter = new BsonDocument { { "KeyName", document["KeyName"] } };
 
                 var current = collection.Find(filter).FirstOrDefault();
-
+             
 
                 if (current != null)
                 {
@@ -174,4 +204,4 @@ namespace WPF_MangaScrapper.Services
         }
 
     }
-}
+

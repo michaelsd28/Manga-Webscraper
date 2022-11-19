@@ -10,6 +10,7 @@ using MongoDB.Driver;
 using WPF_MangaScrapper.Models;
 using System;
 using System.Threading;
+using System.Text.Json;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -55,8 +56,8 @@ namespace WPF_MangaScrapper.Services
         #region GetElements
         public static async Task<IEnumerable<object>?> GetElementsAsync(string url, string query, string? attribute = null)
         {
+            Debug.WriteLine($"GetElementsAsync:: -> url:: {url} -> query:: {query} -> attribute:: {attribute}");
 
-     
             IEnumerable<String?>? elementsSelected = null;
 
             try { 
@@ -79,7 +80,7 @@ namespace WPF_MangaScrapper.Services
 
             if (attribute == null)
             {
-                elementsSelected = document.QuerySelectorAll(query).Select(m => m.TextContent).Take(50);
+                elementsSelected = document.QuerySelectorAll(query).Select(m => m.TextContent.Replace("\n","").Replace("                       ","")).Take(50);
             }
             else
             {
@@ -98,7 +99,7 @@ namespace WPF_MangaScrapper.Services
             }
             catch (Exception ex) 
             {
-            Debug.WriteLine($"GetElementsAsync:: {ex.Message}"); 
+            Debug.WriteLine($"GetElementsAsync:: {ex.Message}  **** url:: {url} -> query:: {query} -> attribute:: {attribute}"); 
             }
 
             return elementsSelected;
@@ -106,90 +107,137 @@ namespace WPF_MangaScrapper.Services
         #endregion
 
 
-
-        public static async Task UpdateChapterList()
+        public static async Task UpdateChapterList1()
         {
 
+            #region get manga callers from db
 
-            var Mushoku = await GetElementsAsync(Mushoku_Chapters, MushokuQuery);
-            //var OnePiece = await GetElementsAsync(OnePiece_Chapters, OnepQuery);
-            //var Boruto = await GetElementsAsync(Boruto_Chapters, BorutoQuery);
-            //var BokuNoHero = await GetElementsAsync(BokuNoHero_Chapters, BokuNoHero_Chapters);
+            var callerCollection = DatabaseServiceUTILS.MongoCollection("ChaptersFetcher");
+            var documents = callerCollection.Find(new BsonDocument()).ToList();
+            var mangaCallerList = new List<MangaCaller>();
 
-
-
-            var MushokuLinks = await GetElementsAsync(Mushoku_Chapters, MushokuQuery,"href");
-            //var OnePieceLinks = await GetElementsAsync(OnePiece_Base, OnepQuery, "href");
-            //var BorutoLinks = await GetElementsAsync(Boruto_Chapters, BorutoQuery, "href");
-            //var BokuNoHeroLinks = await GetElementsAsync(BokuNoHero_Chapters, BokuNoHero_Chapters, "href");
-
-            var searchList = new List<string> { "OnePieceList", "BorutoList", "BokuNoHeroList", "Mushoku" };
-            var collection = DatabaseService.getCollection("ChapterList");
-
-            foreach (var search in searchList)
+            foreach (var document in documents)
             {
-
-                var filter = Builders<BsonDocument>.Filter.Eq($"_{search}", search);
-
-                MangaList? mangaList = null;
-
-                switch (search)
-
-                {
-
-                    //case "OnePieceList":
-
-                    //    mangaList = new MangaList(new BsonElement($"_{search}", search), OnePiece, OnePieceLinks);
-         
-                    //    collection.FindOneAndReplace(filter, mangaList.ToBsonDocument());
-                    //    break;
-
-                    //case "BorutoList":
-
-                    //    mangaList = new MangaList(new BsonElement($"_{search}", search), Boruto, BorutoLinks);
-
-                    //    collection.FindOneAndReplace(filter, mangaList.ToBsonDocument());
-                    //    break;
-
-                    //case "BokuNoHeroList":
-
-                    //    mangaList = new MangaList(new BsonElement($"_{search}", search), BokuNoHero, BokuNoHeroLinks);
-
-                    //    collection.FindOneAndReplace(filter, mangaList.ToBsonDocument());
-                    //    break;
-
-                    case "Mushoku":
-
-                        mangaList = new MangaList($"_{search}", Mushoku, MushokuLinks);
-
-               
-
-                        await collection.ReplaceOneAsync
-                            (  
-                            filter: new BsonDocument("KeyName", $"_{search}"),     
-                            options: new ReplaceOptions { IsUpsert = true },
-                            replacement: mangaList.ToBsonDocument()
-                            );
-
-
-                        Debug.WriteLine($"Insert in db -> mangaList:: {mangaList.ToJson()} * ");
-                        break;
-
-                    default:
-                        Debug.WriteLine("***UpdateChapterList Error***");
-                        break;
-
-                }
-
-
+                
+                document.Remove("_id");
+                Debug.WriteLine($"UpdateChapterList1 -> document:: {document.ToString()}");
+                var current =  JsonSerializer.Deserialize<MangaCaller>(document.ToString());
+                mangaCallerList.Add(current);
             }
 
+            #endregion
 
 
 
+
+
+            foreach (var mangaCaller in mangaCallerList)
+            {
+                var titles = await GetElementsAsync(mangaCaller.ChatersLink, mangaCaller.ChapterQuery);
+                var callerLinks = await GetElementsAsync(mangaCaller.ChatersLink, mangaCaller.ChapterQuery, "href");
+
+                MangaList? mangaList = new MangaList(mangaCaller.KeyName, titles, callerLinks);
+
+                var fetchCollection = DatabaseServiceUTILS.MongoCollection("ChapterList");
+
+                await fetchCollection.ReplaceOneAsync
+                    (
+                    filter: new BsonDocument("KeyName", mangaCaller.KeyName),
+                    options: new ReplaceOptions { IsUpsert = true },
+                    replacement: mangaList.ToBsonDocument()
+                    );
+            }
+
+   
+      
 
 
         }
+
+        //    public static async Task UpdateChapterList()
+        //{
+
+
+
+        //    var Mushoku = await GetElementsAsync(Mushoku_Chapters, MushokuQuery);
+        //    //var OnePiece = await GetElementsAsync(OnePiece_Chapters, OnepQuery);
+        //    //var Boruto = await GetElementsAsync(Boruto_Chapters, BorutoQuery);
+        //    //var BokuNoHero = await GetElementsAsync(BokuNoHero_Chapters, BokuNoHero_Chapters);
+
+
+
+        //    var MushokuLinks = await GetElementsAsync(Mushoku_Chapters, MushokuQuery,"href");
+        //    //var OnePieceLinks = await GetElementsAsync(OnePiece_Base, OnepQuery, "href");
+        //    //var BorutoLinks = await GetElementsAsync(Boruto_Chapters, BorutoQuery, "href");
+        //    //var BokuNoHeroLinks = await GetElementsAsync(BokuNoHero_Chapters, BokuNoHero_Chapters, "href");
+
+        //    var searchList = new List<string> { "OnePieceList", "BorutoList", "BokuNoHeroList", "Mushoku" };
+        //    //var collection = DatabaseService.getCollection("ChapterList");
+
+        //    foreach (var search in searchList)
+        //    {
+
+        //        var filter = Builders<BsonDocument>.Filter.Eq($"_{search}", search);
+
+        //        MangaList? mangaList = null;
+
+        //        switch (search)
+
+        //        {
+
+        //            //case "OnePieceList":
+
+        //            //    mangaList = new MangaList(new BsonElement($"_{search}", search), OnePiece, OnePieceLinks);
+         
+        //            //    collection.FindOneAndReplace(filter, mangaList.ToBsonDocument());
+        //            //    break;
+
+        //            //case "BorutoList":
+
+        //            //    mangaList = new MangaList(new BsonElement($"_{search}", search), Boruto, BorutoLinks);
+
+        //            //    collection.FindOneAndReplace(filter, mangaList.ToBsonDocument());
+        //            //    break;
+
+        //            //case "BokuNoHeroList":
+
+        //            //    mangaList = new MangaList(new BsonElement($"_{search}", search), BokuNoHero, BokuNoHeroLinks);
+
+        //            //    collection.FindOneAndReplace(filter, mangaList.ToBsonDocument());
+        //            //    break;
+
+        //            case "Mushoku":
+
+        //                mangaList = new MangaList($"_{search}", Mushoku, MushokuLinks);
+
+               
+
+        //                await collection.ReplaceOneAsync
+        //                    (  
+        //                    filter: new BsonDocument("KeyName", $"_{search}"),     
+        //                    options: new ReplaceOptions { IsUpsert = true },
+        //                    replacement: mangaList.ToBsonDocument()
+        //                    );
+
+
+        //                Debug.WriteLine($"Insert in db -> mangaList:: {mangaList.ToJson()} * ");
+        //                break;
+
+        //            default:
+        //                Debug.WriteLine("***UpdateChapterList Error***");
+        //                break;
+
+        //        }
+
+
+        //    }
+
+
+
+
+
+
+        //}
 
 
 
@@ -199,7 +247,7 @@ namespace WPF_MangaScrapper.Services
         {
 
             string? content = null;
-            try {
+            try { 
 
             Debug.WriteLine($"GetWebContent:: {url}");
 

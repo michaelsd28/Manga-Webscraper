@@ -64,7 +64,7 @@ namespace WPF_MangaScrapper.Views.Pages
         private async void  OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
 
-            await WebscrapeService.UpdateChapterList();
+            await WebscrapeService.UpdateChapterList1();
      
             Application.Current.Dispatcher.Invoke(delegate
             {

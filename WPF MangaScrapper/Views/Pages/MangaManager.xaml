@@ -37,8 +37,9 @@
 
                     <StackPanel Orientation="Horizontal">
 
-                        <!--left stackpanel-->
-
+               
+                        <!--#region left stackpanel-->
+                    
                         <StackPanel  Orientation="Vertical" Margin="10">
 
                             <!--KeyName-->
@@ -55,6 +56,7 @@
 
                                     <Image Width="20" Source="/Assets/Manager/color picker icon.png" />
                                 </Button>
+                                
 
                             </StackPanel>
 
@@ -62,14 +64,21 @@
                             <!--Chapers link-->
                             <TextBlock   Text="Chapers link" FontSize="16" Margin="10"/>
                             <ui:TextBox x:Name="TBoxChapers"  PlaceholderText="Ej: www.manga.com/episodes" Width="400"/>
-                        </StackPanel>
-                        
-                        
 
-                        <!--right stackpanel -->
+
+                            <!--Chapers query-->
+                            <TextBlock Text="Chapers query" FontSize="16" Margin="10"/>
+                            <ui:TextBox x:Name="TBoxChapersQuery"   PlaceholderText="Ej: div.class ul li a" Width="400"/>
+
+
+                        </StackPanel>
+                        <!--#endregion-->
+
+
+                        <!--#region right stackpanel -->
                         <StackPanel   Margin="10" Orientation="Vertical">
-                            
-                            
+
+
                             <!--gallery base link-->
                             <TextBlock Text="Gallery base link" FontSize="16" Margin="10"/>
                             <ui:TextBox x:Name="TBoxGallery"  PlaceholderText="Ej: www.manga.com/gallery" Width="400"/>
@@ -81,12 +90,20 @@
                             <!--Logo url-->
                             <TextBlock Text="Logo url" FontSize="16" Margin="10"/>
                             <ui:TextBox x:Name="TBoxLogo"   PlaceholderText="Ej: www.logo.com" Width="400"/>
-                            
-                            
+
+                            <!--Gallery query-->
+                            <TextBlock Text="Gallery query" FontSize="16" Margin="10"/>
+                            <ui:TextBox x:Name="TBoxGalleryQuery"   PlaceholderText="Ej: div.class ul li a" Width="400"/>
+
+
                         </StackPanel>
+                        <!--#endregion-->
+           
                         
                     </StackPanel>
 
+
+                    <!--#region option buttons -->
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
 
 
@@ -96,6 +113,8 @@
 
 
                     </StackPanel>
+                    <!--#endregion-->
+
 
 
 

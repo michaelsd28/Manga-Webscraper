@@ -1,13 +1,11 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
-using System.Diagnostics;
 using Wpf.Ui.Common.Interfaces;
 using System.Windows.Controls;
 using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Windows;
 using System.Windows;
-using Wpf.Ui.Appearance;
 
 /// chapters
 //String onePieceUrl = "https://readtcbscans.com/mangas/5/one-piece";
