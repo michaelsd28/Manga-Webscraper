@@ -9,9 +9,8 @@ using WPF_MangaScrapper.Views.Components;
 using WPF_MangaScrapper.Views.Pages;
 using System.Windows.Controls;
 using System.Windows;
-using System.Diagnostics;
-using System.Collections;
 using WPF_MangaScrapper.Views.Windows;
+using System.Diagnostics;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -25,9 +24,16 @@ namespace WPF_MangaScrapper.Services
         internal static void GetChaptersDB()
         {
 
+            try 
+            { 
+
+            } catch (Exception ex) 
+            {
+                Debug.Write($"Exception GetChaptersDB {ex.Message}");
+            }
 
             var searchList = new List<string> { "OnePieceList", "BorutoList", "BokuNoHeroList", "Mushoku" };
-            var chaperList = DabaseServiceUTILS.GetInventory(searchList);
+            var chaperList = DabaseServiceUTILS.GetListInventory(searchList);
             DabaseServiceUTILS.UpdateDashBoard(chaperList);
 
 
@@ -36,18 +42,9 @@ namespace WPF_MangaScrapper.Services
 
 
 
+        public static IMongoCollection<BsonDocument> getCollection(string CollecName)
 
-        public void SaveList() { }
-
-
-        //internal static void GetChapters()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public static IMongoCollection<BsonDocument> getCollection()
-
-           => DabaseServiceUTILS.MongoCollection();
+           => DabaseServiceUTILS.MongoCollection(CollecName);
 
 
 
@@ -62,12 +59,12 @@ namespace WPF_MangaScrapper.Services
 
         static string ConnectionString = "mongodb://localhost:6082";
 
-        public static IMongoCollection<BsonDocument> MongoCollection()
+        public static IMongoCollection<BsonDocument> MongoCollection(string collecName)
         {
 
             var client = new MongoClient(ConnectionString);
             var database = client.GetDatabase("MangaWebscrapeDB");
-            var collection = database.GetCollection<BsonDocument>("ChapterList");
+            var collection = database.GetCollection<BsonDocument>(collecName);
 
 
 
@@ -80,52 +77,36 @@ namespace WPF_MangaScrapper.Services
         {
 
 
-
-            var chapterTitles = new List<string>();
-
-
-
-                
-
             foreach (var manga in mangaList) 
             {
 
-
-              
-
-
-
-
-             
-        
 
               MangaCard mangaCard = new MangaCard 
                 {
                     BackgroundPoster = "https://i.pinimg.com/originals/eb/85/c4/eb85c4376b474030b80afa80ad1cd13a.jpg",
                     CardColor = "#1A0101",
-                    TopIMG = "C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\one piece logo.png",
+                    TopIMG = "/Assets/one piece logo.png",
          
 
               };
 
 
 
-                foreach (var title in manga.Titles)
+                #region add buttons to card
+
+                foreach (object title in manga.Titles)
                 {
+
                     var button = new Button { Content = title, Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Center };
-                    Debug.WriteLine($"title:: {title}");
                     button.Click += NavigateToGallery;
-                     mangaCard.ChaptersSTACKPANEL
-                        .Children
-                        .Add
-                        (
-                       button
-                        );
+                    mangaCard.ChaptersSTACKPANEL.Children.Add (  button );
 
                 }
 
+                #endregion
 
 
+                #region clear and add cards
 
                 DashboardPage
                     .DashboardPageCONTEXT
@@ -137,18 +118,24 @@ namespace WPF_MangaScrapper.Services
                     .Children
                     .Add(mangaCard);
 
-        
+                #endregion
+
             }
-            
+
         }
+
 
         private static void NavigateToGallery(object sender, RoutedEventArgs e)
         {
             MainWindow.mainWindowCONTEXT.Navigate(typeof(GalleryPage));
         }
 
-        public static List<MangaList> GetInventory(List<String> searchList)
+
+
+        public static List<MangaList> GetListInventory(List<String> searchList)
         {
+
+
             var list = new List<MangaList>();
 
 
@@ -156,7 +143,7 @@ namespace WPF_MangaScrapper.Services
             foreach (var search in searchList)
             {
 
-                var collection = MongoCollection();
+                var collection = MongoCollection("ChapterList");
                 var filter = new BsonDocument { { "KeyName", $"_{search}" } };
 
                 var current = collection.Find(filter).FirstOrDefault();
@@ -168,9 +155,6 @@ namespace WPF_MangaScrapper.Services
                     var mangaList = JsonSerializer.Deserialize<MangaList>(current.ToString());
                     list.Add(mangaList);
                 }
-
-
-
             }
             return list;
         }

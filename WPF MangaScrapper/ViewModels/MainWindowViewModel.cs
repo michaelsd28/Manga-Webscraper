@@ -57,7 +57,7 @@ namespace WPF_MangaScrapper.ViewModels
                     Content = new System.Windows.Controls.TextBlock{ Text = "Gallery", FontSize= 12},
                     PageTag = "gallery",
                     PageType = typeof(Views.Pages.GalleryPage),
-                         Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\galleryIcon.png"))
+                         Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Dashboard\\galleryIcon.png"))
                 },
                  new NavigationItem()
                 {

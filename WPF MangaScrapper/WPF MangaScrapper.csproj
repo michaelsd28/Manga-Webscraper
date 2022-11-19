@@ -12,6 +12,15 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
+    <Content Include="Assets\Dashboard\galleryIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Dashboard\magicStick icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\one piece logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -19,14 +28,32 @@
     <PackageReference Include="LottieSharp" Version="2.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.18.0" />
+    <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Animation\rocket 2.json" />
     <None Remove="Assets\applicationIcon-1024.png" />
     <None Remove="Assets\applicationIcon-256.png" />
+    <None Remove="Assets\Dashboard\galleryIcon.png" />
+    <None Remove="Assets\Dashboard\magicStick icon.png" />
+    <None Remove="Assets\Manager\color picker icon.png" />
+    <None Remove="Assets\one piece logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Animation\rocket 2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Manager\color picker icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

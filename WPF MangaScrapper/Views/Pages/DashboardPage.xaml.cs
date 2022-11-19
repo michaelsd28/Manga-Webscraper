@@ -1,6 +1,8 @@
 ﻿
 using LottieSharp.WPF;
+using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common.Interfaces;
@@ -39,7 +41,7 @@ namespace WPF_MangaScrapper.Views.Pages
         private async void BRefreshCH(object sender, System.Windows.RoutedEventArgs e)
         {
 
-                lottie = MangaScrapperUTILS.LottieAnimation("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Animation\\rocket 2.json");
+                lottie = MangaScrapperUTILS.LottieAnimation("Assets/Animation/rocket 2.json");
                 WrapPanel.Visibility = Visibility.Collapsed;
      
 
@@ -59,10 +61,17 @@ namespace WPF_MangaScrapper.Views.Pages
             GridContent.Children.Remove(lottie);
         }
 
-        private void  OnDoWorkAsync(object? sender, DoWorkEventArgs e)
+        private async void  OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
-            _ = WebscrapeService.UpdateChapterList();
-            //Task.Delay(2000).Wait(); // Pretend to work
+
+            await WebscrapeService.UpdateChapterList();
+     
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                DatabaseService.GetChaptersDB();
+            });
+
+
         }
     }
 

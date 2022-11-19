@@ -124,7 +124,7 @@ namespace WPF_MangaScrapper.Services
             //var BokuNoHeroLinks = await GetElementsAsync(BokuNoHero_Chapters, BokuNoHero_Chapters, "href");
 
             var searchList = new List<string> { "OnePieceList", "BorutoList", "BokuNoHeroList", "Mushoku" };
-            var collection = DatabaseService.getCollection();
+            var collection = DatabaseService.getCollection("ChapterList");
 
             foreach (var search in searchList)
             {
@@ -162,7 +162,14 @@ namespace WPF_MangaScrapper.Services
 
                         mangaList = new MangaList($"_{search}", Mushoku, MushokuLinks);
 
-                        collection.InsertOne( mangaList.ToBsonDocument());
+               
+
+                        await collection.ReplaceOneAsync
+                            (  
+                            filter: new BsonDocument("KeyName", $"_{search}"),     
+                            options: new ReplaceOptions { IsUpsert = true },
+                            replacement: mangaList.ToBsonDocument()
+                            );
 
 
                         Debug.WriteLine($"Insert in db -> mangaList:: {mangaList.ToJson()} * ");
