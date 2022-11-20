@@ -112,10 +112,11 @@ namespace WPF_MangaScrapper.Views.Pages
             lottie.Width= 200;
             lottie.Height = 200;
 
+            imgStackPanel.Children.Clear();
             imgStackPanel.Children.Add(lottie);
 
 
-                      BackgroundWorker worker = new BackgroundWorker();
+             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += OnDoWorkAsync;
             worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;
             worker.RunWorkerAsync();
@@ -133,7 +134,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
-            Task.Delay(1000).Wait(); // Pretend to work
+            //Task.Delay(1000).Wait(); // Pretend to work
             MangaChapter? chapter =  DatabaseService.GetMangaChapter(mangaTitle);
             await Helper.HandleNull(chapter: chapter, title: mangaTitle);
             var GalleryLinks = chapter.GalleryLinks;
@@ -170,14 +171,18 @@ namespace WPF_MangaScrapper.Views.Pages
             foreach (var link in galleryLinks)
             {
 
-                var goodLink = link.ToString().Replace("&", "&amp;");
+  
 
                 if (link != null && !link.ToString().Contains("./"))
                 {
 
-                    var image = new System.Windows.Controls.Image ();
-                    image.UseLayoutRounding = true;
-                    image.StretchDirection = StretchDirection.DownOnly;
+                    var image = new System.Windows.Controls.Image
+                    {
+                        UseLayoutRounding = true,
+                        StretchDirection = StretchDirection.DownOnly,
+                        Margin = new Thickness(20)
+                    };
+     
     
                     var fullFilePath = link.ToString();
 
