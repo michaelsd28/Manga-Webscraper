@@ -4,22 +4,22 @@
 //String BokuNoURL = "https://muheroacademia.com/";
 
 
-
-
-
+using LottieSharp.WPF;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Common.Interfaces;
 using WPF_MangaScrapper.Models;
 using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Windows;
+using System.Windows.Controls;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -101,43 +101,50 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
+        LottieAnimationView? lottie = null;
+        object? mangaTitle = null;
 
         internal async void DisplayChapter(object title)
         {
+      
+            mangaTitle = title;
+            lottie = UtilServices.LottieAnimation("Assets/Animation/rocket 2.json");
+            lottie.Width= 200;
+            lottie.Height = 200;
 
-            MangaChapter? chapter = DatabaseService.GetMangaChapter(title);
-            await Helper.HandleNull(chapter, title);
-
-            var GalleryLinks = chapter.GalleryLinks;
-
-
-
-
-
-            foreach (var link in GalleryLinks)
-            {
-
-                Debug.WriteLine($"GalleryLinks:: {link}");
-                if (link != null && !link.ToString().Contains("./"))
-                {
+            imgStackPanel.Children.Add(lottie);
 
 
-                    imgStackPanel.Children.Add(
-         new Image
-         {
-             Source = new BitmapImage { UriSource = new Uri(link.ToString()) },
-             UseLayoutRounding = true,
-             StretchDirection = StretchDirection.DownOnly
-         }
-         );
+                      BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += OnDoWorkAsync;
+            worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;
+            worker.RunWorkerAsync();
 
-                }
 
-            }
+
+
+    
         }
 
+        private void OnRunWorkerCompletedAsync(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            imgStackPanel.Children.Remove(lottie);
+        }
 
-
+        private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
+        {
+            Task.Delay(1000).Wait(); // Pretend to work
+            MangaChapter? chapter =  DatabaseService.GetMangaChapter(mangaTitle);
+            await Helper.HandleNull(chapter: chapter, title: mangaTitle);
+            var GalleryLinks = chapter.GalleryLinks;
+     
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+        
+                Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, imgStackPanel: imgStackPanel);
+            });
+         
+        }
     }
 
 
@@ -153,10 +160,38 @@ namespace WPF_MangaScrapper.Views.Pages
                 string currentKey = (string)GlobalStateService._state["CurrentKey"];
                 MangaCaller mangaCaller = DatabaseService.GetCaller("KeyName", currentKey);
                 await WebscrapeService.FetchMangaAsync(mangaCaller, title);
-                chapter = DatabaseService.GetMangaChapter(title);
+                chapter =  DatabaseService.GetMangaChapter(title);
 
             }
         }
 
+        internal static void AddImageToStack(IEnumerable<object>? galleryLinks, StackPanel imgStackPanel)
+        {
+            foreach (var link in galleryLinks)
+            {
+
+                var goodLink = link.ToString().Replace("&", "&amp;");
+
+                if (link != null && !link.ToString().Contains("./"))
+                {
+
+                    var image = new System.Windows.Controls.Image ();
+                    image.UseLayoutRounding = true;
+                    image.StretchDirection = StretchDirection.DownOnly;
+    
+                    var fullFilePath = link.ToString();
+
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
+                    bitmap.EndInit();
+
+                    image.Source = bitmap;
+                    imgStackPanel.Children.Add(image);
+
+                }
+
+            }
+        }
     }
 }

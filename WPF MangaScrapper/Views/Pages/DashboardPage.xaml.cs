@@ -38,7 +38,7 @@ namespace WPF_MangaScrapper.Views.Pages
         private async void BRefreshCH(object sender, System.Windows.RoutedEventArgs e)
         {
 
-                lottie = MangaScrapperUTILS.LottieAnimation("Assets/Animation/rocket 2.json");
+                lottie = UtilServices.LottieAnimation("Assets/Animation/rocket 2.json");
                 WrapPanel.Visibility = Visibility.Collapsed;
      
 
@@ -77,26 +77,7 @@ public class MangaScrapperUTILS
 {
 
 
-    public static LottieAnimationView LottieAnimation(string fileName) {
 
-
-        var lottie = new LottieAnimationView {
-            Width = 180,
-            Height = 180,
-            HorizontalAlignment = HorizontalAlignment.Center ,
-            VerticalAlignment =  VerticalAlignment.Center,
-            AutoPlay =  true,
-            FileName = fileName,
-            RepeatCount = -1,
-            Name = "LottieAnimation"
-        };
-
-
-        return lottie;
-
-
-
-    }
 
     public static void FullScreenINIT(DashboardPage DashboardPageCONTEXT)
     {

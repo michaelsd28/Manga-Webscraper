@@ -13,11 +13,36 @@ using WPF_MangaScrapper.Views.Pages;
 using WPF_MangaScrapper.Views.Windows;
 using Wpf.Ui.Extensions;
 using WPF_MangaScrapper.ViewModels;
+using LottieSharp.WPF;
 
 namespace WPF_MangaScrapper.Services
 {
     internal class UtilServices
     {
+
+
+        public static LottieAnimationView LottieAnimation(string fileName)
+        {
+
+
+            var lottie = new LottieAnimationView
+            {
+                Width = 180,
+                Height = 180,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                AutoPlay = true,
+                FileName = fileName,
+                RepeatCount = -1,
+                Name = "LottieAnimation"
+            };
+
+
+            return lottie;
+
+
+
+        }
 
         public static BitmapImage ByteToBitmapIMG(byte[] imageData)
         {

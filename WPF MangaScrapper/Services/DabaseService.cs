@@ -14,6 +14,7 @@ using System.Diagnostics;
 using Wpf.Ui.Controls;
 using System.Threading.Tasks;
 using WPF_MangaScrapper.Services;
+using LottieSharp.WPF;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -54,11 +55,11 @@ namespace WPF_MangaScrapper.Services
 
         }
 
-        internal static MangaChapter?GetMangaChapter(object title)
+        internal static  MangaChapter GetMangaChapter(object title)
         {
             var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
     
-            var chapterColl = collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefault();
+            var chapterColl =  collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefault();
 
             MangaChapter? chapter = null;
             if (chapterColl!= null)
@@ -228,6 +229,7 @@ internal class DatabaseServiceUTILS
     public static List<MangaList> GetListInventory()
     {
 
+ 
 
         var list = new List<MangaList>();
         var collection = MongoCollection("ChapterList");
