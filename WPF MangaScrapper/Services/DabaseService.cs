@@ -24,6 +24,19 @@ namespace WPF_MangaScrapper.Services
 
         static string ConnectionString = "mongodb://localhost:6082";
 
+        internal static MangaCaller GetCaller(string key, string value)
+        {
+            var collection = DatabaseServiceUTILS.MongoCollection("ChaptersFetcher");
+            var filter = DatabaseServiceUTILS.BSONFilter( key,  value);
+            var callerBSON =  collection.Find(filter).First();
+
+            //Debug.WriteLine($"GetCaller:: {callerBSON.ToJson()}");
+            callerBSON.Remove("_id");
+            var caller = JsonSerializer.Deserialize<MangaCaller>(callerBSON.ToString());
+
+            return caller;
+        }
+
         internal static void GetChaptersDB()
         {
 
@@ -39,6 +52,41 @@ namespace WPF_MangaScrapper.Services
                 Debug.WriteLine($"Exception ex -> GetChaptersDB:: {ex.Message}");
             }
 
+        }
+
+        internal static MangaChapter?GetMangaChapter(object title)
+        {
+            var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
+    
+            var chapterColl = collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefault();
+
+            MangaChapter? chapter = null;
+            if (chapterColl!= null)
+            {
+                chapterColl.Remove("_id");
+                chapter = JsonSerializer.Deserialize<MangaChapter?>(chapterColl.ToString());
+            }
+       
+      
+
+     
+           
+            return chapter;
+        }
+
+
+
+        internal static async Task InsertMangaChapterAsync(MangaChapter chapter)
+        {
+           var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
+            var filter = DatabaseServiceUTILS.BSONFilter("MangaKey", chapter.MangaKey);
+
+            await collection.ReplaceOneAsync
+          (
+          filter: filter,
+          options: new ReplaceOptions { IsUpsert = true },
+          replacement: chapter.ToBsonDocument()
+          );
         }
 
         internal static async void InsertMangaFetcher(MangaCaller mangaFetch)
@@ -104,29 +152,20 @@ internal class DatabaseServiceUTILS
     {
 
 
-
-
-
-
-
         foreach (var manga in mangaList)
         {
-            //var cardInfo = GlobalStateService.ChapterCallerDic[manga.KeyName];
+            //add list to global state
+            GlobalStateService.ChapterListDic[manga.KeyName] = manga;
+
+         
 
             MangaCard mangaCard = new MangaCard
             {
-
-
 
                 BackgroundPoster = manga.PosterLink,
                 CardColor = manga.ColorTheme,
                 TopIMG = manga.LogoIMG,
                 KeyName = manga.KeyName
-
-                //BackgroundPoster = "https://i.pinimg.com/originals/eb/85/c4/eb85c4376b474030b80afa80ad1cd13a.jpg",
-                //CardColor = "#1A0101",
-                //TopIMG = "/Assets/one piece logo.png",
-                //KeyName = manga.KeyName
 
             };
 
@@ -138,9 +177,15 @@ internal class DatabaseServiceUTILS
 
             foreach (object title in manga.Titles)
             {
-
-                var button = new System.Windows.Controls.Button { Content = title, Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Center };
-                button.Click += (sender, EventArgs) => { NavigateToGallery(sender, EventArgs, manga); };
+       
+                var button = new System.Windows.Controls.Button 
+                { 
+                    Content = title, 
+                    Margin = new Thickness(10), 
+                    HorizontalAlignment = HorizontalAlignment.Center 
+                };
+                GlobalStateService._state["CurrentKey"] = manga.KeyName;
+                button.Click += (sender, EventArgs) => { NavigateToGallery(sender, EventArgs, manga, title); };
                 mangaCard.ChaptersSTACKPANEL.Children.Add(button);
             }
 
@@ -171,9 +216,11 @@ internal class DatabaseServiceUTILS
 
     //}
 
-    private static void NavigateToGallery(object sender, RoutedEventArgs e, MangaList manga)
+    private static void NavigateToGallery(object sender, RoutedEventArgs e, MangaList manga, object title)
     {
+
         MainWindow.mainWindowCONTEXT.Navigate(typeof(GalleryPage));
+        GalleryPage.GalleryPageCONTEXT.DisplayChapter(title);
     }
 
 
@@ -185,6 +232,8 @@ internal class DatabaseServiceUTILS
         var list = new List<MangaList>();
         var collection = MongoCollection("ChapterList");
         var documents = collection.Find(new BsonDocument()).ToList();
+
+        var state = GlobalStateService.ChapterListDic;
 
 
 

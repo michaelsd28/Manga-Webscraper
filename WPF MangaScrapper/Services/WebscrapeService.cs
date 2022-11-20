@@ -11,6 +11,7 @@ using WPF_MangaScrapper.Models;
 using System;
 using System.Threading;
 using System.Text.Json;
+using MongoDB.Driver.Core.Misc;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -81,7 +82,7 @@ namespace WPF_MangaScrapper.Services
 
                 if (attribute == null)
                 {
-                    elementsSelected = document.QuerySelectorAll(query).Select(m => m.TextContent.Replace("\n", "").Replace("                       ", "")).Take(50);
+                    elementsSelected = document.QuerySelectorAll(query).Select(m => m.TextContent).Take(50);
                 }
                 else
                 {
@@ -122,7 +123,7 @@ namespace WPF_MangaScrapper.Services
 
                 document.Remove("_id");
                 var current = JsonSerializer.Deserialize<MangaCaller>(document.ToString());
-        
+
                 mangaCallerList.Add(current);
             }
 
@@ -139,9 +140,9 @@ namespace WPF_MangaScrapper.Services
 
                 MangaList? mangaList = new MangaList
                     (
-                   keyName: mangaCaller.KeyName, 
-                   titles:  titles, 
-                    links:callerLinks , 
+                   keyName: mangaCaller.KeyName,
+                   titles: titles,
+                    links: callerLinks,
                     colorTheme: mangaCaller.ColorTheme,
                     posterLink: mangaCaller.PosterLink,
                     logoIMG: mangaCaller.LogoIMG
@@ -161,6 +162,52 @@ namespace WPF_MangaScrapper.Services
 
 
 
+        }
+
+        internal static async Task  FetchMangaAsync(MangaCaller mangaCaller, object title)
+        {
+            string KeyName = (string)GlobalStateService._state["CurrentKey"];
+            MangaList? mangaList = GlobalStateService.ChapterListDic[KeyName];
+            int index = mangaList.Titles.ToList().IndexOf(title);
+            var link = mangaList.Links.ToList()[index].ToString();
+
+
+            //Debug.WriteLine
+            //    (
+            //    $"FetchMangaAsync:: index-> {index} * " +
+            //    $"title:: {title.ToString()} * " +
+            //    //$"mangaList-> {mangaList.ToJson()} * " +
+            //    $"link-> {link} * " +
+            //    //$"mangaList.Titles.ToList()-> {mangaList.Titles.ToList().ToJson()}" +
+            //    $""
+            //    );
+
+            var GalleryLinks = await GetElementsAsync
+                (
+                url: link,
+                query: mangaCaller.GalleryQuery,
+                attribute: "src"
+                );
+
+        //links
+        //        1
+        //        2
+        //        3
+        //        4
+
+            MangaChapter chapter = new MangaChapter
+                (
+                mangaKey: KeyName,
+                title: title.ToString(),
+                link: link,
+                galleryLinks: GalleryLinks
+                );
+
+            //Debug.WriteLine($"FetchMangaAsync:: {chapter.ToJson()}");
+
+            await DatabaseService.InsertMangaChapterAsync(chapter);
+
+        
         }
 
         //    public static async Task UpdateChapterList()

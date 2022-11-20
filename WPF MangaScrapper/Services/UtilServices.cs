@@ -52,11 +52,11 @@ namespace WPF_MangaScrapper.Services
                 mainWindow.RootNavigation.Visibility = Visibility.Collapsed;
                 mainWindow.Navigate(typeof(GalleryPage));
                 mainWindow.uiTitleBar.Visibility = Visibility.Collapsed;
-                GalleryPage.galleryPageCONTEXT.FullScreenButton.Visibility = Visibility.Visible;
+                GalleryPage.GalleryPageCONTEXT.FullScreenButton.Visibility = Visibility.Visible;
 
 
 
-                GalleryPage.galleryPageCONTEXT.MangaGalleryGrid.Background = new SolidColorBrush(Color.FromRgb(16, 16, 18));
+                GalleryPage.GalleryPageCONTEXT.MangaGalleryGrid.Background = new SolidColorBrush(Color.FromRgb(16, 16, 18));
 
                 mainWindow.MainWindowRoot.WindowStyle = WindowStyle.None;
                 mainWindow.MainWindowRoot.WindowState = WindowState.Maximized;
@@ -64,12 +64,12 @@ namespace WPF_MangaScrapper.Services
 
             }
             else {
-                GalleryPage.galleryPageCONTEXT.FullScreenButton.Visibility = Visibility.Collapsed;
+                GalleryPage.GalleryPageCONTEXT.FullScreenButton.Visibility = Visibility.Collapsed;
                 DashboardPage.DashboardPageCONTEXT.FullScreenButton.Visibility = Visibility.Collapsed;
                 mainWindow.RootNavigation.Visibility = Visibility.Visible;
                 mainWindow.uiTitleBar.Visibility = Visibility.Visible;
 
-                GalleryPage.galleryPageCONTEXT.MangaGalleryGrid.Background = new SolidColorBrush(Colors.Transparent);
+                GalleryPage.GalleryPageCONTEXT.MangaGalleryGrid.Background = new SolidColorBrush(Colors.Transparent);
 
                 mainWindow.MainWindowRoot.WindowStyle = WindowStyle.SingleBorderWindow;
                 mainWindow.MainWindowRoot.WindowState = WindowState.Normal;
