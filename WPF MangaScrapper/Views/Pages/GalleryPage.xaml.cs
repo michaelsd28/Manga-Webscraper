@@ -108,12 +108,13 @@ namespace WPF_MangaScrapper.Views.Pages
         {
       
             mangaTitle = title;
-            lottie = UtilServices.LottieAnimation("Assets/Animation/rocket 2.json");
+            lottie = UtilServices.LottieAnimation("Assets/Animation/book read.json");
             lottie.Width= 200;
             lottie.Height = 200;
 
-            imgStackPanel.Children.Clear();
-            imgStackPanel.Children.Add(lottie);
+            GalleryContent.Visibility= Visibility.Collapsed;
+            MangaGalleryGrid.Children.Add(lottie);
+
 
 
              BackgroundWorker worker = new BackgroundWorker();
@@ -129,21 +130,28 @@ namespace WPF_MangaScrapper.Views.Pages
 
         private void OnRunWorkerCompletedAsync(object? sender, RunWorkerCompletedEventArgs e)
         {
-            imgStackPanel.Children.Remove(lottie);
+            GalleryContent.Visibility = Visibility.Visible;
+            MangaGalleryGrid.Children.Remove(lottie);
+           
         }
 
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
             //Task.Delay(1000).Wait(); // Pretend to work
-            MangaChapter? chapter =  DatabaseService.GetMangaChapter(mangaTitle);
+            MangaChapter? chapter =   DatabaseService.GetMangaChapter(mangaTitle);
             await Helper.HandleNull(chapter: chapter, title: mangaTitle);
-            var GalleryLinks = chapter.GalleryLinks;
-     
-            Application.Current.Dispatcher.Invoke(delegate
-            {
-        
-                Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, imgStackPanel: imgStackPanel);
-            });
+            if (chapter!= null) { 
+                var GalleryLinks = chapter.GalleryLinks;
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+
+                    Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, imgStackPanel: imgStackPanel);
+                });
+
+            }
+         
+
+
          
         }
     }
@@ -161,18 +169,21 @@ namespace WPF_MangaScrapper.Views.Pages
                 string currentKey = (string)GlobalStateService._state["CurrentKey"];
                 MangaCaller mangaCaller = DatabaseService.GetCaller("KeyName", currentKey);
                 await WebscrapeService.FetchMangaAsync(mangaCaller, title);
-                chapter =  DatabaseService.GetMangaChapter(title);
+                chapter = DatabaseService.GetMangaChapter(title);
+       
+          
 
             }
         }
 
         internal static void AddImageToStack(IEnumerable<object>? galleryLinks, StackPanel imgStackPanel)
         {
+
+            imgStackPanel.Children.Clear();
+
+
             foreach (var link in galleryLinks)
             {
-
-  
-
                 if (link != null && !link.ToString().Contains("./"))
                 {
 

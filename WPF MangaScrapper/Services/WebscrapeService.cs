@@ -168,19 +168,23 @@ namespace WPF_MangaScrapper.Services
         {
             string KeyName = (string)GlobalStateService._state["CurrentKey"];
             MangaList? mangaList = GlobalStateService.ChapterListDic[KeyName];
-            int index = mangaList.Titles.ToList().IndexOf(title);
-            var link = mangaList.Links.ToList()[index].ToString();
+            var titleList = mangaList.Titles.ToList();
+            int index = titleList.IndexOf(title);
+            var mangaLinks = mangaList.Links.ToList();
+            var link = mangaLinks[index].ToString();
 
 
-            //Debug.WriteLine
-            //    (
-            //    $"FetchMangaAsync:: index-> {index} * " +
-            //    $"title:: {title.ToString()} * " +
-            //    //$"mangaList-> {mangaList.ToJson()} * " +
-            //    $"link-> {link} * " +
-            //    //$"mangaList.Titles.ToList()-> {mangaList.Titles.ToList().ToJson()}" +
-            //    $""
-            //    );
+            Debug.WriteLine
+                (
+                $"FetchMangaAsync:: index-> {index} * " +
+                $"title:: {title.ToString()} * " +
+                $"mangaList.Titles:: {mangaList.Titles.ToList()[0]} * " +
+                $"mangaLinks:: {mangaLinks.ToJson()} * " +
+                //$"mangaList-> {mangaList.ToJson()} * " +
+                //$"link-> {link} * " +
+                //$"mangaList.Titles.ToList()-> {mangaList.Titles.ToList().ToJson()}" +
+                $""
+                );
 
             var GalleryLinks = await GetElementsAsync
                 (
@@ -189,11 +193,7 @@ namespace WPF_MangaScrapper.Services
                 attribute: "src"
                 );
 
-        //links
-        //        1
-        //        2
-        //        3
-        //        4
+
 
             MangaChapter chapter = new MangaChapter
                 (
@@ -207,7 +207,7 @@ namespace WPF_MangaScrapper.Services
 
             await DatabaseService.InsertMangaChapterAsync(chapter);
 
-        
+
         }
 
         //    public static async Task UpdateChapterList()

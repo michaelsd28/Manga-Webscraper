@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
+    <Content Include="Assets\Animation\book read.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Dashboard\galleryIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -35,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Animation\book read.json" />
     <None Remove="Assets\Animation\rocket 2.json" />
     <None Remove="Assets\applicationIcon-1024.png" />
     <None Remove="Assets\applicationIcon-256.png" />

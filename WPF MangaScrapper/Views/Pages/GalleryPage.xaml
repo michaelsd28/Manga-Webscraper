@@ -15,12 +15,13 @@
 
     <ScrollViewer  VerticalScrollBarVisibility="Auto" >
 
-
+ 
 
         <Grid    x:Name="MangaGalleryGrid"    >
-           
-        
-        <Grid.RowDefinitions>
+
+            <Grid x:Name="GalleryContent">
+            
+            <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="10*"/>
@@ -134,7 +135,7 @@
 
            
         </Grid>
-
+        </Grid>
     </ScrollViewer>
 
 </ui:UiPage>
