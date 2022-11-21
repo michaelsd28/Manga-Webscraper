@@ -13,11 +13,50 @@
        
             >
 
-    <ScrollViewer  VerticalScrollBarVisibility="Auto" >
+
+
+    <ScrollViewer      x:Name="scrollviewer"    CanContentScroll="True"  VerticalScrollBarVisibility="Auto" >
 
  
 
         <Grid    x:Name="MangaGalleryGrid"    >
+
+
+            <!--<Grid>
+                <ScrollViewer MouseDown="ScrollViewer_MouseDown" MouseUp="ScrollViewer_MouseUp" MouseMove="ScrollViewer_MouseMove">
+                    <StackPanel x:Name="dynamicLongStackPanel">
+
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+                <Canvas x:Name="topLayer" IsHitTestVisible="False" />
+            </Grid>-->
+
+
 
             <Grid x:Name="GalleryContent">
             

@@ -10,6 +10,8 @@ namespace WPF_MangaScrapper.Services
 
         public static BsonDocument? _state = new BsonDocument();
 
+        public static Dictionary<string,MangaList>? _MangaList =   new Dictionary<string, MangaList>();
+
         private static GlobalStateService? globalStateService;
 
         private GlobalStateService() { }

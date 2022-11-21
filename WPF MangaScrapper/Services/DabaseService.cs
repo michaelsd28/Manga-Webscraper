@@ -253,6 +253,7 @@ internal class DatabaseServiceUTILS
             {
                 current.Remove("_id");
                 var mangaList = JsonSerializer.Deserialize<MangaList>(current.ToString());
+                GlobalStateService._MangaList[mangaList.KeyName] = mangaList;
                 list.Add(mangaList);
             }
         }

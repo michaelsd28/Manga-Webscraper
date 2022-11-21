@@ -20,6 +20,8 @@ using WPF_MangaScrapper.Models;
 using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Linq;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -34,6 +36,7 @@ namespace WPF_MangaScrapper.Views.Pages
         }
 
         public static GalleryPage GalleryPageCONTEXT { get; set; }
+        object? mangaTitle = null;
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
             ViewModel = viewModel;
@@ -46,6 +49,8 @@ namespace WPF_MangaScrapper.Views.Pages
         private async void PreviusButton(object sender, System.Windows.RoutedEventArgs e)
         {
 
+
+            #region gridfs example
             //MongoClient client = new MongoClient("mongodb://localhost:6082");
             //IMongoDatabase database = client.GetDatabase("Images");
             //IGridFSBucket bucket = new GridFSBucket(database);
@@ -66,8 +71,21 @@ namespace WPF_MangaScrapper.Views.Pages
 
             //await WebscrapeService.GetElementsAsync(OnePiece_Chapters, BorutoQuery);
 
+            #endregion
+
+
+  
+
+
+            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+            MangaList mangaList = GlobalStateService._MangaList[mangaKey];
+            var titleList = mangaList.Titles.ToList();
+            int index = titleList.IndexOf(mangaTitle);
+            var prevTitle = titleList[index +1];
+            DisplayChapter(prevTitle);
 
         }
+
 
 
 
@@ -102,8 +120,6 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
         LottieAnimationView? lottie = null;
-        object? mangaTitle = null;
-
         internal async void DisplayChapter(object title)
         {
       
@@ -132,29 +148,47 @@ namespace WPF_MangaScrapper.Views.Pages
         {
             GalleryContent.Visibility = Visibility.Visible;
             MangaGalleryGrid.Children.Remove(lottie);
-           
+    
         }
 
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
-            //Task.Delay(1000).Wait(); // Pretend to work
-            MangaChapter? chapter =   DatabaseService.GetMangaChapter(mangaTitle);
+
+          
+             //Task.Delay(1000).Wait(); // Pretend to work
+             MangaChapter? chapter =   DatabaseService.GetMangaChapter(mangaTitle);
             await Helper.HandleNull(chapter: chapter, title: mangaTitle);
             if (chapter!= null) { 
                 var GalleryLinks = chapter.GalleryLinks;
                 Application.Current.Dispatcher.Invoke(delegate
                 {
 
+                    
                     Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, imgStackPanel: imgStackPanel);
                 });
-
             }
-         
-
-
-         
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
 
 
     internal class Helper
