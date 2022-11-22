@@ -169,6 +169,7 @@ namespace WPF_MangaScrapper.Services
         internal static async Task  FetchMangaAsync(MangaCaller mangaCaller, object title)
         {
             string KeyName = (string)GlobalStateService._state["CurrentKey"];
+            //// get manga list from db
             MangaList? mangaList = GlobalStateService.ChapterListDic[KeyName];
             var titleList = mangaList.Titles.ToList();
             int index = titleList.IndexOf(title);

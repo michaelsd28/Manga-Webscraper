@@ -22,6 +22,8 @@ using WPF_MangaScrapper.Views.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
+using System.Drawing;
+using System.Windows.Media;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -37,6 +39,8 @@ namespace WPF_MangaScrapper.Views.Pages
 
         public static GalleryPage GalleryPageCONTEXT { get; set; }
         object? mangaTitle = null;
+        int boundIndex = 0;
+        int boundCapacity = 0;
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
             ViewModel = viewModel;
@@ -74,16 +78,32 @@ namespace WPF_MangaScrapper.Views.Pages
             #endregion
 
 
-  
+            try
+            {
+
+               
 
 
-            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
-            MangaList mangaList = GlobalStateService._MangaList[mangaKey];
-            var titleList = mangaList.Titles.ToList();
-            int index = titleList.IndexOf(mangaTitle);
-            var prevTitle = titleList[index +1];
-            DisplayChapter(prevTitle);
+                string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+                MangaList mangaList = GlobalStateService._MangaList[mangaKey];
+                var titleList = mangaList.Titles.ToList();
+                int index = titleList.IndexOf(mangaTitle);
+                boundIndex = index+1;
+                boundCapacity = titleList.Count;
 
+
+                var prevTitle = titleList[index + 1];
+                var currentTitle = titleList[index];
+                Debug.WriteLine($"titleList[{index} + 1]:: {index} ***  prevTitle:: {prevTitle}  **** currentTitle:: {currentTitle}");
+
+                DisplayChapter(prevTitle);
+
+                Helper.CheckButtonStatus(BPrev, BNext, boundIndex, boundCapacity);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PreviusButton:: {ex.Message}");
+            }
         }
 
 
@@ -93,23 +113,36 @@ namespace WPF_MangaScrapper.Views.Pages
         private void NextButton(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            MongoClient client = new MongoClient("mongodb://localhost:6082");
-            IMongoDatabase database = client.GetDatabase("Images");
-            IGridFSBucket bucket = new GridFSBucket(database);
+            #region gridfs example
+            //MongoClient client = new MongoClient("mongodb://localhost:6082");
+            //IMongoDatabase database = client.GetDatabase("Images");
+            //IGridFSBucket bucket = new GridFSBucket(database);
 
-
-
-
-
-            ObjectId id = new ObjectId("63742278c91007b582fb4436");
+            //ObjectId id = new ObjectId("63742278c91007b582fb4436");
             ///63743ccb4707489c9fc9c8b0
-            var byteIMG = bucket.DownloadAsBytes(id);
+            //var byteIMG = bucket.DownloadAsBytes(id);
 
 
-            for (int x = 0; x < 20; x++)
-            {
-                imgStackPanel.Children.Add(new System.Windows.Controls.Image { Source = UtilServices.ByteToBitmapIMG(byteIMG), UseLayoutRounding = true, StretchDirection = StretchDirection.DownOnly });
-            }
+            //for (int x = 0; x < 20; x++)
+            //{
+            //    imgStackPanel.Children.Add(new System.Windows.Controls.Image { Source = UtilServices.ByteToBitmapIMG(byteIMG), UseLayoutRounding = true, StretchDirection = StretchDirection.DownOnly });
+            //}
+            #endregion
+
+
+            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+            MangaList mangaList = GlobalStateService._MangaList[mangaKey];
+            var titleList = mangaList.Titles.ToList();
+            int index = titleList.IndexOf(mangaTitle);
+            boundIndex = index-1;
+            boundCapacity = titleList.Count;
+
+            var nextTitle = titleList[index - 1];
+            var currentTitle = titleList[index];
+            Debug.WriteLine($"titleList[{index} - 1]:: {index} ***  nextTitle:: {nextTitle}  **** currentTitle:: {currentTitle}");
+
+            DisplayChapter(nextTitle);
+            Helper.CheckButtonStatus(BPrev, BNext, boundIndex, boundCapacity);
 
         }
 
@@ -119,21 +152,20 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-        LottieAnimationView? lottie = null;
+        LottieAnimationView? lottie = new LottieAnimationView { Width = 200, Height = 200 };
         internal async void DisplayChapter(object title)
         {
-      
+
             mangaTitle = title;
             lottie = UtilServices.LottieAnimation("Assets/Animation/book read.json");
-            lottie.Width= 200;
-            lottie.Height = 200;
 
-            GalleryContent.Visibility= Visibility.Collapsed;
+
+            GalleryContent.Visibility = Visibility.Collapsed;
             MangaGalleryGrid.Children.Add(lottie);
 
 
 
-             BackgroundWorker worker = new BackgroundWorker();
+            BackgroundWorker worker = new BackgroundWorker { };
             worker.DoWork += OnDoWorkAsync;
             worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;
             worker.RunWorkerAsync();
@@ -141,50 +173,34 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-    
+
         }
 
         private void OnRunWorkerCompletedAsync(object? sender, RunWorkerCompletedEventArgs e)
         {
             GalleryContent.Visibility = Visibility.Visible;
             MangaGalleryGrid.Children.Remove(lottie);
-    
+
         }
 
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
 
-          
-             //Task.Delay(1000).Wait(); // Pretend to work
-             MangaChapter? chapter =   DatabaseService.GetMangaChapter(mangaTitle);
+
+            //Task.Delay(1000).Wait(); // Pretend to work
+            MangaChapter? chapter = DatabaseService.GetMangaChapter(mangaTitle);
             await Helper.HandleNull(chapter: chapter, title: mangaTitle);
-            if (chapter!= null) { 
+            if (chapter != null)
+            {
                 var GalleryLinks = chapter.GalleryLinks;
                 Application.Current.Dispatcher.Invoke(delegate
                 {
 
-                    
+
                     Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, imgStackPanel: imgStackPanel);
                 });
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
@@ -195,6 +211,24 @@ namespace WPF_MangaScrapper.Views.Pages
     {
 
 
+        public static void CheckButtonStatus(Button prev, Button next, int boundIndex, int boundCapacity)
+        {
+
+            Debug.WriteLine($"CheckButtonStatus:: boundIndex -> {boundIndex}  *** boundCapacity-> {boundCapacity} |{boundIndex} >= {boundCapacity} {-1} {boundIndex >= boundCapacity - 1}|");
+
+            if (boundIndex == 0)
+                next.IsEnabled = false;
+            else
+                next.IsEnabled = true;
+
+            if (boundIndex >=  boundCapacity-1)
+                prev.IsEnabled = false;
+            else
+                prev.IsEnabled = true;
+
+
+        }
+
 
         public static async Task HandleNull(MangaChapter chapter, object title)
         {
@@ -204,8 +238,8 @@ namespace WPF_MangaScrapper.Views.Pages
                 MangaCaller mangaCaller = DatabaseService.GetCaller("KeyName", currentKey);
                 await WebscrapeService.FetchMangaAsync(mangaCaller, title);
                 chapter = DatabaseService.GetMangaChapter(title);
-       
-          
+
+
 
             }
         }
@@ -227,8 +261,8 @@ namespace WPF_MangaScrapper.Views.Pages
                         StretchDirection = StretchDirection.DownOnly,
                         Margin = new Thickness(20)
                     };
-     
-    
+
+
                     var fullFilePath = link.ToString();
 
                     BitmapImage bitmap = new BitmapImage();

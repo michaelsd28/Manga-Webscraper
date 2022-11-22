@@ -80,7 +80,7 @@ namespace WPF_MangaScrapper.Services
         internal static async Task InsertMangaChapterAsync(MangaChapter chapter)
         {
            var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
-            var filter = DatabaseServiceUTILS.BSONFilter("MangaKey", chapter.MangaKey);
+            var filter = DatabaseServiceUTILS.BSONFilter("Title", chapter.Title);
 
             await collection.ReplaceOneAsync
           (
