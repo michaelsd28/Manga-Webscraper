@@ -85,12 +85,12 @@
 
         <!--#region Combobox -->
             <Grid Margin="20" Grid.Row="1" MaxWidth="300">
-            <ComboBox SelectedIndex="1">
+            <ComboBox x:Name="ComboBox" SelectedIndex="1">
+                <!--<ComboBoxItem Content="One piece chapter 1034" />
                 <ComboBoxItem Content="One piece chapter 1034" />
                 <ComboBoxItem Content="One piece chapter 1034" />
                 <ComboBoxItem Content="One piece chapter 1034" />
-                <ComboBoxItem Content="One piece chapter 1034" />
-                <ComboBoxItem Content="One piece chapter 1034" />
+                <ComboBoxItem Content="One piece chapter 1034" />-->
             </ComboBox>
         </Grid>
             <!--#endregion-->
@@ -106,14 +106,14 @@
                         <DropShadowEffect BlurRadius="10" />
                     </Border.Effect>
                     <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button x:Name="BPrev" Click="PreviusButton"  >
+                        <Button x:Name="BPrev" Click="PreviousButton"  >
                             <ui:SymbolIcon Symbol="ChevronLeft20"/>
                         </Button>
                         <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
                             <Border.Background>
                                 <SolidColorBrush Opacity="0.6" Color="#292b30"/>
                             </Border.Background>
-                            <TextBlock FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
+                            <TextBlock x:Name="TBlockMangaTitle" FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
                         </Border>
 
                         <Button x:Name="BNext"  Click="NextButton" >
@@ -154,7 +154,7 @@
                         <DropShadowEffect BlurRadius="10" />
                     </Border.Effect>
                     <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button Click="PreviusButton"  >
+                        <Button Click="PreviousButton"  >
                             <ui:SymbolIcon Symbol="ChevronLeft20"/>
                         </Button>
                         <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
