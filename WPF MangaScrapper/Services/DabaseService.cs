@@ -47,6 +47,7 @@ namespace WPF_MangaScrapper.Services
                 var chaperList = DatabaseServiceUTILS.GetListInventory();
 
                 DatabaseServiceUTILS.UpdateDashBoard(chaperList);
+                chaperList.Clear();
             }
             catch (Exception ex)
             {
@@ -153,6 +154,8 @@ internal class DatabaseServiceUTILS
     {
 
 
+
+
         foreach (var manga in mangaList)
         {
             //add list to global state
@@ -243,6 +246,7 @@ internal class DatabaseServiceUTILS
         {
 
 
+    
 
             var filter = new BsonDocument { { "KeyName", document["KeyName"] } };
 

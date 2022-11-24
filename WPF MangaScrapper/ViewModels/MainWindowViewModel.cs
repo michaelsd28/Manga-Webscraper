@@ -6,6 +6,7 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using WPF_MangaScrapper.Services;
 
 namespace WPF_MangaScrapper.ViewModels
 {
@@ -42,8 +43,7 @@ namespace WPF_MangaScrapper.ViewModels
                     Content = new System.Windows.Controls.TextBlock{ Text = "Home", FontSize= 12},
                     PageTag = "dashboard",
                     PageType = typeof(Views.Pages.DashboardPage),
-                      Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\boruto-uzumaki-icon.png"))
-
+                    Image =UIStore.NavICONS["BorutoICON"]
                 },
                 //new NavigationItem()
                 //{
@@ -57,14 +57,15 @@ namespace WPF_MangaScrapper.ViewModels
                     Content = new System.Windows.Controls.TextBlock{ Text = "Gallery", FontSize= 12},
                     PageTag = "gallery",
                     PageType = typeof(Views.Pages.GalleryPage),
-                         Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Dashboard\\galleryIcon.png"))
+                         Image = UIStore.NavICONS["GalleryICON"]
+
                 },
                  new NavigationItem()
                 {
                     Content = new System.Windows.Controls.TextBlock{ Text = "Admin", FontSize= 12},
                     PageTag = "manager",
                     PageType = typeof(Views.Pages.MangaManager),
-                         Image =new BitmapImage (new Uri("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Dashboard\\magicStick icon.png"))
+                         Image =UIStore.NavICONS["ManagerICON"]
                 }
             };
 

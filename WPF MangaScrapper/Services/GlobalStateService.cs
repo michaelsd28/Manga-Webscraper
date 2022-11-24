@@ -8,19 +8,20 @@ namespace WPF_MangaScrapper.Services
     internal class GlobalStateService
     {
 
-        public static BsonDocument? _state = new BsonDocument();
+        public static  BsonDocument _state = new BsonDocument();
 
-        public static Dictionary<string,MangaList>? _MangaList =   new Dictionary<string, MangaList>();
+        public static  Dictionary<string, MangaList>? _MangaList { get; set; } = new Dictionary<string, MangaList>();
 
-        private static GlobalStateService? globalStateService;
+        public static GlobalStateService globalStateService { get; set; }  
 
         private GlobalStateService() {   }
 
-        public static Dictionary<string,MangaCaller> ChapterCallerDic { get;  set; } = new Dictionary<string,MangaCaller>();
-        public static Dictionary<string, MangaList> ChapterListDic { get;  set; }  = new Dictionary<string, MangaList>();
+        public static Dictionary<string, MangaCaller> ChapterCallerDic { get; set; } = new Dictionary<string, MangaCaller>();
+        public static  Dictionary<string, MangaList> ChapterListDic { get; set; } = new Dictionary<string, MangaList> ();
 
         public static GlobalStateService GetInstance() {
 
+      
 
             if (globalStateService == null)
             { 

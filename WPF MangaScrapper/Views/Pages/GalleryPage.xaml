@@ -43,7 +43,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"> 
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Manga gallery" FontSize="22"/>
                     <ui:Button Margin="10"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
-                        <Image Width="30"  Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\boruto-uzumaki-icon.png"/>
+                            <Image Width="30"  Source="\Assets\Components\boruto icon.png"/>
                     </ui:Button>
                 </StackPanel>
                 <components:FullScreenButton Margin="0 0 0 80" HorizontalAlignment="Right" x:Name="FullScreenButton"  />
@@ -53,7 +53,7 @@
 
         <!--#region Combobox -->
             <Grid Margin="20" Grid.Row="1" MaxWidth="300">
-            <ComboBox x:Name="ComboBox" SelectedIndex="1">
+            <ComboBox  x:Name="ComboBox" SelectedIndex="1">
                 <!--<ComboBoxItem Content="One piece chapter 1034" />
                 <ComboBoxItem Content="One piece chapter 1034" />
                 <ComboBoxItem Content="One piece chapter 1034" />
@@ -81,7 +81,7 @@
                             <Border.Background>
                                 <SolidColorBrush Opacity="0.6" Color="#292b30"/>
                             </Border.Background>
-                            <TextBlock x:Name="TBlockMangaTitle" FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
+                                <TextBlock MaxWidth="250" ToolTip="{Binding Text,ElementName=TBlockMangaTitle}" TextTrimming="CharacterEllipsis" x:Name="TBlockMangaTitle" FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
                         </Border>
 
                         <Button x:Name="BNext"  Click="NextButton" >

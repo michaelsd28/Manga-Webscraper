@@ -12,6 +12,7 @@ using System;
 using System.Threading;
 using System.Text.Json;
 using MongoDB.Driver.Core.Misc;
+using System.Text.RegularExpressions;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -52,7 +53,10 @@ namespace WPF_MangaScrapper.Services
         readonly static string BokuGallery_Query = ".entry-content div.separator img";
         #endregion
 
-        //.su-expand-content ul.su-posts li.su-post a
+        static string RemoveSpaces(string value)
+        {
+            return Regex.Replace(value, @"\s+", " ");
+        }
 
         #region GetElements
         public static async Task<IEnumerable<object>?> GetElementsAsync(string url, string query, string? attribute = null)
@@ -82,7 +86,7 @@ namespace WPF_MangaScrapper.Services
 
                 if (attribute == null)
                 {
-                    elementsSelected = document.QuerySelectorAll(query).Select(m => m.TextContent).Take(50);
+                    elementsSelected = document.QuerySelectorAll(query).Select(m => RemoveSpaces(m.TextContent.Replace("\n", ""))   ).Take(50);
                 }
                 else
                 {
@@ -168,6 +172,10 @@ namespace WPF_MangaScrapper.Services
 
         internal static async Task  FetchMangaAsync(MangaCaller mangaCaller, object title)
         {
+
+
+
+
             string KeyName = (string)GlobalStateService._state["CurrentKey"];
             //// get manga list from db
             MangaList? mangaList = GlobalStateService.ChapterListDic[KeyName];

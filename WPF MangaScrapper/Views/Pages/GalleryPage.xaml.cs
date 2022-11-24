@@ -5,9 +5,7 @@
 
 
 using LottieSharp.WPF;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,11 +18,7 @@ using WPF_MangaScrapper.Models;
 using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Linq;
-using System.Drawing;
-using System.Windows.Media;
-using SkiaSharp;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -44,11 +38,13 @@ namespace WPF_MangaScrapper.Views.Pages
         object? mangaTitle = null;
         int boundIndex = 0;
         int boundCapacity = 0;
+      
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
             ViewModel = viewModel;
             InitializeComponent();
             GalleryPageCONTEXT = this;
+
 
             Debug.WriteLine("********GalleryPage initialized********");
         }
@@ -87,6 +83,8 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
                 #region get previous chapter
+
+
 
                 string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
                 MangaList mangaList = GlobalStateService._MangaList[mangaKey];
@@ -138,6 +136,8 @@ namespace WPF_MangaScrapper.Views.Pages
 
             #region get next chapter
 
+
+
             string mangaKey = GlobalStateService. _state["CurrentKey"].ToString();
             MangaList mangaList = GlobalStateService._MangaList[mangaKey];
             var titleList = mangaList.Titles.ToList();
@@ -165,7 +165,8 @@ namespace WPF_MangaScrapper.Views.Pages
         LottieAnimationView? lottie = null;
         internal async void DisplayChapter(object title)
         {
-       
+            galleryGRID.Children.Clear();
+
             TBlockMangaTitle.Text = title.ToString();
             mangaTitle = title;
    
@@ -254,6 +255,9 @@ namespace WPF_MangaScrapper.Views.Pages
 
         public static async Task HandleNull(MangaChapter chapter, object title)
         {
+
+            var globalStore = GlobalStateService.GetInstance();
+
             if (chapter == null)
             {
                 string currentKey = (string)GlobalStateService._state["CurrentKey"];
@@ -302,7 +306,7 @@ namespace WPF_MangaScrapper.Views.Pages
    
 
             }
-            GalleryGRID.Children.Clear();
+        
             GalleryGRID.Children.Add(stackPanel);
         }
     }
