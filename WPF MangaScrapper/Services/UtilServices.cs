@@ -81,7 +81,7 @@ namespace WPF_MangaScrapper.Services
 
 
 
-                GalleryPage.GalleryPageCONTEXT.MangaGalleryGrid.Background = new SolidColorBrush(Color.FromRgb(16, 16, 18));
+                GalleryPage.GalleryPageCONTEXT.ContentGRID.Background = new SolidColorBrush(Color.FromRgb(16, 16, 18));
 
                 mainWindow.MainWindowRoot.WindowStyle = WindowStyle.None;
                 mainWindow.MainWindowRoot.WindowState = WindowState.Maximized;
@@ -94,7 +94,7 @@ namespace WPF_MangaScrapper.Services
                 mainWindow.RootNavigation.Visibility = Visibility.Visible;
                 mainWindow.uiTitleBar.Visibility = Visibility.Visible;
 
-                GalleryPage.GalleryPageCONTEXT.MangaGalleryGrid.Background = new SolidColorBrush(Colors.Transparent);
+                GalleryPage.GalleryPageCONTEXT.ContentGRID.Background = new SolidColorBrush(Colors.Transparent);
 
                 mainWindow.MainWindowRoot.WindowStyle = WindowStyle.SingleBorderWindow;
                 mainWindow.MainWindowRoot.WindowState = WindowState.Normal;

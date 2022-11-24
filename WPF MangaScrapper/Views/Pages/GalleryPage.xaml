@@ -19,14 +19,14 @@
 
  
 
-        <Grid    x:Name="MangaGalleryGrid"    >
+        <Grid    x:Name="ContentGRID"    >
 
 
         
 
 
 
-            <Grid x:Name="GalleryContent">
+            <Grid x:Name="GalleryGRID">
             
             <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>

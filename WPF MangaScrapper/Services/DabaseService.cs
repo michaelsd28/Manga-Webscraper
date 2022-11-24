@@ -25,11 +25,11 @@ namespace WPF_MangaScrapper.Services
 
         static string ConnectionString = "mongodb://localhost:6082";
 
-        internal static MangaCaller GetCaller(string key, string value)
+        internal static async Task<MangaCaller>  GetCaller(string key, string value)
         {
             var collection = DatabaseServiceUTILS.MongoCollection("ChaptersFetcher");
             var filter = DatabaseServiceUTILS.BSONFilter(key, value);
-            var callerBSON = collection.Find(filter).First();
+            var callerBSON = await collection.Find(filter).FirstAsync();
 
             //Debug.WriteLine($"GetCaller:: {callerBSON.ToJson()}");
             callerBSON.Remove("_id");
@@ -56,24 +56,36 @@ namespace WPF_MangaScrapper.Services
 
         }
 
-        internal static MangaChapter GetMangaChapter(object title)
+        internal static async Task<MangaChapter>  GetMangaChapter(object title)
         {
             var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
 
-            var chapterColl = collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefault();
+            var chapterColl = await collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefaultAsync();
 
             MangaChapter? chapter = null;
             if (chapterColl != null)
             {
                 chapterColl.Remove("_id");
                 chapter = JsonSerializer.Deserialize<MangaChapter?>(chapterColl.ToString());
+            
+            }
+            else 
+            {
+
+                string currentKey = (string)GlobalStateService._state["CurrentKey"];
+                MangaCaller mangaCaller = await GetCaller("KeyName", currentKey);
+                chapter = await WebscrapeService.ScrapeManga(mangaCaller, title);
+
+
+
+
+    
+
+   
             }
 
-
-
-
-
             return chapter;
+
         }
 
 

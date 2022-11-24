@@ -168,58 +168,37 @@ namespace WPF_MangaScrapper.Services
 
         }
 
-        internal static async Task  FetchMangaAsync(MangaCaller mangaCaller, object title)
+        internal static async Task<MangaChapter>  ScrapeManga(MangaCaller mangaCaller, object title)
         {
 
 
-
-
+            #region scraping is here
             string KeyName = (string)GlobalStateService._state["CurrentKey"];
-            //// get manga list from db
             MangaList? mangaList = GlobalStateService.ChapterListDic[KeyName];
-            var titleList = mangaList.Titles.ToList();
-            int index = titleList.IndexOf(title);
-            var mangaLinks = mangaList.Links.ToList();
-            var link = mangaLinks[index].ToString();
+            var indexTitle = mangaList.Titles.ToList().IndexOf(title);
 
-
-            Debug.WriteLine
-                (
-                $"FetchMangaAsync:: index-> {index} * " +
-                $"title:: {title.ToString()} * " +
-                $"mangaList.Titles:: {mangaList.Titles.ToList()[0]} * " +
-                $"mangaLinks:: {mangaLinks.ToJson()} * " +
-                //$"mangaList-> {mangaList.ToJson()} * " +
-                //$"link-> {link} * " +
-                //$"mangaList.Titles.ToList()-> {mangaList.Titles.ToList().ToJson()}" +
-                $""
-                );
-
-            var GalleryLinks = await GetElementsAsync
-                (
-                url: link,
-                query: mangaCaller.GalleryQuery,
-                attribute: "src"
-                );
-
-
+            var mangaLink = mangaList.Links.ToList()[indexTitle].ToString();
+            var GalleryLinks = await GetElementsAsync(url: mangaLink, query: mangaCaller.GalleryQuery, "src");
+            #endregion
+  
 
             MangaChapter chapter = new MangaChapter
                 (
                 mangaKey: KeyName,
                 title: title.ToString(),
-                link: link,
+                link: mangaLink,
                 galleryLinks: GalleryLinks
                 );
 
-            //Debug.WriteLine($"FetchMangaAsync:: {chapter.ToJson()}");
 
-            await DatabaseService.InsertMangaChapterAsync(chapter);
+             await DatabaseService.InsertMangaChapterAsync(chapter);
 
+
+            return chapter;
 
         }
 
-  
+
 
 
 

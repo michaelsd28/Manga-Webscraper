@@ -165,11 +165,13 @@ namespace WPF_MangaScrapper.Views.Pages
         LottieAnimationView? lottie = null;
         internal async void DisplayChapter(object title)
         {
-            galleryGRID.Children.Clear();
+
+
+
+            //galleryGRID.Children.Clear();
 
             TBlockMangaTitle.Text = title.ToString();
             mangaTitle = title;
-   
 
             #region add titles to combobox
             string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
@@ -183,11 +185,11 @@ namespace WPF_MangaScrapper.Views.Pages
             #endregion
 
             #region add lottie animation 
-            lottie = UtilServices.LottieAnimation("Assets/Animation/book read.json");
-            GalleryContent.Visibility = Visibility.Collapsed;
-            lottie.Width = 200;
-            lottie.Height = 200;
-            MangaGalleryGrid.Children.Add(lottie);
+            //lottie = UtilServices.LottieAnimation("Assets/Animation/book read.json");
+            //lottie.Width = 200;
+            //lottie.Height = 200;
+            //GalleryGRID.Visibility= Visibility.Collapsed;
+            //ContentGRID.Children.Add(lottie);
             #endregion
 
             #region background worker
@@ -210,33 +212,30 @@ namespace WPF_MangaScrapper.Views.Pages
 
         private void OnRunWorkerCompletedAsync(object? sender, RunWorkerCompletedEventArgs e)
         {
-            MangaGalleryGrid.Children.Remove(lottie);
-            GalleryContent.Visibility = Visibility.Visible;
-        
-
+            //ContentGRID.Children.Remove(new LottieAnimationView());
+            //GalleryGRID.Visibility = Visibility.Visible;
         }
 
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
          
 
-            //Task.Delay(1000).Wait(); // Pretend to work
-            MangaChapter? chapter = DatabaseService.GetMangaChapter(mangaTitle);
-            await Helper.HandleNull(chapter: chapter, title: mangaTitle);
-            if (chapter != null)
+          
+            MangaChapter chapter = await DatabaseService.GetMangaChapter(mangaTitle);
+
+
+
+            Debug.WriteLine($"chapter != null - >>> {chapter} *** {chapter != null}");
+
+
+            var GalleryLinks = chapter.GalleryLinks;
+            Application.Current.Dispatcher.Invoke(delegate
             {
-                var GalleryLinks = chapter.GalleryLinks;
-                Application.Current.Dispatcher.Invoke(delegate
-                {
-                    Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, GalleryGRID: galleryGRID);
-                });
-            }
+                Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, GalleryGRID: galleryGRID);
+            });
         }
 
-        private void imgStackPanel_CleanUpVirtualizedItem(object sender, CleanUpVirtualizedItemEventArgs e)
-        {
-    
-        }
+
     }
 
 
@@ -253,22 +252,7 @@ namespace WPF_MangaScrapper.Views.Pages
         }
 
 
-        public static async Task HandleNull(MangaChapter chapter, object title)
-        {
 
-            var globalStore = GlobalStateService.GetInstance();
-
-            if (chapter == null)
-            {
-                string currentKey = (string)GlobalStateService._state["CurrentKey"];
-                MangaCaller mangaCaller = DatabaseService.GetCaller("KeyName", currentKey);
-                await WebscrapeService.FetchMangaAsync(mangaCaller, title);
-                chapter = DatabaseService.GetMangaChapter(title);
-
-
-
-            }
-        }
 
         internal static void AddImageToStack(IEnumerable<object>? galleryLinks, Grid GalleryGRID)
         {
