@@ -11,7 +11,7 @@
       Title="MangaManager">
 
     <Grid >
-    
+
         <Grid.RowDefinitions >
             <RowDefinition Height="20*"/>
             <RowDefinition Height="75*"/>
@@ -27,7 +27,7 @@
         <Grid Grid.Row="0" >
             <TextBlock FontSize="28" Text="Manga manager" Margin="20"/>
         </Grid>
-        
+
         <!--#endregion-->
 
 
@@ -37,9 +37,9 @@
 
                     <StackPanel Orientation="Horizontal">
 
-               
+
                         <!--#region left stackpanel-->
-                    
+
                         <StackPanel  Orientation="Vertical" Margin="10">
 
                             <!--KeyName-->
@@ -56,7 +56,7 @@
 
                                     <Image Width="20" Source="/Assets/Manager/color picker icon.png" />
                                 </Button>
-                                
+
 
                             </StackPanel>
 
@@ -98,8 +98,8 @@
 
                         </StackPanel>
                         <!--#endregion-->
-           
-                        
+
+
                     </StackPanel>
 
 
@@ -118,15 +118,15 @@
 
 
 
-             
-            </StackPanel>
+
+                </StackPanel>
 
 
             </ScrollViewer>
         </Grid>
- 
+
         <Grid Grid.Row="2" />
 
- 
+
     </Grid>
 </ui:UiPage>

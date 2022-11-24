@@ -85,13 +85,11 @@ namespace WPF_MangaScrapper.Services
                 //IHtmlCollection<IElement> elementsSelected = document.QuerySelectorAll(query);
 
                 if (attribute == null)
-                {
-                    elementsSelected = document.QuerySelectorAll(query).Select(m => RemoveSpaces(m.TextContent.Replace("\n", ""))   ).Take(50);
-                }
+                    elementsSelected = document.QuerySelectorAll(query).Select(m => RemoveSpaces(m.TextContent.Replace("\n", "")).Trim()   ).Take(50);
+                
                 else
-                {
                     elementsSelected = document.QuerySelectorAll(query).Select(m => m.GetAttribute(attribute)).Take(50);
-                }
+                
 
 
 

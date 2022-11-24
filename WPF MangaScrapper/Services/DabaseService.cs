@@ -28,8 +28,8 @@ namespace WPF_MangaScrapper.Services
         internal static MangaCaller GetCaller(string key, string value)
         {
             var collection = DatabaseServiceUTILS.MongoCollection("ChaptersFetcher");
-            var filter = DatabaseServiceUTILS.BSONFilter( key,  value);
-            var callerBSON =  collection.Find(filter).First();
+            var filter = DatabaseServiceUTILS.BSONFilter(key, value);
+            var callerBSON = collection.Find(filter).First();
 
             //Debug.WriteLine($"GetCaller:: {callerBSON.ToJson()}");
             callerBSON.Remove("_id");
@@ -56,23 +56,23 @@ namespace WPF_MangaScrapper.Services
 
         }
 
-        internal static  MangaChapter GetMangaChapter(object title)
+        internal static MangaChapter GetMangaChapter(object title)
         {
             var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
-    
-            var chapterColl =  collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefault();
+
+            var chapterColl = collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefault();
 
             MangaChapter? chapter = null;
-            if (chapterColl!= null)
+            if (chapterColl != null)
             {
                 chapterColl.Remove("_id");
                 chapter = JsonSerializer.Deserialize<MangaChapter?>(chapterColl.ToString());
             }
-       
-      
 
-     
-           
+
+
+
+
             return chapter;
         }
 
@@ -80,7 +80,7 @@ namespace WPF_MangaScrapper.Services
 
         internal static async Task InsertMangaChapterAsync(MangaChapter chapter)
         {
-           var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
+            var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
             var filter = DatabaseServiceUTILS.BSONFilter("Title", chapter.Title);
 
             await collection.ReplaceOneAsync
@@ -154,14 +154,25 @@ internal class DatabaseServiceUTILS
     {
 
 
+        #region clear container before adding 
+
+        DashboardPage
+     .DashboardPageCONTEXT
+     .WrapPanel.Children.Clear();
+        #endregion
+
 
 
         foreach (var manga in mangaList)
         {
+
+
+
+
             //add list to global state
             GlobalStateService.ChapterListDic[manga.KeyName] = manga;
 
-         
+
 
             MangaCard mangaCard = new MangaCard
             {
@@ -181,12 +192,12 @@ internal class DatabaseServiceUTILS
 
             foreach (object title in manga.Titles)
             {
-       
-                var button = new System.Windows.Controls.Button 
-                { 
-                    Content = title, 
-                    Margin = new Thickness(10), 
-                    HorizontalAlignment = HorizontalAlignment.Center 
+
+                var button = new System.Windows.Controls.Button
+                {
+                    Content = title,
+                    Margin = new Thickness(10),
+                    HorizontalAlignment = HorizontalAlignment.Center
                 };
                 GlobalStateService._state["CurrentKey"] = manga.KeyName;
                 button.Click += (sender, EventArgs) => { NavigateToGallery(sender, EventArgs, manga, title); };
@@ -199,9 +210,7 @@ internal class DatabaseServiceUTILS
 
             #region clear and add cards
 
-            DashboardPage
-                .DashboardPageCONTEXT
-                .WrapPanel.Children.Clear();
+
 
             DashboardPage
                 .DashboardPageCONTEXT
@@ -232,7 +241,7 @@ internal class DatabaseServiceUTILS
     public static List<MangaList> GetListInventory()
     {
 
- 
+
 
         var list = new List<MangaList>();
         var collection = MongoCollection("ChapterList");
@@ -244,9 +253,6 @@ internal class DatabaseServiceUTILS
 
         foreach (var document in documents)
         {
-
-
-    
 
             var filter = new BsonDocument { { "KeyName", document["KeyName"] } };
 
@@ -261,6 +267,7 @@ internal class DatabaseServiceUTILS
                 list.Add(mangaList);
             }
         }
+
         return list;
     }
 

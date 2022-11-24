@@ -43,6 +43,9 @@ namespace WPF_MangaScrapper.Views.Pages
      
 
                 GridContent.Children.Add(lottie);
+
+
+
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.DoWork += OnDoWorkAsync;
                 worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;

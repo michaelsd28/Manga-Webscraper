@@ -279,6 +279,8 @@ namespace WPF_MangaScrapper.Views.Pages
 
             foreach (var link in galleryLinks)
             {
+
+                Debug.WriteLine($"AddImageToStack -> link:: {link}");
                 if (link != null && !link.ToString().Contains("./"))
                 {
 
