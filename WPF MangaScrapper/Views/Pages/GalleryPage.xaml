@@ -15,46 +15,14 @@
 
 
 
-    <ScrollViewer      x:Name="scrollviewer"    CanContentScroll="True"  VerticalScrollBarVisibility="Auto" >
+    <ScrollViewer   VirtualizingPanel.IsVirtualizing="True"   x:Name="scrollviewer"    CanContentScroll="True"  VerticalScrollBarVisibility="Auto" >
 
  
 
         <Grid    x:Name="MangaGalleryGrid"    >
 
 
-            <!--<Grid>
-                <ScrollViewer MouseDown="ScrollViewer_MouseDown" MouseUp="ScrollViewer_MouseUp" MouseMove="ScrollViewer_MouseMove">
-                    <StackPanel x:Name="dynamicLongStackPanel">
-
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-                        <TextBlock Margin="80" Text=" hola" Background="Aquamarine" FontSize="30"/>
-
-                    </StackPanel>
-                </ScrollViewer>
-                <Canvas x:Name="topLayer" IsHitTestVisible="False" />
-            </Grid>-->
+        
 
 
 
@@ -126,23 +94,15 @@
 
 
         <!--#region Manga Gallery -->
-        <Grid  Grid.Row="3">
-            <StackPanel x:Name="imgStackPanel" Orientation="Vertical">
+        <Grid  x:Name="galleryGRID" Grid.Row="3">
+            <!--<StackPanel VirtualizingPanel.CacheLength="20" VirtualizingPanel.IsVirtualizing="True"  x:Name="imgStackPanel" Orientation="Vertical">
 
-                    <!--<Image Source="https://by3302files.storage.live.com/y4m-mgJILQf3AV-qy1JstNpW7YNd47rvLczOInUaymPqj1c2HCMtXWHlUMM3zqtQ9vkKDqdnd9gKlcpXzNGkR41MzSRp_sAkLrfO4Qo5BWtVcx5cbqQoAnzae494zv70FW9DqUo78MU-sVMBKKf6LkhhY_CIo5wxcBm5H1IwBf48MDzka0Z9lTJFdZt6bJ5vrnU?width=1100&amp;height=1611&amp;cropmode=none"/>-->
-                    <!--<Image 
-                    Margin="0 0 0 60"
-                   StretchDirection="DownOnly"
-                    UseLayoutRounding="True"
-                    Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\manga1.png"/>
-                    <Image 
-                   StretchDirection="DownOnly"
-                    UseLayoutRounding="True"
-                    Source="C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\manga1.png"/>-->
-                </StackPanel>
+
+                </StackPanel>-->
         </Grid>
         <!--#endregion-->
 
+                
         <!--#region PageController -->
 
             <Grid Margin="20" Grid.Row="5">

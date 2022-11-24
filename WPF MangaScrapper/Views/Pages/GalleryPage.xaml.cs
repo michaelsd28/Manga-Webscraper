@@ -24,6 +24,7 @@ using System.Windows.Input;
 using System.Linq;
 using System.Drawing;
 using System.Windows.Media;
+using SkiaSharp;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -136,7 +137,8 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
             #region get next chapter
-            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+
+            string mangaKey = GlobalStateService. _state["CurrentKey"].ToString();
             MangaList mangaList = GlobalStateService._MangaList[mangaKey];
             var titleList = mangaList.Titles.ToList();
             int index = titleList.IndexOf(mangaTitle);
@@ -160,12 +162,13 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-        LottieAnimationView? lottie = new LottieAnimationView { Width = 200, Height = 200 };
+        LottieAnimationView? lottie = null;
         internal async void DisplayChapter(object title)
         {
-
+       
             TBlockMangaTitle.Text = title.ToString();
             mangaTitle = title;
+   
 
             #region add titles to combobox
             string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
@@ -181,6 +184,8 @@ namespace WPF_MangaScrapper.Views.Pages
             #region add lottie animation 
             lottie = UtilServices.LottieAnimation("Assets/Animation/book read.json");
             GalleryContent.Visibility = Visibility.Collapsed;
+            lottie.Width = 200;
+            lottie.Height = 200;
             MangaGalleryGrid.Children.Add(lottie);
             #endregion
 
@@ -204,8 +209,9 @@ namespace WPF_MangaScrapper.Views.Pages
 
         private void OnRunWorkerCompletedAsync(object? sender, RunWorkerCompletedEventArgs e)
         {
-            GalleryContent.Visibility = Visibility.Visible;
             MangaGalleryGrid.Children.Remove(lottie);
+            GalleryContent.Visibility = Visibility.Visible;
+        
 
         }
 
@@ -221,11 +227,15 @@ namespace WPF_MangaScrapper.Views.Pages
                 var GalleryLinks = chapter.GalleryLinks;
                 Application.Current.Dispatcher.Invoke(delegate
                 {
-                    Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, imgStackPanel: imgStackPanel);
+                    Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, GalleryGRID: galleryGRID);
                 });
             }
         }
 
+        private void imgStackPanel_CleanUpVirtualizedItem(object sender, CleanUpVirtualizedItemEventArgs e)
+        {
+    
+        }
     }
 
 
@@ -256,10 +266,11 @@ namespace WPF_MangaScrapper.Views.Pages
             }
         }
 
-        internal static void AddImageToStack(IEnumerable<object>? galleryLinks, StackPanel imgStackPanel)
+        internal static void AddImageToStack(IEnumerable<object>? galleryLinks, Grid GalleryGRID)
         {
 
-            imgStackPanel.Children.Clear();
+            StackPanel stackPanel = new StackPanel();
+
 
 
             foreach (var link in galleryLinks)
@@ -275,19 +286,24 @@ namespace WPF_MangaScrapper.Views.Pages
                     };
 
 
+
+
                     var fullFilePath = link.ToString();
 
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
                     bitmap.EndInit();
-
+                    
                     image.Source = bitmap;
-                    imgStackPanel.Children.Add(image);
-
+                    stackPanel.Children.Add(image);
+                  
                 }
+   
 
             }
+            GalleryGRID.Children.Clear();
+            GalleryGRID.Children.Add(stackPanel);
         }
     }
 }

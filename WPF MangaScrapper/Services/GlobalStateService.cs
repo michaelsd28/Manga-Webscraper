@@ -14,7 +14,7 @@ namespace WPF_MangaScrapper.Services
 
         private static GlobalStateService? globalStateService;
 
-        private GlobalStateService() { }
+        private GlobalStateService() {   }
 
         public static Dictionary<string,MangaCaller> ChapterCallerDic { get;  set; } = new Dictionary<string,MangaCaller>();
         public static Dictionary<string, MangaList> ChapterListDic { get;  set; }  = new Dictionary<string, MangaList>();
