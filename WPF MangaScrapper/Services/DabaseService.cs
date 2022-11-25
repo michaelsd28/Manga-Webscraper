@@ -211,7 +211,7 @@ internal class DatabaseServiceUTILS
                     Margin = new Thickness(10),
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
-                GlobalStateService._state["CurrentKey"] = manga.KeyName;
+        
                 button.Click += (sender, EventArgs) => { NavigateToGallery(sender, EventArgs, manga, title); };
                 mangaCard.ChaptersSTACKPANEL.Children.Add(button);
             }
@@ -236,13 +236,13 @@ internal class DatabaseServiceUTILS
 
     }
 
-    //private static RoutedEventHandler NavigateToGallery(string? keyName)
-    //{
 
-    //}
 
     private static void NavigateToGallery(object sender, RoutedEventArgs e, MangaList manga, object title)
     {
+
+        GlobalStateService._state["CurrentManga"] = title.ToString();
+        GlobalStateService._state["CurrentKey"] = manga.KeyName;
 
         MainWindow.mainWindowCONTEXT.Navigate(typeof(GalleryPage));
         GalleryPage.GalleryPageCONTEXT.DisplayChapter(title);

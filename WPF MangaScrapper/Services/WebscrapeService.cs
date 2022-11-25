@@ -174,10 +174,14 @@ namespace WPF_MangaScrapper.Services
 
             #region scraping is here
             string KeyName = (string)GlobalStateService._state["CurrentKey"];
+
             MangaList? mangaList = GlobalStateService.ChapterListDic[KeyName];
-            var indexTitle = mangaList.Titles.ToList().IndexOf(title);
+
+            var titles = mangaList.Titles.ToList();
+            var indexTitle = titles.IndexOf(title);
 
             var mangaLink = mangaList.Links.ToList()[indexTitle].ToString();
+      
             var GalleryLinks = await GetElementsAsync(url: mangaLink, query: mangaCaller.GalleryQuery, "src");
             #endregion
   

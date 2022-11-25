@@ -48,7 +48,7 @@ namespace WPF_MangaScrapper.Views.Pages
             InitializeComponent();
             GalleryPageCONTEXT = this;
 
-           
+
 
             Debug.WriteLine("********GalleryPage initialized********");
         }
@@ -161,7 +161,10 @@ namespace WPF_MangaScrapper.Views.Pages
 
         private void BGoHome(object sender, RoutedEventArgs e)
 
-            => MainWindow.mainWindowCONTEXT.Navigate(typeof(DashboardPage));
+           => MainWindow.mainWindowCONTEXT.Navigate(typeof(DashboardPage));
+  
+         
+        
 
 
 
@@ -169,11 +172,13 @@ namespace WPF_MangaScrapper.Views.Pages
 
         internal async void DisplayChapter(object title)
         {
-    
+
+            try { 
 
 
+            Debug.WriteLine($"DisplayChapter----->>>>>>>>>>     {title}     <<<<<<<<-------");
 
-
+  
 
 
             TBlockMangaTitle.Text = title.ToString();
@@ -181,13 +186,15 @@ namespace WPF_MangaScrapper.Views.Pages
 
             #region add titles to combobox
             string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+
+
             MangaList mangaList = GlobalStateService._MangaList[mangaKey];
             var titleList = mangaList.Titles.ToList();
             ComboBox.ItemsSource = titleList;
 
-         
+
             int index = titleList.IndexOf(mangaTitle);
-            ComboBox.SelectedIndex = index;
+          
             #endregion
 
             #region add lottie animation 
@@ -204,9 +211,13 @@ namespace WPF_MangaScrapper.Views.Pages
             worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;
             worker.RunWorkerAsync();
 
-            #endregion
+                #endregion
 
-
+            }
+            catch (Exception ex) 
+            { 
+                Debug.WriteLine($"Exception ex:: {ex.Message}       ***DisplayChapter***"); 
+            }
         }
 
 
@@ -216,20 +227,16 @@ namespace WPF_MangaScrapper.Views.Pages
         {
             ContentGRID.Children.Remove(lottie);
             GalleryGRID.Visibility = Visibility.Visible;
-            
+
 
         }
 
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
 
-            Task.Delay(2000).Wait();
+            Task.Delay(500).Wait();
 
             MangaChapter chapter = await DatabaseService.GetMangaChapter(mangaTitle);
-
-
-
-            Debug.WriteLine($"chapter != null - >>> {chapter} *** {chapter != null}");
 
 
             var GalleryLinks = chapter.GalleryLinks;
@@ -237,97 +244,97 @@ namespace WPF_MangaScrapper.Views.Pages
 
             var invokenumbers = 0;
 
-           var  dispatcher = Application.Current.Dispatcher;
-
-
-
-
-         await   dispatcher.BeginInvoke(() => 
-            {
-                Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, GalleryGRID: galleryGRID);
-           
-            }
-            );
-
-       
-
+            var dispatcher = Application.Current.Dispatcher;
 
            
 
+
+            await dispatcher.BeginInvoke(() =>
+               {
+                   Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, GalleryGRID: galleryGRID);
+
+               }
+               );
 
 
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
             var selectedItem = ComboBox.SelectedItem;
             DisplayChapter(selectedItem);
 
         }
-    }
 
 
 
 
-    internal class Helper
-    {
 
-
-        public static void CheckButtonStatus(Button prev, Button next, int boundIndex, int boundCapacity)
-        {
-            next.IsEnabled = boundIndex != 0;
-            prev.IsEnabled = boundIndex < boundCapacity - 1;
-        }
-
-
-
-
-        internal static void AddImageToStack(IEnumerable<object>? galleryLinks, Grid GalleryGRID)
+        internal class Helper
         {
 
-            StackPanel stackPanel = new StackPanel();
+
+            public static void CheckButtonStatus(Button prev, Button next, int boundIndex, int boundCapacity)
+            {
+                next.IsEnabled = boundIndex != 0;
+                prev.IsEnabled = boundIndex < boundCapacity - 1;
+            }
 
 
-            GalleryGRID.Children.Clear();
 
 
-        
-
-            foreach (var link in galleryLinks)
+            internal static void AddImageToStack(IEnumerable<object>? galleryLinks, Grid GalleryGRID)
             {
 
-                Debug.WriteLine($"AddImageToStack -> link:: {link}    ****  {galleryLinks.Count()}");
-                if (link != null && !link.ToString().Contains("./"))
+                StackPanel stackPanel = new StackPanel();
+
+
+                GalleryGRID.Children.Clear();
+
+
+
+
+                foreach (var link in galleryLinks)
                 {
 
-                    var image = new Image
+                    Debug.WriteLine($"AddImageToStack -> link:: {link}    ****  {galleryLinks.Count()}");
+                    if (link != null && !link.ToString().Contains("./"))
                     {
-                        UseLayoutRounding = true,
-                        StretchDirection = StretchDirection.DownOnly,
-                        Margin = new Thickness(20)
-                    };
+
+                        var image = new Image
+                        {
+                            UseLayoutRounding = true,
+                            StretchDirection = StretchDirection.DownOnly,
+                            Margin = new Thickness(20),
+                            SnapsToDevicePixels = true,
+
+
+                        };
 
 
 
-                    var fullFilePath = link.ToString();
+                        var fullFilePath = link.ToString();
 
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
-                    bitmap.EndInit();
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
+                        bitmap.EndInit();
 
-                    image.Source = bitmap;
-                    stackPanel.Children.Add(image);
+                        image.Source = bitmap;
 
-            
+
+                        stackPanel.Children.Add(image);
+
+
+
+                    }
+
 
                 }
 
-
+                GalleryGRID.Children.Add(stackPanel);
             }
-
-            GalleryGRID.Children.Add(stackPanel);
         }
     }
 }

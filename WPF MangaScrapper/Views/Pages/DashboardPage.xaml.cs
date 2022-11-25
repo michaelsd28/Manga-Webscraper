@@ -29,7 +29,7 @@ namespace WPF_MangaScrapper.Views.Pages
             InitializeComponent();
             ViewModel = viewModel;
             DashboardPageCONTEXT = this;
-            MangaScrapperUTILS.FullScreenINIT(this);
+            Helper.FullScreenINIT(this);
             DatabaseService.GetChaptersDB();
 
 
@@ -38,19 +38,24 @@ namespace WPF_MangaScrapper.Views.Pages
         private async void BRefreshCH(object sender, System.Windows.RoutedEventArgs e)
         {
 
+            #region lottie animation
                 lottie = UtilServices.LottieAnimation("Assets/Animation/rocket 2.json");
                 WrapPanel.Visibility = Visibility.Collapsed;
-     
-
                 GridContent.Children.Add(lottie);
+            #endregion
 
 
+            #region background worker
 
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.DoWork += OnDoWorkAsync;
                 worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;
                 worker.RunWorkerAsync();
-                
+
+            #endregion
+
+
+
 
         }
 
@@ -76,7 +81,7 @@ namespace WPF_MangaScrapper.Views.Pages
     }
 
 }
-public class MangaScrapperUTILS
+public class Helper
 {
 
 
@@ -92,8 +97,5 @@ public class MangaScrapperUTILS
         }
     }
 
-    internal static void FetchChapters(DashboardPage dashboardPage)
-    {
-        
-    }
+
 }
