@@ -85,8 +85,6 @@ namespace WPF_MangaScrapper.Views.Pages
             {
 
 
-                NavigationService.Navigate(null);
-                NavigationService.Navigate(typeof (GalleryPage));
                 #region get previous chapter
 
 
