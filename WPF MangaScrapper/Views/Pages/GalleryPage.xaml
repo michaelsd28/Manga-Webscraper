@@ -53,7 +53,7 @@
 
         <!--#region Combobox -->
             <Grid Margin="20" Grid.Row="1" MaxWidth="300">
-            <ComboBox  x:Name="ComboBox" SelectedIndex="1">
+            <ComboBox SelectionChanged="ComboBox_SelectionChanged"  x:Name="ComboBox" SelectedIndex="1">
                 <!--<ComboBoxItem Content="One piece chapter 1034" />
                 <ComboBoxItem Content="One piece chapter 1034" />
                 <ComboBoxItem Content="One piece chapter 1034" />
