@@ -1,25 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Appearance;
-using Wpf.Ui.Controls;
 using WPF_MangaScrapper.Views.Pages;
 using WPF_MangaScrapper.Views.Windows;
-using Wpf.Ui.Extensions;
-using WPF_MangaScrapper.ViewModels;
 using LottieSharp.WPF;
+
 
 namespace WPF_MangaScrapper.Services
 {
     internal class UtilServices
     {
 
+        public static void QuickMessageBox(string title , string content) {
+
+            Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
+            messageBox.Title = title;
+            messageBox.Content = content;
+            messageBox.ButtonLeftClick += messageBoxClose;
+            messageBox.ButtonLeftName = "OK";
+            messageBox.ButtonRightClick += messageBoxClose;
+            messageBox.Show();
+
+        }
+
+        private static void messageBoxClose(object sender, RoutedEventArgs e)
+        {
+            var messageBox = (Wpf.Ui.Controls.MessageBox)sender;
+            messageBox.Close();
+        }
 
         public static LottieAnimationView LottieAnimation(string fileName)
         {

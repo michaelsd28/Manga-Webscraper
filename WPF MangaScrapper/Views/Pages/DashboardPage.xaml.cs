@@ -84,9 +84,6 @@ namespace WPF_MangaScrapper.Views.Pages
 public class Helper
 {
 
-
-
-
     public static void FullScreenINIT(DashboardPage DashboardPageCONTEXT)
     {
 

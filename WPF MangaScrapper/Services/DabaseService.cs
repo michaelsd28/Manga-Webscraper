@@ -15,6 +15,7 @@ using Wpf.Ui.Controls;
 using System.Threading.Tasks;
 using WPF_MangaScrapper.Services;
 using LottieSharp.WPF;
+using Wpf.Ui.Mvvm.Services;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -112,29 +113,16 @@ namespace WPF_MangaScrapper.Services
                       options: new ReplaceOptions { IsUpsert = true },
                       replacement: mangaFetch.ToBsonDocument()
                       );
+
+   
+            UtilServices.QuickMessageBox("Saved Succefully", "Please press ok to continue");
         }
+
+
     }
 
 
 
-    //public static IMongoCollection<BsonDocument> GetCollection(string CollecName)
-
-    //   => DatabaseServiceUTILS.MongoCollection(CollecName);
-
-
-
-    //internal static async void InsertMangaFetcher(MangaCaller mangaCaller)
-    //    {
-    //    var collection =    DatabaseServiceUTILS.MongoCollection("ChaptersFetcher");
-
-    //        await collection.ReplaceOneAsync
-    //        (
-    //        filter: new BsonDocument("KeyName", mangaCaller.KeyName),
-    //        options: new ReplaceOptions { IsUpsert = true },
-    //        replacement: mangaCaller.ToBsonDocument()
-    //        );
-
-    //    }
 
 
 

@@ -101,7 +101,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-                Helper.CheckButtonStatus(BPrev, BNext, boundIndex, boundCapacity);
+      
                 DisplayChapter(prevTitle);
 
 
@@ -153,7 +153,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-            Helper.CheckButtonStatus(BPrev, BNext, boundIndex, boundCapacity);
+
             DisplayChapter(nextTitle);
 
 
@@ -162,9 +162,9 @@ namespace WPF_MangaScrapper.Views.Pages
         private void BGoHome(object sender, RoutedEventArgs e)
 
            => MainWindow.mainWindowCONTEXT.Navigate(typeof(DashboardPage));
-  
-         
-        
+
+
+
 
 
 
@@ -173,50 +173,54 @@ namespace WPF_MangaScrapper.Views.Pages
         internal async void DisplayChapter(object title)
         {
 
-            try { 
+            try
+            {
 
 
-            Debug.WriteLine($"DisplayChapter----->>>>>>>>>>     {title}     <<<<<<<<-------");
+                TBlockMangaTitle.Text = title.ToString();
+                mangaTitle = title;
 
+
+                #region check button status
+
+                string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+                MangaList mangaList = GlobalStateService._MangaList[mangaKey];
+                var titleList = mangaList.Titles.ToList();
+                int Bindex = titleList.IndexOf(mangaTitle);
   
+                boundCapacity = titleList.Count;
 
+                Helper.CheckButtonStatus(BPrev, BNext, Bindex, boundCapacity);
 
-            TBlockMangaTitle.Text = title.ToString();
-            mangaTitle = title;
+                #endregion
 
-            #region add titles to combobox
-            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+                #region add titles to combobox
+           
+                ComboBox.ItemsSource = titleList;
+                int index = titleList.IndexOf(mangaTitle);
 
+                #endregion
 
-            MangaList mangaList = GlobalStateService._MangaList[mangaKey];
-            var titleList = mangaList.Titles.ToList();
-            ComboBox.ItemsSource = titleList;
+                #region add lottie animation 
+                lottie = UtilServices.LottieAnimation("Assets/Animation/book read.json");
+                lottie.Width = 200;
+                lottie.Height = 200;
+                GalleryGRID.Visibility = Visibility.Collapsed;
+                ContentGRID.Children.Add(lottie);
+                #endregion
 
-
-            int index = titleList.IndexOf(mangaTitle);
-          
-            #endregion
-
-            #region add lottie animation 
-            lottie = UtilServices.LottieAnimation("Assets/Animation/book read.json");
-            lottie.Width = 200;
-            lottie.Height = 200;
-            GalleryGRID.Visibility = Visibility.Collapsed;
-            ContentGRID.Children.Add(lottie);
-            #endregion
-
-            #region background worker
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += OnDoWorkAsync;
-            worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;
-            worker.RunWorkerAsync();
+                #region background worker
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += OnDoWorkAsync;
+                worker.RunWorkerCompleted += OnRunWorkerCompletedAsync;
+                worker.RunWorkerAsync();
 
                 #endregion
 
             }
-            catch (Exception ex) 
-            { 
-                Debug.WriteLine($"Exception ex:: {ex.Message}       ***DisplayChapter***"); 
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception ex:: {ex.Message}       ***DisplayChapter***");
             }
         }
 
@@ -246,13 +250,12 @@ namespace WPF_MangaScrapper.Views.Pages
 
             var dispatcher = Application.Current.Dispatcher;
 
-           
+
 
 
             await dispatcher.BeginInvoke(() =>
                {
                    Helper.AddImageToStack(galleryLinks: chapter.GalleryLinks, GalleryGRID: galleryGRID);
-
                }
                );
 
@@ -261,7 +264,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
             var selectedItem = ComboBox.SelectedItem;
             DisplayChapter(selectedItem);
 
