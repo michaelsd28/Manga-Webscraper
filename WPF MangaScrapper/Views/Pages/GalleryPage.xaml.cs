@@ -67,7 +67,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 Debug.WriteLine($"DisplayChapter -> title:: {title}");
 
-                //TBlockMangaTitle.Text = title.ToString();
+
                 mangaTitle = title;
                 GlobalStateService._state["CurrentManga"] = title.ToString();
 
@@ -79,17 +79,17 @@ namespace WPF_MangaScrapper.Views.Pages
                 var titleList = mangaList.Titles.ToList();
 
 
-                //boundCapacity = titleList.Count; 
 
 
-                Helper.CheckButtonStatus();
+
+                Helper.CheckPageControllerStatus();
 
                 #endregion
 
                 #region add titles to combobox
 
-                //ComboBox.ItemsSource = titleList;
-                int index = titleList.IndexOf(mangaTitle);
+                PageController.PageControllerContext.ComboBox.ItemsSource = titleList;
+                int indexCombobox = titleList.IndexOf(mangaTitle);
 
                 #endregion
 
@@ -164,16 +164,17 @@ namespace WPF_MangaScrapper.Views.Pages
         {
 
 
-            public static void CheckButtonStatus()
+            public static void CheckPageControllerStatus()
             {
 
-                //Button prev, Button next, int boundIndex, int boundCapacity
+
 
 
 
 
 
                 #region get list
+
                 string mangaTitle = GlobalStateService._state["CurrentManga"].ToString();
                 string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
                 MangaList mangaList = GlobalStateService._MangaList[mangaKey];
@@ -182,14 +183,10 @@ namespace WPF_MangaScrapper.Views.Pages
                 var listLimitIndex = index - 1;
                 var listCapacity = titleList.Count;
 
+                PageController.PageControllerContext.TBlockMangaTitle.Text = mangaTitle;
 
-          
+
                 #endregion
-
-
-
-                Debug.WriteLine($"CheckButtonStatus -> index:: {index}   ***  listLimitIndex:: {listLimitIndex}   ***  listCapacity:: {listCapacity}");
-
 
 
 
