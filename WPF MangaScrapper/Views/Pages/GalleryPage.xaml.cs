@@ -109,7 +109,10 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 #endregion
 
+        
+
             }
+
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception ex:: {ex.Message}       ***DisplayChapter***");

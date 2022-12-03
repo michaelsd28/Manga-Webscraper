@@ -24,10 +24,19 @@
                 <ComboBox MinWidth="250"    SelectionChanged="ComboBox_SelectionChanged"  x:Name="ComboBox" >
 
                 </ComboBox>
-                <ui:Button Margin="5 0 0 0"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
+                <ui:Button 
+                    Margin="5 0 0 0"  
+                    Background="Transparent" 
+                    Click="DisplayInWebview_Click"
+                    HorizontalAlignment="Center"  
+                    BorderBrush="Transparent">
                     <Image Width="25"  Source="\Assets\Gallery\webviewIcon.png"/>
                 </ui:Button>
-                <ui:Button  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
+                <ui:Button  
+                    Background="Transparent" 
+                    Click="SaveToMongoDB_Click"
+                    HorizontalAlignment="Center"  
+                    BorderBrush="Transparent">
                     <Image Width="25"  Source="\Assets\Gallery\databaseCloudIcon.png"/>
                 </ui:Button>
             </StackPanel>

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WPF_MangaScrapper.Models;
 using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Pages;
@@ -18,7 +19,7 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
     {
 
 
-        public static PageController PageControllerContext { get; set; } 
+        public static PageController PageControllerContext { get; set; }
 
         public PageController()
         {
@@ -31,7 +32,7 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
         {
 
             var selectedItem = ComboBox.SelectedItem;
-           GalleryPage.GalleryPageCONTEXT.DisplayChapter(selectedItem);
+            GalleryPage.GalleryPageCONTEXT.DisplayChapter(selectedItem);
 
         }
 
@@ -118,18 +119,18 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
             #region get next chapter
 
 
-            string mangaTitle = GlobalStateService._state["CurrentManga"].ToString(); 
+            string mangaTitle = GlobalStateService._state["CurrentManga"].ToString();
             string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
             MangaList mangaList = GlobalStateService._MangaList[mangaKey];
-            var titleList = mangaList.Titles.ToList().Select( title => title.ToString()).ToList();
-            int index = titleList.IndexOf( mangaTitle);
+            var titleList = mangaList.Titles.ToList().Select(title => title.ToString()).ToList();
+            int index = titleList.IndexOf(mangaTitle);
 
 
             var nextTitle = titleList[index - 1];
 
 
             #endregion
-          
+
 
             GalleryPage.GalleryPageCONTEXT.DisplayChapter(nextTitle);
 
@@ -137,5 +138,30 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
         }
 
 
+
+        private void DisplayInWebview_Click(object sender, RoutedEventArgs e)
+        {
+
+            var headerVisibility = GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility;
+
+            if (headerVisibility == Visibility.Visible)
+            {
+                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Hidden;
+      
+
+            }
+            else
+            {
+                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Visible;
+            }
+
+
+
+        }
+
+        private void SaveToMongoDB_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

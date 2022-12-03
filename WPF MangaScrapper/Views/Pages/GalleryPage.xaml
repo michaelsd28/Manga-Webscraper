@@ -20,49 +20,54 @@
 
     <ScrollViewer   VirtualizingPanel.IsVirtualizing="True"   x:Name="scrollviewer"    CanContentScroll="True"  VerticalScrollBarVisibility="Auto" >
 
- 
+
 
         <Grid    x:Name="ContentGRID"    >
 
 
-        
+
 
 
 
             <Grid x:Name="GalleryGRID">
-            
-            <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="60*"/>
-            <RowDefinition Height="10*"/>
-        </Grid.RowDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
 
 
-        <!--#region Header -->
-                
-        <Grid Margin="20" Grid.Row="0">
-            
+                <!--#region Header -->
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"> 
-                    
-                    
-                    
-                    
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Manga gallery" FontSize="22"/>
-                    <ui:Button Margin="10"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
+                <Grid x:Name="Header_GRID" Margin="20" Grid.Row="0">
+
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+
+
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Manga gallery" FontSize="22"/>
+                        <ui:Button Margin="10"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
                             <Image Width="30"  Source="\Assets\Components\boruto icon.png"/>
-                    </ui:Button>
-                </StackPanel>
-                <components:FullScreenButton Margin="0 0 0 80" HorizontalAlignment="Right" x:Name="FullScreenButton"  />
+                        </ui:Button>
+                    </StackPanel>
+                    <components:FullScreenButton Margin="0 0 0 80" HorizontalAlignment="Right" x:Name="FullScreenButton"  />
 
-            </Grid>
-        <!--#endregion-->
+                </Grid>
+                <!--#endregion-->
 
                 <!--#region Page Controller -->
-                <Grid Grid.Row="1">
-                    <gallery:PageController/>
+                <Grid Panel.ZIndex="10" x:Name="PageController_GRID" Grid.Row="1">
+
+                    <gallery:HiddenPageController/>
+
+
+                    <!--<gallery:PageController/>-->
+
 
                 </Grid>
                 <!--#endregion-->
@@ -70,48 +75,21 @@
 
 
                 <!--#region Manga Gallery -->
-        <Grid  x:Name="galleryGRID" Grid.Row="3">
+                <Grid  x:Name="galleryGRID" Grid.Row="3">
 
-              
+
                     <!--<StackPanel VirtualizingPanel.CacheLength="20" VirtualizingPanel.IsVirtualizing="True"  x:Name="imgStackPanel" Orientation="Vertical">
 
 
                 </StackPanel>-->
-        </Grid>
-        <!--#endregion-->
-
-                
-        <!--#region PageController -->
-
-            <Grid Margin="20" Grid.Row="5">
-                    <Border   MaxWidth="400"  Margin="10" Padding="10" CornerRadius="10">
-                        <Border.Background>
-                            <SolidColorBrush Color="#282c34" Opacity="0.4" />
-                        </Border.Background>
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="10" />
-                        </Border.Effect>
-                        <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button  >
-                                <ui:SymbolIcon Symbol="ChevronLeft20"/>
-                            </Button>
-                            <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
-                                <Border.Background>
-                                    <SolidColorBrush Opacity="0.6" Color="#292b30"/>
-                                </Border.Background>
-                                <TextBlock MaxWidth="250" TextTrimming="CharacterEllipsis" FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
-                            </Border>
-
-                            <Button    >
-                                <ui:SymbolIcon Symbol="ChevronRight20"/>
-                            </Button>
-                        </StackPanel>
-                    </Border>
                 </Grid>
-            <!--#endregion-->
+                <!--#endregion-->
 
-           
-        </Grid>
+
+
+
+
+            </Grid>
         </Grid>
     </ScrollViewer>
 
