@@ -45,13 +45,7 @@ namespace WPF_MangaScrapper.ViewModels
                     PageType = typeof(Views.Pages.DashboardPage),
                     Image =UIStore.NavICONS["BorutoICON"]
                 },
-                //new NavigationItem()
-                //{
-                //    Content = new System.Windows.Controls.TextBlock{ Text = "Data", FontSize= 12},
-                //    PageTag = "data",
-                //    Icon = SymbolRegular.DataHistogram24,
-                //    PageType = typeof(Views.Pages.DataPage)
-                //},
+
                 new NavigationItem()
                 {
                     Content = new System.Windows.Controls.TextBlock{ Text = "Gallery", FontSize= 12},

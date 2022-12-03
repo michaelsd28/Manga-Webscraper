@@ -1,17 +1,20 @@
-﻿<ui:UiPage  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
-            x:Class="WPF_MangaScrapper.Views.Pages.GalleryPage"
-                d:DataContext="{d:DesignInstance local:GalleryPage, IsDesignTimeCreatable=False}"
+﻿<ui:UiPage  
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+    x:Class="WPF_MangaScrapper.Views.Pages.GalleryPage"
+    d:DataContext="{d:DesignInstance local:GalleryPage, IsDesignTimeCreatable=False}"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Pages" xmlns:components="clr-namespace:WPF_MangaScrapper.Views.Components"
-            mc:Ignorable="d" 
+      xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Pages" 
+    xmlns:components="clr-namespace:WPF_MangaScrapper.Views.Components" xmlns:gallery="clr-namespace:WPF_MangaScrapper.Views.Components.Gallery"
+    mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GalleryPage"
  
        
             >
+
 
 
 
@@ -57,45 +60,16 @@
             </Grid>
         <!--#endregion-->
 
-        <!--#region Combobox -->
-            <Grid  Margin="20" Grid.Row="1" MaxWidth="300">
-            <ComboBox    SelectionChanged="ComboBox_SelectionChanged"  x:Name="ComboBox" >
+                <!--#region Page Controller -->
+                <Grid Grid.Row="1">
+                    <gallery:PageController/>
 
-            </ComboBox>
-        </Grid>
-            <!--#endregion-->
-            
-
-            <!--#region PageController -->
-            <Grid  Margin="20" Grid.Row="2">
-                <Border   MaxWidth="400"  Margin="10" Padding="10" CornerRadius="10">
-                    <Border.Background>
-                        <SolidColorBrush Color="#282c34" Opacity="0.4" />
-                    </Border.Background>
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="10" />
-                    </Border.Effect>
-                    <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button x:Name="BPrev" Click="PreviousButton"  >
-                            <ui:SymbolIcon Symbol="ChevronLeft20"/>
-                        </Button>
-                        <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
-                            <Border.Background>
-                                <SolidColorBrush Opacity="0.6" Color="#292b30"/>
-                            </Border.Background>
-                                <TextBlock MaxWidth="250" ToolTip="{Binding Text,ElementName=TBlockMangaTitle}" TextTrimming="CharacterEllipsis" x:Name="TBlockMangaTitle" FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
-                        </Border>
-
-                        <Button x:Name="BNext"  Click="NextButton" >
-                            <ui:SymbolIcon Symbol="ChevronRight20"/>
-                        </Button>
-                    </StackPanel>
-                </Border>
-            </Grid>
-        <!--#endregion-->
+                </Grid>
+                <!--#endregion-->
 
 
-        <!--#region Manga Gallery -->
+
+                <!--#region Manga Gallery -->
         <Grid  x:Name="galleryGRID" Grid.Row="3">
 
               
@@ -118,17 +92,17 @@
                             <DropShadowEffect BlurRadius="10" />
                         </Border.Effect>
                         <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button  Click="PreviousButton"  >
+                            <Button  >
                                 <ui:SymbolIcon Symbol="ChevronLeft20"/>
                             </Button>
                             <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
                                 <Border.Background>
                                     <SolidColorBrush Opacity="0.6" Color="#292b30"/>
                                 </Border.Background>
-                                <TextBlock MaxWidth="250" ToolTip="{Binding Text,ElementName=TBlockMangaTitle2}" TextTrimming="CharacterEllipsis" x:Name="TBlockMangaTitle2" FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
+                                <TextBlock MaxWidth="250" TextTrimming="CharacterEllipsis" FontSize="14"   VerticalAlignment="Center" Text="One piece chapter 1034"/>
                             </Border>
 
-                            <Button   Click="NextButton" >
+                            <Button    >
                                 <ui:SymbolIcon Symbol="ChevronRight20"/>
                             </Button>
                         </StackPanel>

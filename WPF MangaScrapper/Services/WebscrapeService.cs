@@ -177,12 +177,18 @@ namespace WPF_MangaScrapper.Services
 
             MangaList? mangaList = GlobalStateService.ChapterListDic[KeyName];
 
-            var titles = mangaList.Titles.ToList();
-            var indexTitle = titles.IndexOf(title);
+            var titles = mangaList.Titles.Select(title => title.ToString()).ToList();
+            var indexTitle = titles.IndexOf(title.ToString());
+            var mangaLinkList = mangaList.Links.ToList();
 
-            var mangaLink = mangaList.Links.ToList()[indexTitle].ToString();
+
+            Debug.WriteLine($"ScrapeManga ->  mangaLinkList[indexTitle]==title:: {mangaLinkList[1] == title.ToString()} " +
+                $"mangaLinkList[1] = {mangaLinkList[1]}   ***  title = {title} " +
+                $"indexTitle:: {indexTitle}" +
+                $"");
+            var mangaLink = mangaLinkList[indexTitle];
       
-            var GalleryLinks = await GetElementsAsync(url: mangaLink, query: mangaCaller.GalleryQuery, "src");
+            var GalleryLinks = await GetElementsAsync(url: mangaLink.ToString(), query: mangaCaller.GalleryQuery, "src");
             #endregion
   
 

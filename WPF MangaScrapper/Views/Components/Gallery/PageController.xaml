@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="WPF_MangaScrapper.Views.Components.Gallery.PageController"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Components.Gallery" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+
+    
+    
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+
+        </Grid.RowDefinitions>
+
+        <!--#region Combobox -->
+        <Grid  Margin="20" Grid.Row="0" >
+            <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal">
+                <ComboBox MinWidth="250"    SelectionChanged="ComboBox_SelectionChanged"  x:Name="ComboBox" >
+
+                </ComboBox>
+                <ui:Button Margin="5 0 0 0"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
+                    <Image Width="25"  Source="\Assets\Gallery\webviewIcon.png"/>
+                </ui:Button>
+                <ui:Button  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
+                    <Image Width="25"  Source="\Assets\Gallery\databaseCloudIcon.png"/>
+                </ui:Button>
+            </StackPanel>
+        </Grid>
+        <!--#endregion-->
+
+
+        <!--#region PageController -->
+        <Grid  Margin="20" Grid.Row="1">
+
+            <!--<ContentPresenter   ContentTemplate="{StaticResource ResourceKey=PageControllerTemplate}">
+                        
+                    </ContentPresenter>-->
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Border   MinWidth="400"  MaxWidth="400"  Margin="10" Padding="10" CornerRadius="10">
+                    <Border.Background>
+                        <SolidColorBrush Color="#282c34" Opacity="0.4" />
+                    </Border.Background>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" />
+                    </Border.Effect>
+                    <StackPanel   HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button x:Name="BPrev" Click="PreviousButton"  >
+                            <ui:SymbolIcon Symbol="ChevronLeft20"/>
+                        </Button>
+                        <Border Margin="5" Padding="10" MaxWidth="400"   CornerRadius="10">
+                            <Border.Background>
+                                <SolidColorBrush Opacity="0.6" Color="#292b30"/>
+                            </Border.Background>
+                            <TextBlock  
+                                                TextAlignment="Center" 
+                                                MinWidth="250"  
+                                                MaxWidth="250" 
+                                                ToolTip="{Binding Text,ElementName=TBlockMangaTitle}" 
+                                                TextTrimming="CharacterEllipsis" 
+                                                x:Name="TBlockMangaTitle" 
+                                                FontSize="14"   
+                                                VerticalAlignment="Center" 
+                                        Text="One piece chapter 1034"
+                                        />
+                        </Border>
+
+                        <Button x:Name="BNext"  Click="NextButton" >
+                            <ui:SymbolIcon Symbol="ChevronRight20"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+                <ui:Button ToolTip="Webview" Margin="5 0 0 0"  Background="Transparent"   HorizontalAlignment="Center"  BorderBrush="Transparent"/>
+            </StackPanel>
+        </Grid>
+        <!--#endregion-->
+
+    </Grid>
+</UserControl>

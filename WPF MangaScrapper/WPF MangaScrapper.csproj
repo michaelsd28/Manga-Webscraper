@@ -24,14 +24,39 @@
     <Content Include="Assets\Dashboard\magicStick icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Gallery\databaseCloudIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Gallery\uploadIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Gallery\webviewICon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\one piece logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Webview\2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Webview\image (4).png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Webview\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Webview\script.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Webview\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.17.1" />
     <PackageReference Include="LottieSharp" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1418.22" />
     <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.18.0" />
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
@@ -49,8 +74,16 @@
     <None Remove="Assets\Components\boruto-uzumaki-icon.png" />
     <None Remove="Assets\Dashboard\galleryIcon.png" />
     <None Remove="Assets\Dashboard\magicStick icon.png" />
+    <None Remove="Assets\Gallery\databaseCloudIcon.png" />
+    <None Remove="Assets\Gallery\uploadIcon.png" />
+    <None Remove="Assets\Gallery\webviewICon.png" />
     <None Remove="Assets\Manager\color picker icon.png" />
     <None Remove="Assets\one piece logo.png" />
+    <None Remove="Assets\Webview\2.jpg" />
+    <None Remove="Assets\Webview\image %284%29.png" />
+    <None Remove="Assets\Webview\index.html" />
+    <None Remove="Assets\Webview\script.js" />
+    <None Remove="Assets\Webview\styles.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +101,10 @@
   <ItemGroup>
     <Resource Include="Assets\applicationIcon-1024.png" />
     <Resource Include="Assets\applicationIcon-256.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Components\Admin\" />
   </ItemGroup>
 
 </Project>

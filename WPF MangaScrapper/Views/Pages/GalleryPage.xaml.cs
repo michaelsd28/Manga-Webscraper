@@ -19,9 +19,7 @@ using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Windows;
 using System.Windows.Controls;
 using System.Linq;
-using System.Threading;
-using System.Windows.Threading;
-using System.Windows.Media;
+using WPF_MangaScrapper.Views.Components.Gallery;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -37,11 +35,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
         public static GalleryPage GalleryPageCONTEXT { get; set; }
 
-
         object? mangaTitle = null;
-        int boundIndex = 0;
-        int boundCapacity = 0;
-
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
             ViewModel = viewModel;
@@ -53,115 +47,10 @@ namespace WPF_MangaScrapper.Views.Pages
             Debug.WriteLine("********GalleryPage initialized********");
         }
 
-        private async void PreviousButton(object sender, System.Windows.RoutedEventArgs e)
-        {
 
-
-            #region gridfs example
-            //MongoClient client = new MongoClient("mongodb://localhost:6082");
-            //IMongoDatabase database = client.GetDatabase("Images");
-            //IGridFSBucket bucket = new GridFSBucket(database);
-
-
-            //var imgdata = System.IO.File.ReadAllBytes("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\manga1.png");
-            //var id = bucket.UploadFromBytes("newIMG.png", imgdata);
-
-            //Debug.WriteLine($"id:: -> {id}");
-
-
-
-
-
-            //string OnePiece_Chapters = "http://127.0.0.1:5500/Read%20Mushoku%20Tensei%20Manga%20Online%20-%20English%20Scans.html";
-            //string BorutoQuery = "div.su-expand-content ul.su-posts-list-loop li a";
-
-
-            //await WebscrapeService.GetElementsAsync(OnePiece_Chapters, BorutoQuery);
-
-            #endregion
-
-
-            try
-            {
-
-
-                #region get previous chapter
-
-
-
-                string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
-                MangaList mangaList = GlobalStateService._MangaList[mangaKey];
-                var titleList = mangaList.Titles.ToList();
-                int index = titleList.IndexOf(mangaTitle);
-                boundIndex = index + 1;
-                boundCapacity = titleList.Count;
-                var prevTitle = titleList[index + 1];
-
-                #endregion
-
-
-
-      
-                DisplayChapter(prevTitle);
-
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"PreviusButton:: {ex.Message}");
-            }
-        }
-
-
-
-
-
-        private void NextButton(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-            #region gridfs example
-            //MongoClient client = new MongoClient("mongodb://localhost:6082");
-            //IMongoDatabase database = client.GetDatabase("Images");
-            //IGridFSBucket bucket = new GridFSBucket(database);
-
-            //ObjectId id = new ObjectId("63742278c91007b582fb4436");
-            ///63743ccb4707489c9fc9c8b0
-            //var byteIMG = bucket.DownloadAsBytes(id);
-
-
-            //for (int x = 0; x < 20; x++)
-            //{
-            //    imgStackPanel.Children.Add(new System.Windows.Controls.Image { Source = UtilServices.ByteToBitmapIMG(byteIMG), UseLayoutRounding = true, StretchDirection = StretchDirection.DownOnly });
-            //}
-            #endregion
-
-
-
-            #region get next chapter
-
-
-
-            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
-            MangaList mangaList = GlobalStateService._MangaList[mangaKey];
-            var titleList = mangaList.Titles.ToList();
-            int index = titleList.IndexOf(mangaTitle);
-            boundIndex = index - 1;
-            boundCapacity = titleList.Count;
-
-            var nextTitle = titleList[index - 1];
-            #endregion
-
-
-
-
-            DisplayChapter(nextTitle);
-
-
-        }
 
         private void BGoHome(object sender, RoutedEventArgs e)
-
-           => MainWindow.mainWindowCONTEXT.Navigate(typeof(DashboardPage));
+            => MainWindow.mainWindowCONTEXT.Navigate(typeof(DashboardPage));
 
 
 
@@ -176,9 +65,11 @@ namespace WPF_MangaScrapper.Views.Pages
             try
             {
 
+                Debug.WriteLine($"DisplayChapter -> title:: {title}");
 
-                TBlockMangaTitle.Text = title.ToString();
+                //TBlockMangaTitle.Text = title.ToString();
                 mangaTitle = title;
+                GlobalStateService._state["CurrentManga"] = title.ToString();
 
 
                 #region check button status
@@ -186,17 +77,18 @@ namespace WPF_MangaScrapper.Views.Pages
                 string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
                 MangaList mangaList = GlobalStateService._MangaList[mangaKey];
                 var titleList = mangaList.Titles.ToList();
-                int Bindex = titleList.IndexOf(mangaTitle);
-  
-                boundCapacity = titleList.Count;
 
-                Helper.CheckButtonStatus(BPrev, BNext, Bindex, boundCapacity);
+
+                //boundCapacity = titleList.Count; 
+
+
+                Helper.CheckButtonStatus();
 
                 #endregion
 
                 #region add titles to combobox
-           
-                ComboBox.ItemsSource = titleList;
+
+                //ComboBox.ItemsSource = titleList;
                 int index = titleList.IndexOf(mangaTitle);
 
                 #endregion
@@ -262,13 +154,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-            var selectedItem = ComboBox.SelectedItem;
-            DisplayChapter(selectedItem);
-
-        }
 
 
 
@@ -278,10 +164,63 @@ namespace WPF_MangaScrapper.Views.Pages
         {
 
 
-            public static void CheckButtonStatus(Button prev, Button next, int boundIndex, int boundCapacity)
+            public static void CheckButtonStatus()
             {
-                next.IsEnabled = boundIndex != 0;
-                prev.IsEnabled = boundIndex < boundCapacity - 1;
+
+                //Button prev, Button next, int boundIndex, int boundCapacity
+
+
+
+
+
+                #region get list
+                string mangaTitle = GlobalStateService._state["CurrentManga"].ToString();
+                string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+                MangaList mangaList = GlobalStateService._MangaList[mangaKey];
+                var titleList = mangaList.Titles.ToList().Select(title => title.ToString()).ToList();
+                int index = titleList.IndexOf(mangaTitle);
+                var listLimitIndex = index - 1;
+                var listCapacity = titleList.Count;
+
+
+          
+                #endregion
+
+
+
+                Debug.WriteLine($"CheckButtonStatus -> index:: {index}   ***  listLimitIndex:: {listLimitIndex}   ***  listCapacity:: {listCapacity}");
+
+
+
+
+
+                if (listLimitIndex == -1)
+                {
+                    PageController.PageControllerContext.BNext.IsEnabled = false;
+                }
+                else
+                {
+                    PageController.PageControllerContext.BNext.IsEnabled = true;
+                }
+
+
+
+
+                if (index == listCapacity-1)
+                {
+                    PageController.PageControllerContext.BPrev.IsEnabled = false;
+
+                }
+                else
+                {
+                    PageController.PageControllerContext.BPrev.IsEnabled = true;
+                }
+
+
+
+
+
+
             }
 
 
@@ -307,10 +246,12 @@ namespace WPF_MangaScrapper.Views.Pages
 
                         var image = new Image
                         {
-                            UseLayoutRounding = true,
                             StretchDirection = StretchDirection.DownOnly,
-                            Margin = new Thickness(20),
-                            SnapsToDevicePixels = true,
+
+
+
+                            UseLayoutRounding = true,
+                            Margin = new Thickness(10),
 
 
                         };
