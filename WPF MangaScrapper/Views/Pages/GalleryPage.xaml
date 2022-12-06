@@ -1,96 +1,92 @@
-﻿<ui:UiPage  
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
-    x:Class="WPF_MangaScrapper.Views.Pages.GalleryPage"
-    d:DataContext="{d:DesignInstance local:GalleryPage, IsDesignTimeCreatable=False}"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Pages" 
-    xmlns:components="clr-namespace:WPF_MangaScrapper.Views.Components" xmlns:gallery="clr-namespace:WPF_MangaScrapper.Views.Components.Gallery"
-    mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="GalleryPage"
- 
-       
-            >
-
-
-
-
-    <ScrollViewer   VirtualizingPanel.IsVirtualizing="True"   x:Name="scrollviewer"    CanContentScroll="True"  VerticalScrollBarVisibility="Auto" >
-
-
-
-        <Grid    x:Name="ContentGRID"    >
-
-
-
-
-
-
-            <Grid x:Name="GalleryGRID">
-
+﻿<ui:UiPage xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  x:Class="WPF_MangaScrapper.Views.Pages.GalleryPage"
+  d:DataContext="{d:DesignInstance local:GalleryPage, IsDesignTimeCreatable=False}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:WPF_MangaScrapper.Views.Pages" xmlns:components="clr-namespace:WPF_MangaScrapper.Views.Components" xmlns:gallery="clr-namespace:WPF_MangaScrapper.Views.Components.Gallery" xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+  mc:Ignorable="d"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  Title="GalleryPage">
+    <ScrollViewer
+    VirtualizingPanel.IsVirtualizing="True"
+    x:Name="scrollviewer"
+    CanContentScroll="True"
+    VerticalScrollBarVisibility="Auto">
+        
+        
+        <Grid  x:Name="ContentGRID">
+            <Grid   x:Name="GalleryGRID">
+                
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"/>
-                    <RowDefinition Height="10*"/>
-                    <RowDefinition Height="10*"/>
-                    <RowDefinition Height="60*"/>
-                    <RowDefinition Height="10*"/>
+                    <RowDefinition     Height="10*" />
+                    <RowDefinition       Height="10*" />
+                    <RowDefinition     Height="10*" />
+                    <RowDefinition     Height="60*" />
+                    <RowDefinition   Height="10*" />
                 </Grid.RowDefinitions>
+                
+                
+                <!--#region manga webview -->
+
+                <Grid 
+                    Panel.ZIndex="10"
+                    Visibility="Collapsed"  
+                    x:Name="WebView_CONTAINER"  
+                    Grid.Row="0" 
+                    Grid.RowSpan="5"
+                    >
+                    <gallery:Manga_Webview  />
+                </Grid>
+     
+                <!--#endregion-->
+
 
 
                 <!--#region Header -->
-
-                <Grid x:Name="Header_GRID" Margin="20" Grid.Row="0">
-
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
-
-
-
+                <Grid
+          x:Name="Header_GRID"
+          Margin="20"
+          Grid.Row="0">
+                    <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
+  
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Manga gallery" FontSize="22"/>
                         <ui:Button Margin="10"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
                             <Image Width="30"  Source="\Assets\Components\boruto icon.png"/>
                         </ui:Button>
                     </StackPanel>
-                    <components:FullScreenButton Margin="0 0 0 80" HorizontalAlignment="Right" x:Name="FullScreenButton"  />
-
+                    <components:FullScreenButton
+            Margin="0 0 0 80"
+            HorizontalAlignment="Right"
+            x:Name="FullScreenButton" />
                 </Grid>
                 <!--#endregion-->
-
+                
+                
                 <!--#region Page Controller -->
-                <Grid Panel.ZIndex="10" x:Name="PageController_GRID" Grid.Row="1">
-
-                    <gallery:HiddenPageController/>
-
-
-                    <!--<gallery:PageController/>-->
-
-
+                
+                <Grid
+          Panel.ZIndex="1"
+          x:Name="PageController_GRID"
+          Grid.Row="1">
+                    <!--<gallery:HiddenPageController />-->
+                    <gallery:PageController/>
                 </Grid>
                 <!--#endregion-->
-
-
-
+                
+                
                 <!--#region Manga Gallery -->
-                <Grid  x:Name="galleryGRID" Grid.Row="3">
-
-
+                <Grid
+          x:Name="galleryGRID"
+          Grid.Row="3">
                     <!--<StackPanel VirtualizingPanel.CacheLength="20" VirtualizingPanel.IsVirtualizing="True"  x:Name="imgStackPanel" Orientation="Vertical">
 
 
                 </StackPanel>-->
                 </Grid>
                 <!--#endregion-->
-
-
-
-
-
+                
+                
             </Grid>
         </Grid>
     </ScrollViewer>
-
 </ui:UiPage>

@@ -140,24 +140,13 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
 
 
         private void DisplayInWebview_Click(object sender, RoutedEventArgs e)
-        {
-
-            var headerVisibility = GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility;
-
-            if (headerVisibility == Visibility.Visible)
-            {
-                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Hidden;
-      
-
-            }
-            else
-            {
-                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Visible;
-            }
+          =>  UtilServices.ToggleWebviewScreen();
 
 
 
-        }
+
+
+        
 
         private void SaveToMongoDB_Click(object sender, RoutedEventArgs e)
         {

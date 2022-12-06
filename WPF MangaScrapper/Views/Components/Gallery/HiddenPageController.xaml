@@ -6,44 +6,64 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:galleryComponent="clr-namespace:WPF_MangaScrapper.Views.Components.Gallery"
              mc:Ignorable="d" 
-             
+     
 >
-    <Border  Background="Transparent" Padding="80">
-    <Grid HorizontalAlignment="Center"  >
 
 
-        <Canvas Margin="-250 -370 0 0" >
+
+        <Grid   >
+
+
+
+
+
+            <Canvas Width="450" Background="Transparent" Margin="0 -270 0 0"  >
+
             <Canvas.Triggers>
                 <EventTrigger RoutedEvent="Canvas.MouseLeave">
                     <BeginStoryboard >
                         <Storyboard  >
-                            <ThicknessAnimation Storyboard.TargetProperty="Margin" To="-250 -455 0 0"  Duration="0:0:0.2"/>
-
+                            <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0 -270 0 0"  Duration="0:0:0.2"/>
+                     
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="Canvas.MouseEnter">
+             
                     <BeginStoryboard>
                         <Storyboard >
-                            <ThicknessAnimation Storyboard.TargetProperty="Margin" To="-250 -230 0 0"  Duration="0:0:0.2"/>
-
+                                <!--To="-250 -230 0 0"-->
+                            
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin"  To="0 -80 0 0" Duration="0:0:0.4"/>
+        
+                        
+                       
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
             </Canvas.Triggers >
 
 
-            <Border CornerRadius="10"    Padding="10">
-                <Border.Background>
-                    <SolidColorBrush Color="Black" Opacity="0.8"/>
+
+         
+
+                <Border  CornerRadius="20"  >
+                <Border.Background >
+                    <SolidColorBrush Color="#1a2030" Opacity="0.01"/>
                 </Border.Background>
-                <galleryComponent:PageController/>
-            </Border>
+
             
-            
+
+                <galleryComponent:PageController  Padding="0 80 0 0" />
+                </Border>
+
+
+
+
+
         </Canvas>
 
 
     </Grid>
-    </Border>
+
 </UserControl>

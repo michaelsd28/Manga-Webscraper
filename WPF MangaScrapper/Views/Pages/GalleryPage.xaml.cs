@@ -20,6 +20,7 @@ using WPF_MangaScrapper.Views.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using WPF_MangaScrapper.Views.Components.Gallery;
+using Wpf.Ui.Controls;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -34,6 +35,7 @@ namespace WPF_MangaScrapper.Views.Pages
         }
 
         public static GalleryPage GalleryPageCONTEXT { get; set; }
+        public static PageController_Window PageController_Window { get; set; }
 
         object? mangaTitle = null;
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
@@ -90,6 +92,8 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 PageController.PageControllerContext.ComboBox.ItemsSource = titleList;
                 int indexCombobox = titleList.IndexOf(mangaTitle);
+
+
 
                 #endregion
 
@@ -279,6 +283,24 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 GalleryGRID.Children.Add(stackPanel);
             }
+        }
+
+        private async void webbrowser_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            //await webView .EnsureCoreWebView2Async();
+            //webView.CoreWebView2.Navigate("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Webview\\index.html");
+
+        }
+
+        private void LaunchWindow_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            PageController_Window  = new PageController_Window();
+
+            PageController_Window.Show();
+
         }
     }
 }

@@ -73,7 +73,35 @@ namespace WPF_MangaScrapper.Services
             return image;
         }
 
+        public static void ToggleWebviewScreen() 
+        {
+            var headerVisibility = GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility;
 
+            if (headerVisibility == Visibility.Visible)
+            {
+                GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Collapsed;
+                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Hidden;
+                GalleryPage.PageController_Window = new PageController_Window();
+                GalleryPage.PageController_Window.Show();
+
+                ToggleFullScreen(MainWindow.mainWindowCONTEXT);
+                GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Collapsed;
+                GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Visible;
+                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Visible;
+                GalleryPage.PageController_Window.Close();
+                ToggleFullScreen(MainWindow.mainWindowCONTEXT);
+                GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Visible;
+                GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Collapsed;
+
+
+            }
+
+        }
 
         public static void ToggleFullScreen(MainWindow mainWindow) {
 
@@ -100,6 +128,7 @@ namespace WPF_MangaScrapper.Services
 
             }
             else {
+
                 GalleryPage.GalleryPageCONTEXT.FullScreenButton.Visibility = Visibility.Collapsed;
                 DashboardPage.DashboardPageCONTEXT.FullScreenButton.Visibility = Visibility.Collapsed;
                 mainWindow.RootNavigation.Visibility = Visibility.Visible;
@@ -110,6 +139,9 @@ namespace WPF_MangaScrapper.Services
                 mainWindow.MainWindowRoot.WindowStyle = WindowStyle.SingleBorderWindow;
                 mainWindow.MainWindowRoot.WindowState = WindowState.Normal;
                 mainWindow.WindowCornerPreference = WindowCornerPreference.Round;
+
+                GalleryPage.PageController_Window.Close();
+
 
             }
 
