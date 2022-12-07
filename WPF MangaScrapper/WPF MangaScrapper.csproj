@@ -82,6 +82,7 @@
     <None Remove="Assets\Webview\2.jpg" />
     <None Remove="Assets\Webview\image %284%29.png" />
     <None Remove="Assets\Webview\index.html" />
+    <None Remove="Assets\Webview\MangaGallery\klk.jpg" />
     <None Remove="Assets\Webview\script.js" />
     <None Remove="Assets\Webview\styles.css" />
   </ItemGroup>
@@ -104,6 +105,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Webview\MangaGallery\" />
     <Folder Include="Views\Components\Admin\" />
   </ItemGroup>
 

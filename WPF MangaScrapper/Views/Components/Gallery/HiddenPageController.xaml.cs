@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_MangaScrapper.Views.Pages;
 
 namespace WPF_MangaScrapper.Views.Components.Gallery
 {
@@ -23,6 +24,7 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
         public HiddenPageController()
         {
             InitializeComponent();
+            this.PageController_Component = GalleryPage.GalleryPageCONTEXT.PageController_Component;
         }
     }
 }

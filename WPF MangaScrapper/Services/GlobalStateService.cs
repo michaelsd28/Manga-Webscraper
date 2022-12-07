@@ -14,11 +14,11 @@ namespace WPF_MangaScrapper.Services
 
         public static GlobalStateService globalStateService { get; set; }  
 
-        private GlobalStateService() {   }
-
-        public static Dictionary<string, MangaCaller> ChapterCallerDic { get; set; } = new Dictionary<string, MangaCaller>();
         public static  Dictionary<string, MangaList> ChapterListDic { get; set; } = new Dictionary<string, MangaList> ();
 
+
+
+        private GlobalStateService() { }
         public static GlobalStateService GetInstance() {
 
       

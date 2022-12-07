@@ -11,10 +11,6 @@ namespace WPF_MangaScrapper.Views.Windows
         public PageController_Window()
         {
             InitializeComponent();
-         
-
-
-
         }
     }
 }

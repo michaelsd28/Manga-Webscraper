@@ -17,7 +17,7 @@
 
 
 
-            <Canvas Width="450" Background="Transparent" Margin="0 -270 0 0"  >
+        <Canvas Width="450" Background="Transparent" Margin="0 -270 0 0"  >
 
             <Canvas.Triggers>
                 <EventTrigger RoutedEvent="Canvas.MouseLeave">
@@ -52,9 +52,9 @@
                     <SolidColorBrush Color="#1a2030" Opacity="0.01"/>
                 </Border.Background>
 
-            
 
-                <galleryComponent:PageController  Padding="0 80 0 0" />
+
+                <galleryComponent:PageController x:Name="PageController_Component"  Padding="0 80 0 0" />
                 </Border>
 
 

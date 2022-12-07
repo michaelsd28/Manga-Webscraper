@@ -21,6 +21,7 @@ using System.Windows.Controls;
 using System.Linq;
 using WPF_MangaScrapper.Views.Components.Gallery;
 using Wpf.Ui.Controls;
+using MongoDB.Bson;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
 {
@@ -139,18 +140,14 @@ namespace WPF_MangaScrapper.Views.Pages
 
             Task.Delay(500).Wait();
 
+           
             MangaChapter chapter = await DatabaseService.GetMangaChapter(mangaTitle);
-
-
             var GalleryLinks = chapter.GalleryLinks;
 
+            GlobalStateService._state["CurrentMangaChapter"] = GalleryLinks.ToJson();
 
-            var invokenumbers = 0;
 
             var dispatcher = Application.Current.Dispatcher;
-
-
-
 
             await dispatcher.BeginInvoke(() =>
                {
@@ -234,10 +231,8 @@ namespace WPF_MangaScrapper.Views.Pages
             {
 
                 StackPanel stackPanel = new StackPanel();
-
-
                 GalleryGRID.Children.Clear();
-
+          
 
 
 

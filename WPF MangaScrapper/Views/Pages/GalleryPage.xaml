@@ -69,7 +69,7 @@
           x:Name="PageController_GRID"
           Grid.Row="1">
                     <!--<gallery:HiddenPageController />-->
-                    <gallery:PageController/>
+                    <gallery:PageController x:Name="PageController_Component"/>
                 </Grid>
                 <!--#endregion-->
                 
