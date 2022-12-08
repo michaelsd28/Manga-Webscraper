@@ -146,19 +146,21 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
         private async void DisplayInWebview_Click(object sender, RoutedEventArgs e)
         {
 
+            UtilServices.ToggleWebviewScreen();
 
             if (GlobalStateService._state["IsWebview"] == true)
             {
                 GlobalStateService._state["IsWebview"] = false;
-                UtilServices.ToggleWebviewScreen();
+
                 return;
-            } else 
+            }
+            else
             {
                 GlobalStateService._state["IsWebview"] = true;
             }
-                
-  
-               
+
+
+
 
             string mangaTitle = GlobalStateService._state["CurrentManga"].ToString();
 
@@ -166,26 +168,25 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
             var GalleryLinks = chapter.GalleryLinks;
 
 
-            UtilServices.ToggleWebviewScreen();
+
 
             await UtilServices.WriteToWebGallery(GalleryLinks);
 
-
-        
-            Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
-            await web.webView.EnsureCoreWebView2Async();
-
-
-            web.webView.CoreWebView2.Navigate("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Webview\\index.html");
-
-
-        } 
+   
 
 
 
 
 
-        
+
+           
+        }
+
+
+
+
+
+
 
         private void SaveToMongoDB_Click(object sender, RoutedEventArgs e)
         {

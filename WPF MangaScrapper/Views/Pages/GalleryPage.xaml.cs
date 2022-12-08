@@ -60,7 +60,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
         LottieAnimationView? lottie = null;
 
-        internal async void DisplayChapter(object title)
+        internal void DisplayChapter(object title)
         {
 
             try
@@ -79,6 +79,8 @@ namespace WPF_MangaScrapper.Views.Pages
                 MangaList mangaList = GlobalStateService._MangaList[mangaKey];
                 var titleList = mangaList.Titles.ToList();
 
+          
+   
 
 
 
@@ -112,7 +114,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 #endregion
 
-        
+
 
             }
 
@@ -136,14 +138,32 @@ namespace WPF_MangaScrapper.Views.Pages
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
 
-            Task.Delay(500).Wait();
-
-           
             MangaChapter chapter = await DatabaseService.GetMangaChapter(mangaTitle);
             var GalleryLinks = chapter.GalleryLinks;
 
-            GlobalStateService._state["CurrentMangaChapter"] = GalleryLinks.ToJson();
+
+
+
+
+
+            
+            if (GlobalStateService._state["IsWebview"] == true)
+            {
+                Debug.WriteLine($"*****OnDoWorkAsync -> GlobalStateService._state[\"IsWebview\"] == true:: {GlobalStateService._state["IsWebview"] == true}");
+              await UtilServices.WriteToWebGallery(GalleryLinks);
+
+                return;
+            }
+
+
+
+            Task.Delay(500).Wait();
+
            
+
+
+
+
 
 
             var dispatcher = Application.Current.Dispatcher;
@@ -229,15 +249,9 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-             
-
-                //if (GalleryPageCONTEXT.isW == true)
-                //{
 
 
-                //    //UtilServices.ReloadWebview();
-                //}
-
+  
 
 
 

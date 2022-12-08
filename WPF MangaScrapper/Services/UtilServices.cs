@@ -14,10 +14,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Wpf.Ui.Appearance;
 using WPF_MangaScrapper.Views.Components.Gallery;
 using WPF_MangaScrapper.Views.Pages;
 using WPF_MangaScrapper.Views.Windows;
+using Path = System.IO.Path;
 
 namespace WPF_MangaScrapper.Services
 {
@@ -181,31 +183,53 @@ public static void ToggleWebviewScreen()
         internal static async Task WriteToWebGallery(IEnumerable<object>? galleryLinks)
         {
 
-            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            var htmlPath = @"C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Webview\index.html";
 
-            var mangaLinks = galleryLinks.ToList();
+            string currentDir = Directory.GetCurrentDirectory();
+            string htmlFilePath = Path.Combine(currentDir, "Assets", "Webview", "index.html");
+            string ImagefilePath = Path.Combine(currentDir, "Assets", "Webview", "MangaGallery");
 
-            for (int x = 0; x < mangaLinks.ToList().Count; x++)
+
+
+
+
+            for (int x = 0; x < galleryLinks.Count(); x++)
             {
 
-                Debug.WriteLine($"mangaLinks[{x}]:: {mangaLinks[x]}");
+                var currentImageLink = galleryLinks.ElementAt(x).ToString();
 
-                string htmlString = File.ReadAllText(htmlPath);
+                Debug.WriteLine($"mangaLinks[{x}]:: {currentImageLink}");
+
+                #region download imaga and write to file
 
                 using var client = new HttpClient();
-
-                using var response = await client.GetAsync(mangaLinks[x].ToString());
-
+                using var response = await client.GetAsync(currentImageLink);
                 byte[] imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                var fileName = "loco" + x + ".png";
-                await File.WriteAllBytesAsync(@"C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Webview\MangaGallery\" + fileName, imageBytes);
+                string fileName = "loco" + x + ".png";
+                await File.WriteAllBytesAsync(ImagefilePath + "\\" + fileName, imageBytes);
 
+                #endregion
+
+
+                #region get div container from html
+                string htmlString = File.ReadAllText(htmlFilePath);
                 var config = AngleSharp.Configuration.Default;
                 using var context = BrowsingContext.New(config);
                 using var doc = await context.OpenAsync(req => req.Content(htmlString));
                 var divContainer = doc.QuerySelector(".galleryReader");
+
+
+                /// h1 title
+                var h1Title = doc.QuerySelector(".mangaTitle");
+
+
+                var mangaTitle = (string) GlobalStateService._state["CurrentManga"];
+                h1Title.TextContent = mangaTitle;
+
+
+
+                #endregion
+
 
                 #region clear container before adding images
                 if (x <= 0)
@@ -215,18 +239,19 @@ public static void ToggleWebviewScreen()
 
                 #endregion
 
-                var wli = doc.CreateElement("img");
- 
-     
-                wli.SetAttribute("src", "./MangaGallery/" + fileName);
-                wli.SetAttribute("alt", x.ToString());
 
-                divContainer.AppendChild(wli);
+                #region create image element and add it to html
 
+                var imageElement = doc.CreateElement("img");
+                imageElement.SetAttribute("src", "./MangaGallery/" + fileName);
+                imageElement.SetAttribute("alt", x.ToString());
 
-                await File.WriteAllTextAsync(htmlPath, doc.ToHtml());
+                divContainer.AppendChild(imageElement);
 
 
+                await File.WriteAllTextAsync(htmlFilePath, doc.ToHtml());
+
+                #endregion
 
 
 
@@ -234,25 +259,36 @@ public static void ToggleWebviewScreen()
             }
 
 
+           await ReloadWebview();
 
-
-
-
-
-
-
-            //UtilServices.ToggleWebviewScreen();
-            Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
-            await web.webView.EnsureCoreWebView2Async();
-
-
-            web.webView.CoreWebView2.Navigate("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Webview\\index.html");
 
         }
 
-        internal static void ReloadWebview()
+        internal static async Task ReloadWebview()
         {
-            throw new NotImplementedException();
+
+            Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Dispatcher.Invoke(() =>
+            {
+                return GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
+            });
+
+
+            await web.webView.Dispatcher.InvokeAsync(() =>
+            {
+                web.webView.EnsureCoreWebView2Async();
+
+                string currentDir = Directory.GetCurrentDirectory();
+                string htmlFilePath = Path.Combine(currentDir, "Assets", "Webview", "index.html");
+                web.webView.CoreWebView2.Navigate(htmlFilePath);
+            });
+
+
+            //Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
+            //await web.webView.EnsureCoreWebView2Async();
+
+            //string currentDir = Directory.GetCurrentDirectory();
+            //string htmlFilePath = Path.Combine(currentDir, "Assets", "Webview", "index.html");
+            //web.webView.CoreWebView2.Navigate(htmlFilePath);
         }
     }
 }

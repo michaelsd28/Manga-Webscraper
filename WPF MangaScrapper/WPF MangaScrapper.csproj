@@ -36,12 +36,6 @@
     <Content Include="Assets\one piece logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Webview\2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Webview\image (4).png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Webview\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
