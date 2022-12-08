@@ -147,10 +147,18 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
         {
 
 
-            //if (GlobalStateService._state["IsWebview"] == true)
-            //    GlobalStateService._state["IsWebview"] = false;
-            //else
-            //    GlobalStateService._state["IsWebview"] = true;
+            if (GlobalStateService._state["IsWebview"] == true)
+            {
+                GlobalStateService._state["IsWebview"] = false;
+                UtilServices.ToggleWebviewScreen();
+                return;
+            } else 
+            {
+                GlobalStateService._state["IsWebview"] = true;
+            }
+                
+  
+               
 
             string mangaTitle = GlobalStateService._state["CurrentManga"].ToString();
 
