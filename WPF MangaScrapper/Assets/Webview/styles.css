@@ -7,10 +7,22 @@
 overflow:scroll;
 overflow-x:hidden;
   }
+.galleryReader{
 
-img {
 
-width: 100%;
+  justify-content: center;
+justify-items: center;
+justify-self: center;
+
+
+
+
+}
+
+.galleryReader img {
+
+  margin: 30px;
+
 }
 
   h1 {

@@ -1,9 +1,4 @@
 ﻿
-//String onePieceUrl = "https://readtcbscans.com/mangas/5/one-piece";
-//String BorutoURL = "https://ww1.read-boruto.online/manga/";
-//String BokuNoURL = "https://muheroacademia.com/";
-
-
 using LottieSharp.WPF;
 using MongoDB.Driver;
 using System;
@@ -41,6 +36,7 @@ namespace WPF_MangaScrapper.Views.Pages
         object? mangaTitle = null;
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
+            GlobalStateService._state["IsWebview"] = false;
             ViewModel = viewModel;
             InitializeComponent();
             GalleryPageCONTEXT = this;
@@ -50,6 +46,8 @@ namespace WPF_MangaScrapper.Views.Pages
             Debug.WriteLine("********GalleryPage initialized********");
         }
 
+
+        public bool isWebView = false;
 
 
         private void BGoHome(object sender, RoutedEventArgs e)
@@ -145,6 +143,7 @@ namespace WPF_MangaScrapper.Views.Pages
             var GalleryLinks = chapter.GalleryLinks;
 
             GlobalStateService._state["CurrentMangaChapter"] = GalleryLinks.ToJson();
+           
 
 
             var dispatcher = Application.Current.Dispatcher;
@@ -170,12 +169,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
             public static void CheckPageControllerStatus()
             {
-
-
-
-
-
-
+                
 
                 #region get list
 
@@ -227,19 +221,31 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-            internal static void AddImageToStack(IEnumerable<object>? galleryLinks, Grid GalleryGRID)
+            internal static async void AddImageToStack(IEnumerable<object>? galleryLinks, Grid GalleryGRID)
             {
 
                 StackPanel stackPanel = new StackPanel();
                 GalleryGRID.Children.Clear();
-          
+
+
+
+             
+
+                //if (GalleryPageCONTEXT.isW == true)
+                //{
+
+
+                //    //UtilServices.ReloadWebview();
+                //}
+
+
 
 
 
                 foreach (var link in galleryLinks)
                 {
 
-                    Debug.WriteLine($"AddImageToStack -> link:: {link}    ****  {galleryLinks.Count()}");
+           
                     if (link != null && !link.ToString().Contains("./"))
                     {
 

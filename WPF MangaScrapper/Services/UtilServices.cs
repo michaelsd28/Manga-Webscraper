@@ -1,13 +1,23 @@
-﻿using System;
+﻿
+
+using AngleSharp;
+using LottieSharp.WPF;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
-using System.Windows.Media;
+using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Appearance;
+using WPF_MangaScrapper.Views.Components.Gallery;
 using WPF_MangaScrapper.Views.Pages;
 using WPF_MangaScrapper.Views.Windows;
-using LottieSharp.WPF;
-
 
 namespace WPF_MangaScrapper.Services
 {
@@ -73,35 +83,43 @@ namespace WPF_MangaScrapper.Services
             return image;
         }
 
-        public static void ToggleWebviewScreen() 
-        {
-            var headerVisibility = GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility;
+public static void ToggleWebviewScreen() 
+{
+    // Create a local variable to store the header visibility
+    var headerVisibility = GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility;
 
-            if (headerVisibility == Visibility.Visible)
-            {
-                GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Collapsed;
-                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Hidden;
-                GalleryPage.PageController_Window = new PageController_Window();
-                GalleryPage.PageController_Window.Show();
+    // Check the header visibility
+    if (headerVisibility == System.Windows.Visibility.Visible)
+    {
+        // Hide the header and show the web view
+        GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Hidden;
+        GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Visible;
 
-                ToggleFullScreen(MainWindow.mainWindowCONTEXT);
-                GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Collapsed;
-                GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Visible;
+        // Show the page controller window and toggle full screen mode
+        GalleryPage.PageController_Window = new PageController_Window();
+        GalleryPage.PageController_Window.Show();
+        ToggleFullScreen(MainWindow.mainWindowCONTEXT);
 
-            }
-            else
-            {
-                GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Visible;
-                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Visible;
-                GalleryPage.PageController_Window.Close();
-                ToggleFullScreen(MainWindow.mainWindowCONTEXT);
-                GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Visible;
-                GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Collapsed;
+        // Hide the gallery grid and the page controller grid
+        GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Collapsed;
+        GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Collapsed;
+    }
+    else
+    {
+        // Show the header and hide the web view
+        GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Visible;
+        GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Collapsed;
 
+        // Close the page controller window and toggle full screen mode
+        GalleryPage.PageController_Window.Close();
+        ToggleFullScreen(MainWindow.mainWindowCONTEXT);
 
-            }
+        // Show the gallery grid and the page controller grid
+        GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Visible;
+        GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Visible;
+    }
+}
 
-        }
 
         public static void ToggleFullScreen(MainWindow mainWindow) {
 
@@ -160,5 +178,81 @@ namespace WPF_MangaScrapper.Services
 
         }
 
+        internal static async Task WriteToWebGallery(IEnumerable<object>? galleryLinks)
+        {
+
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            var htmlPath = @"C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Webview\index.html";
+
+            var mangaLinks = galleryLinks.ToList();
+
+            for (int x = 0; x < mangaLinks.ToList().Count; x++)
+            {
+
+                Debug.WriteLine($"mangaLinks[{x}]:: {mangaLinks[x]}");
+
+                string htmlString = File.ReadAllText(htmlPath);
+
+                using var client = new HttpClient();
+
+                using var response = await client.GetAsync(mangaLinks[x].ToString());
+
+                byte[] imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                var fileName = "loco" + x + ".png";
+                await File.WriteAllBytesAsync(@"C:\Users\rd28\Videos\Coding 2022\My Personal Projects\03 - Manga Webscrape  Remastered\WPF MangaScrapper\WPF MangaScrapper\Assets\Webview\MangaGallery\" + fileName, imageBytes);
+
+                var config = AngleSharp.Configuration.Default;
+                using var context = BrowsingContext.New(config);
+                using var doc = await context.OpenAsync(req => req.Content(htmlString));
+                var divContainer = doc.QuerySelector(".galleryReader");
+
+                #region clear container before adding images
+                if (x <= 0)
+                {
+                    divContainer.InnerHtml = "";
+                }
+
+                #endregion
+
+                var wli = doc.CreateElement("img");
+ 
+     
+                wli.SetAttribute("src", "./MangaGallery/" + fileName);
+                wli.SetAttribute("alt", x.ToString());
+
+                divContainer.AppendChild(wli);
+
+
+                await File.WriteAllTextAsync(htmlPath, doc.ToHtml());
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+            //UtilServices.ToggleWebviewScreen();
+            Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
+            await web.webView.EnsureCoreWebView2Async();
+
+
+            web.webView.CoreWebView2.Navigate("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Webview\\index.html");
+
+        }
+
+        internal static void ReloadWebview()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
