@@ -267,14 +267,11 @@ public static void ToggleWebviewScreen()
         internal static async Task ReloadWebview()
         {
 
-            Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Dispatcher.Invoke(() =>
-            {
-                return GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
-            });
+   
 
-
-            await web.webView.Dispatcher.InvokeAsync(() =>
+            await GalleryPage.GalleryPageCONTEXT.Dispatcher.InvokeAsync(() =>
             {
+                Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
                 web.webView.EnsureCoreWebView2Async();
 
                 string currentDir = Directory.GetCurrentDirectory();
