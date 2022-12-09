@@ -29,7 +29,6 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
         {
             InitializeComponent();
             PageControllerContext = this;
-
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

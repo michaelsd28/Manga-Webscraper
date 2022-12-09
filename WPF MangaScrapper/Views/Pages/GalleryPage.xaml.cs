@@ -70,7 +70,9 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
                 mangaTitle = title;
-                GlobalStateService._state["CurrentManga"] = title.ToString();
+
+                
+                GlobalStateService._state["CurrentManga"] = title?.ToString();
                 
 
 
@@ -92,11 +94,9 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 #region add titles to combobox
 
-
-                PageController.PageControllerContext.TBlockMangaTitle.Text = mangaTitle.ToString();
                 PageController.PageControllerContext.ComboBox.ItemsSource = titleList;
                 int indexCombobox = titleList.IndexOf(mangaTitle);
-                
+                PageController.PageControllerContext.TBlockMangaTitle.Text = title.ToString();
 
 
                 #endregion
