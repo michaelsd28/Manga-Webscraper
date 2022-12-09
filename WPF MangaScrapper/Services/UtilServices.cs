@@ -1,6 +1,4 @@
-﻿
-
-using AngleSharp;
+﻿using AngleSharp;
 using LottieSharp.WPF;
 using System;
 using System.Collections.Generic;
@@ -27,6 +25,9 @@ namespace WPF_MangaScrapper.Services
     {
 
         public static void QuickMessageBox(string title , string content) {
+
+   
+
 
             Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
             messageBox.Title = title;
@@ -85,42 +86,42 @@ namespace WPF_MangaScrapper.Services
             return image;
         }
 
-public static void ToggleWebviewScreen() 
-{
-    // Create a local variable to store the header visibility
-    var headerVisibility = GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility;
+        public static void ToggleWebviewScreen() 
+        {
+            // Create a local variable to store the header visibility
+            var headerVisibility = GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility;
 
-    // Check the header visibility
-    if (headerVisibility == System.Windows.Visibility.Visible)
-    {
-        // Hide the header and show the web view
-        GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Hidden;
-        GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Visible;
+            // Check the header visibility
+            if (headerVisibility == System.Windows.Visibility.Visible)
+            {
+                // Hide the header and show the web view
+                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Hidden;
+                GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Visible;
 
-        // Show the page controller window and toggle full screen mode
-        GalleryPage.PageController_Window = new PageController_Window();
-        GalleryPage.PageController_Window.Show();
-        ToggleFullScreen(MainWindow.mainWindowCONTEXT);
+                // Show the page controller window and toggle full screen mode
+                GalleryPage.PageController_Window = new PageController_Window();
+                GalleryPage.PageController_Window.Show();
+                ToggleFullScreen(MainWindow.mainWindowCONTEXT);
 
-        // Hide the gallery grid and the page controller grid
-        GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Collapsed;
-        GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Collapsed;
-    }
-    else
-    {
-        // Show the header and hide the web view
-        GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Visible;
-        GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Collapsed;
+                // Hide the gallery grid and the page controller grid
+                GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Collapsed;
+                GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // Show the header and hide the web view
+                GalleryPage.GalleryPageCONTEXT.Header_GRID.Visibility = Visibility.Visible;
+                GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Visibility = Visibility.Collapsed;
 
-        // Close the page controller window and toggle full screen mode
-        GalleryPage.PageController_Window.Close();
-        ToggleFullScreen(MainWindow.mainWindowCONTEXT);
+                // Close the page controller window and toggle full screen mode
+                GalleryPage.PageController_Window.Close();
+                ToggleFullScreen(MainWindow.mainWindowCONTEXT);
 
-        // Show the gallery grid and the page controller grid
-        GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Visible;
-        GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Visible;
-    }
-}
+                // Show the gallery grid and the page controller grid
+                GalleryPage.GalleryPageCONTEXT.galleryGRID.Visibility = Visibility.Visible;
+                GalleryPage.GalleryPageCONTEXT.PageController_GRID.Visibility = Visibility.Visible;
+            }
+        }
 
 
         public static void ToggleFullScreen(MainWindow mainWindow) {
@@ -271,21 +272,24 @@ public static void ToggleWebviewScreen()
 
             await GalleryPage.GalleryPageCONTEXT.Dispatcher.InvokeAsync(() =>
             {
+
+                // Get the web view object from the gallery page context.
                 Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
+
+                // Ensure that the web view is ready to use.
                 web.webView.EnsureCoreWebView2Async();
 
+                // Get the current directory and the path to the HTML file.
                 string currentDir = Directory.GetCurrentDirectory();
                 string htmlFilePath = Path.Combine(currentDir, "Assets", "Webview", "index.html");
+
+                // Navigate to the HTML file in the web view.
                 web.webView.CoreWebView2.Navigate(htmlFilePath);
+
             });
 
 
-            //Manga_Webview web = (Manga_Webview)GalleryPage.GalleryPageCONTEXT.WebView_CONTAINER.Children[0];
-            //await web.webView.EnsureCoreWebView2Async();
-
-            //string currentDir = Directory.GetCurrentDirectory();
-            //string htmlFilePath = Path.Combine(currentDir, "Assets", "Webview", "index.html");
-            //web.webView.CoreWebView2.Navigate(htmlFilePath);
         }
+
     }
 }

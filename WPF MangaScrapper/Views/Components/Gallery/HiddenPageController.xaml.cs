@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Linq;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WPF_MangaScrapper.Models;
+using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Pages;
 
 namespace WPF_MangaScrapper.Views.Components.Gallery
@@ -24,7 +14,25 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
         public HiddenPageController()
         {
             InitializeComponent();
-            this.PageController_Component = GalleryPage.GalleryPageCONTEXT.PageController_Component;
+
+
+            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+            MangaList mangaList = GlobalStateService._MangaList[mangaKey];
+            var titleList = mangaList.Titles.ToList();
+
+
+            #region add titles to combobox
+
+            var title =   GlobalStateService._state["CurrentManga"].ToString();
+
+            PageController_Hidden.TBlockMangaTitle.Text = title;
+
+            PageController_Hidden.ComboBox.ItemsSource = titleList;
+            int indexCombobox = titleList.IndexOf(title);
+
+
+
+            #endregion
         }
     }
 }

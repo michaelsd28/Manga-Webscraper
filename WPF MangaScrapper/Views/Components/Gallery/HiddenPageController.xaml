@@ -54,7 +54,7 @@
 
 
 
-                <galleryComponent:PageController x:Name="PageController_Component"  Padding="0 80 0 0" />
+                <galleryComponent:PageController x:Name="PageController_Hidden"  Padding="0 80 0 0" />
                 </Border>
 
 

@@ -46,6 +46,6 @@ Background="Transparent"
 
     <Grid  Panel.ZIndex="10"       >
 
-        <gallery:HiddenPageController/>
+        <gallery:HiddenPageController x:Name="HiddenPageController"/>
     </Grid>
 </Window>

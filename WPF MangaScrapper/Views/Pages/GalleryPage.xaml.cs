@@ -71,6 +71,7 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 mangaTitle = title;
                 GlobalStateService._state["CurrentManga"] = title.ToString();
+                
 
 
                 #region check button status
@@ -91,9 +92,11 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 #region add titles to combobox
 
+
+                PageController.PageControllerContext.TBlockMangaTitle.Text = mangaTitle.ToString();
                 PageController.PageControllerContext.ComboBox.ItemsSource = titleList;
                 int indexCombobox = titleList.IndexOf(mangaTitle);
-
+                
 
 
                 #endregion
@@ -150,9 +153,8 @@ namespace WPF_MangaScrapper.Views.Pages
             if (GlobalStateService._state["IsWebview"] == true)
             {
                 Debug.WriteLine($"*****OnDoWorkAsync -> GlobalStateService._state[\"IsWebview\"] == true:: {GlobalStateService._state["IsWebview"] == true}");
-              await UtilServices.WriteToWebGallery(GalleryLinks);
+                await UtilServices.WriteToWebGallery(GalleryLinks);
 
-                return;
             }
 
 
@@ -259,7 +261,9 @@ namespace WPF_MangaScrapper.Views.Pages
                 foreach (var link in galleryLinks)
                 {
 
-           
+                    Debug.WriteLine($"AddImageToStack -> link:: {link}");
+
+
                     if (link != null && !link.ToString().Contains("./"))
                     {
 

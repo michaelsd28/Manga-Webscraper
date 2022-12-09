@@ -21,7 +21,12 @@
         <!--#region Combobox -->
         <Grid Margin="20" Grid.Row="0" >
             <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal">
-                <ComboBox Background="#2d3242"   MinWidth="250"    SelectionChanged="ComboBox_SelectionChanged"  x:Name="ComboBox" >
+                <ComboBox 
+                    Background="#2d3242"   
+                    MinWidth="250"    
+                    SelectionChanged="ComboBox_SelectionChanged"  
+                    x:Name="ComboBox" 
+                    >
 
                 </ComboBox>
                 <ui:Button 
@@ -68,6 +73,7 @@
                                 <SolidColorBrush Opacity="0.6" Color="#292b30"/>
                             </Border.Background>
                             <TextBlock  
+                               Foreground="White"
                                                 TextAlignment="Center" 
                                                 MinWidth="250"  
                                                 MaxWidth="250" 

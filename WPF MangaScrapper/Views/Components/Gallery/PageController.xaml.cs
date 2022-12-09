@@ -152,34 +152,35 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
             {
                 GlobalStateService._state["IsWebview"] = false;
 
-                return;
             }
             else
             {
+
                 GlobalStateService._state["IsWebview"] = true;
+
+
+                string mangaTitle = GlobalStateService._state["CurrentManga"].ToString();
+
+                MangaChapter chapter = await DatabaseService.GetMangaChapter(mangaTitle);
+                var GalleryLinks = chapter.GalleryLinks;
+
+
+                await UtilServices.WriteToWebGallery(GalleryLinks);
             }
 
 
 
 
-            string mangaTitle = GlobalStateService._state["CurrentManga"].ToString();
-
-            MangaChapter chapter = await DatabaseService.GetMangaChapter(mangaTitle);
-            var GalleryLinks = chapter.GalleryLinks;
-
-
-
-
-            await UtilServices.WriteToWebGallery(GalleryLinks);
-
-   
 
 
 
 
 
 
-           
+
+
+
+
         }
 
 

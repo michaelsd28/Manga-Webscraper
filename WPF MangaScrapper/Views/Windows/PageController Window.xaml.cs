@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using WPF_MangaScrapper.Views.Components.Gallery;
 
 namespace WPF_MangaScrapper.Views.Windows
 {
@@ -11,6 +12,7 @@ namespace WPF_MangaScrapper.Views.Windows
         public PageController_Window()
         {
             InitializeComponent();
+            HiddenPageController.PageController_Hidden = PageController.PageControllerContext;
         }
     }
 }

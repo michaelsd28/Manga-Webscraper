@@ -50,7 +50,12 @@
             HorizontalAlignment="Center">
   
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Manga gallery" FontSize="22"/>
-                        <ui:Button Margin="10"  Background="Transparent" Click="BGoHome"   HorizontalAlignment="Center"  BorderBrush="Transparent">
+                        <ui:Button 
+                            Margin="10"  
+                            Background="Transparent" 
+                            Click="BGoHome"   
+                            HorizontalAlignment="Center"  
+                            BorderBrush="Transparent">
                             <Image Width="30"  Source="\Assets\Components\boruto icon.png"/>
                         </ui:Button>
                     </StackPanel>
