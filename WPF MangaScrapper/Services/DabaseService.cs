@@ -61,7 +61,14 @@ namespace WPF_MangaScrapper.Services
         {
             var collection = DatabaseServiceUTILS.MongoCollection("Mangas");
 
-            var chapterColl = await collection.Find(new BsonDocument("Title", title.ToString())).FirstOrDefaultAsync();
+            if (title == null) {
+
+                title = GlobalStateService._state["CurrentManga"].ToString();
+          
+            }
+
+            var chapterColl = await collection.Find(new BsonDocument("Title", title?.ToString())).FirstOrDefaultAsync();
+
 
             MangaChapter? chapter = null;
             if (chapterColl != null)

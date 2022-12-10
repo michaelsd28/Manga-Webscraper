@@ -19,39 +19,7 @@ namespace WPF_MangaScrapper.Services
     internal class WebscrapeService
     {
 
-        #region variables for chapters
 
-
-        readonly static string Mushoku_Chapters = "http://127.0.0.1:5500/Read%20Mushoku%20Tensei%20Manga%20Online%20-%20English%20Scans.html";
-        readonly static string MushokuQuery = "div.su-expand-content ul.su-posts-list-loop li a";
-
-        readonly static string OnePiece_Chapters = "http://127.0.0.1:5500/One%20Piece%20_%20TCB%20Scans.html";
-        readonly static string OnepQuery = "body > main > div.overflow-hidden > div > div > div.col-span-2 > a:nth-child(n) > div.text-lg.font-bold";
-
-        readonly static string Boruto_Chapters = "http://127.0.0.1:5500/Boruto_%20Naruto%20Next%20Generations.html";
-        readonly static string BorutoQuery = "body > div.wrap > div > div.site-content > div > div.c-page-content.style-1 > div > div > div > div > div > div > div > div.page-content-listing.single-page > div > ul > li:nth-child(n) > div:nth-child(1) > a";
-
-        readonly static string BokuNoHero_Chapters = "http://127.0.0.1:5500/Read%20My%20Hero%20Academia%20Manga%20Online%20[FREE]%E2%9C%85.html";
-        readonly static string BokuNoHeroQuery = "#manga-chapters-holder > div.page-content-listing.single-page > div > ul > li:nth-child(n) > div:nth-child(1) > a";
-
-
-        #endregion
-
-        #region variables for gallery
-
-
-        readonly static string Mushoku_Base = "http://127.0.0.1:5501/mushoku%20tensei,%20Chapter%2057%20-%20English%20Scans.html";
-        readonly static string MushokuGallery_Query = "body > main > div.overflow-hidden > div > div > div.col-span-2 > a:nth-child(n) > div.text-lg.font-bold";
-
-        readonly static string OnePiece_Base = "http://127.0.0.1:5500/One%20Piece%20Chapter%201066%20_%20TCB%20Scans.html";
-        readonly static string OnepGallery_Query = "body > div.container.px-3.mx-auto > div > div.w-full.md\\:w-2\\/3.px-2 > div:nth-child(n) > div > div.col-span-3 > a";
-
-        readonly static string Boruto_Base = "http://127.0.0.1:5500/Boruto_%20Naruto%20Next%20Generations,%20Chapter%2074%20-%20Boruto_%20Naruto%20Next%20Generations%20Manga%20Online.html";
-        readonly static string BorutoGallery_Query = "div.entry-content img[src]";
-
-        readonly static string BokuNoHero_Base = "http://127.0.0.1:5500/My%20Hero%20Academia,%20Chapter%20372%20-%20My%20Hero%20Academia%20Manga%20Online.html";
-        readonly static string BokuGallery_Query = ".entry-content div.separator img";
-        #endregion
 
         static string RemoveSpaces(string value)
         {

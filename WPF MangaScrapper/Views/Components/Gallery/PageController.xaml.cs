@@ -27,17 +27,13 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
 
         public PageController()
         {
+
             InitializeComponent();
             PageControllerContext = this;
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            var selectedItem = ComboBox.SelectedItem;
-            GalleryPage.GalleryPageCONTEXT.DisplayChapter(selectedItem);
 
         }
+
+
 
 
 
@@ -89,6 +85,9 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
                 #endregion
 
 
+                GlobalStateService._state["CurrentManga"] = prevTitle;
+
+
                 GalleryPage.GalleryPageCONTEXT.DisplayChapter(prevTitle);
 
 
@@ -134,7 +133,7 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
 
             #endregion
 
-
+            GlobalStateService._state["CurrentManga"] = nextTitle;
             GalleryPage.GalleryPageCONTEXT.DisplayChapter(nextTitle);
 
 
@@ -170,20 +169,7 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
 
 
 
-
-
-
-
-
-
-
-
-
-
         }
-
-
-
 
 
 

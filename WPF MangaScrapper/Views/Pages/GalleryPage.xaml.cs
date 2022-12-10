@@ -15,7 +15,6 @@ using WPF_MangaScrapper.Views.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using WPF_MangaScrapper.Views.Components.Gallery;
-using Wpf.Ui.Controls;
 using MongoDB.Bson;
 /// chapters
 namespace WPF_MangaScrapper.Views.Pages
@@ -32,8 +31,6 @@ namespace WPF_MangaScrapper.Views.Pages
 
         public static GalleryPage GalleryPageCONTEXT { get; set; }
         public static PageController_Window PageController_Window { get; set; }
-
-        object? mangaTitle = null;
         public GalleryPage(ViewModels.DashboardViewModel viewModel)
         {
             GlobalStateService._state["IsWebview"] = false;
@@ -66,21 +63,27 @@ namespace WPF_MangaScrapper.Views.Pages
             try
             {
 
+
+                if (title == null) {
+                
+                
+                title = GlobalStateService._state["CurrentManga"].ToString();
+                }
+        
+
                 Debug.WriteLine($"DisplayChapter -> title:: {title}");
 
 
-                mangaTitle = title;
+                GlobalStateService._state["CurrentManga"] =  title.ToString();
 
-                
-                GlobalStateService._state["CurrentManga"] = title?.ToString();
-                
 
+                var currentTitle = GlobalStateService._state["CurrentManga"];
 
                 #region check button status
 
                 string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
                 MangaList mangaList = GlobalStateService._MangaList[mangaKey];
-                var titleList = mangaList.Titles.ToList();
+ 
 
           
    
@@ -94,9 +97,28 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 #region add titles to combobox
 
-                PageController.PageControllerContext.ComboBox.ItemsSource = titleList;
-                int indexCombobox = titleList.IndexOf(mangaTitle);
-                PageController.PageControllerContext.TBlockMangaTitle.Text = title.ToString();
+
+
+                    // Create an IEnumerable of objects
+                    var titleList = mangaList.Titles.ToList();
+
+                    // Convert the IEnumerable to a List of strings using the ConvertToStringList method
+                    List<string> stringTitleList = ConvertToStringList(titleList);
+
+                // Create a ComboBox object
+                    var comboBoxController = PageController.PageControllerContext.ControllerComboBox;
+
+                    // Use the ComboBox object to access the properties and methods of the underlying ComboBox object
+                    comboBoxController.ItemsSource = stringTitleList;
+
+                // Unsubscribe from the SelectionChanged event before changing the SelectedIndex
+                comboBoxController.SelectionChanged -= ComboBoxSelectionChanged;
+
+                    int indexTitle = stringTitleList.IndexOf(currentTitle.ToString());
+                    comboBoxController.SelectedIndex = indexTitle;
+
+                // Resubscribe to the SelectionChanged event
+                comboBoxController.SelectionChanged += ComboBoxSelectionChanged;
 
 
                 #endregion
@@ -123,8 +145,23 @@ namespace WPF_MangaScrapper.Views.Pages
 
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception ex:: {ex.Message}       ***DisplayChapter***");
+                Debug.WriteLine($"Exception ex:: {ex}       ***DisplayChapter***");
             }
+        }
+
+
+        private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combobox = sender as ComboBox;
+
+            GalleryPageCONTEXT.DisplayChapter(combobox.SelectedItem);
+
+        }
+
+        // This method converts an IEnumerable<object> to a List<string>
+        public List<string> ConvertToStringList(IEnumerable<object> inputList)
+        {
+            return inputList.Select(item => item.ToString()).ToList();
         }
 
 
@@ -140,13 +177,13 @@ namespace WPF_MangaScrapper.Views.Pages
 
         private async void OnDoWorkAsync(object? sender, DoWorkEventArgs e)
         {
+            var currentTitle = GlobalStateService._state["CurrentManga"];
 
-            MangaChapter chapter = await DatabaseService.GetMangaChapter(mangaTitle);
+
+            Debug.WriteLine($"OnDoWorkAsync-> currentTitle:: {currentTitle}");
+
+            MangaChapter chapter = await DatabaseService.GetMangaChapter(currentTitle);
             var GalleryLinks = chapter.GalleryLinks;
-
-
-
-
 
 
             
@@ -158,15 +195,9 @@ namespace WPF_MangaScrapper.Views.Pages
             }
 
 
-
             Task.Delay(500).Wait();
 
            
-
-
-
-
-
 
             var dispatcher = Application.Current.Dispatcher;
 
@@ -235,9 +266,6 @@ namespace WPF_MangaScrapper.Views.Pages
 
 
 
-
-
-
             }
 
 
@@ -248,13 +276,6 @@ namespace WPF_MangaScrapper.Views.Pages
 
                 StackPanel stackPanel = new StackPanel();
                 GalleryGRID.Children.Clear();
-
-
-
-
-
-  
-
 
 
 
@@ -304,13 +325,7 @@ namespace WPF_MangaScrapper.Views.Pages
             }
         }
 
-        private async void webbrowser_Loaded(object sender, RoutedEventArgs e)
-        {
 
-            //await webView .EnsureCoreWebView2Async();
-            //webView.CoreWebView2.Navigate("C:\\Users\\rd28\\Videos\\Coding 2022\\My Personal Projects\\03 - Manga Webscrape  Remastered\\WPF MangaScrapper\\WPF MangaScrapper\\Assets\\Webview\\index.html");
-
-        }
 
         private void LaunchWindow_Click(object sender, RoutedEventArgs e)
         {
