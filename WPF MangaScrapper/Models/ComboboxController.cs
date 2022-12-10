@@ -38,6 +38,8 @@ namespace WPF_MangaScrapper.Models
         {
             var combobox = sender as ComboBox;
 
+            UnsubscribeFromSelectionChanged();
+
             GalleryPage.GalleryPageCONTEXT.DisplayChapter(combobox.SelectedItem);
 
         }
