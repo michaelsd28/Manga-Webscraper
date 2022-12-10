@@ -103,7 +103,7 @@ namespace WPF_MangaScrapper.Views.Pages
                     var titleList = mangaList.Titles.ToList();
 
                     // Convert the IEnumerable to a List of strings using the ConvertToStringList method
-                    List<string> stringTitleList = ConvertToStringList(titleList);
+                    List<string> stringTitleList = ComboBoxController.ConvertToStringList(titleList);
 
                 // Create a ComboBox object
                 ComboBoxController comboBoxController = ComboBoxController.GetInstance();
@@ -154,11 +154,6 @@ namespace WPF_MangaScrapper.Views.Pages
 
   
 
-        // This method converts an IEnumerable<object> to a List<string>
-        public List<string> ConvertToStringList(IEnumerable<object> inputList)
-        {
-            return inputList.Select(item => item.ToString()).ToList();
-        }
 
 
 

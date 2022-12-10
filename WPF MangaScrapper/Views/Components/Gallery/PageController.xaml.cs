@@ -1,18 +1,12 @@
-﻿using AngleSharp;
-using System;
+﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using WPF_MangaScrapper.Models;
 using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Pages;
 using WPF_MangaScrapper.Views.Windows;
-using System.IO;
-using MongoDB.Bson;
 
 namespace WPF_MangaScrapper.Views.Components.Gallery
 {

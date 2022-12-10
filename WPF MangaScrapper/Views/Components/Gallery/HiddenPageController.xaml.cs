@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using WPF_MangaScrapper.Models;
 using WPF_MangaScrapper.Services;
@@ -16,20 +17,39 @@ namespace WPF_MangaScrapper.Views.Components.Gallery
             InitializeComponent();
 
 
-            //string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
-            //MangaList mangaList = GlobalStateService._MangaList[mangaKey];
-            //var titleList = mangaList.Titles.ToList();
-
-
             #region add titles to combobox
 
-            //var title =   GlobalStateService._state["CurrentManga"].ToString();
+            string mangaKey = GlobalStateService._state["CurrentKey"].ToString();
+            MangaList mangaList = GlobalStateService._MangaList[mangaKey];
 
-            //PageController_Hidden.TBlockMangaTitle.Text = title;
+           var currentTitle =  GlobalStateService._state["CurrentManga"] ;
 
-            //PageController_Hidden.ComboBox.ItemsSource = titleList;
-            //int indexCombobox = titleList.IndexOf(title);
 
+
+            // Create an IEnumerable of objects
+            var titleList = mangaList.Titles.ToList();
+
+            // Convert the IEnumerable to a List of strings using the ConvertToStringList method
+            List<string> stringTitleList = ComboBoxController.ConvertToStringList(titleList);
+
+            // Create a ComboBox object
+            ComboBoxController comboBoxController = ComboBoxController.GetInstance();
+
+            // Unsubscribe from the SelectionChanged event before changing the SelectedIndex
+            comboBoxController.UnsubscribeFromSelectionChanged();
+
+            // Use the ComboBox object to access the properties and methods of the underlying ComboBox object
+            comboBoxController.ItemsSource = stringTitleList;
+
+            // assign title to controller
+            PageController_Hidden.TBlockMangaTitle.Text = currentTitle.ToString();
+
+
+            int indexTitle = stringTitleList.IndexOf(currentTitle.ToString());
+            comboBoxController.SelectedIndex = indexTitle;
+
+            // Resubscribe to the SelectionChanged event
+            comboBoxController.SubscribeToSelectionChanged();
 
 
             #endregion

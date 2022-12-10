@@ -64,6 +64,13 @@ namespace WPF_MangaScrapper.Models
         {
             PageController.PageControllerContext.ControllerComboBox.SelectionChanged += ComboBoxSelectionChanged;
         }
+
+        // This method converts an IEnumerable<object> to a List<string>
+        public static List<string> ConvertToStringList(IEnumerable<object> inputList)
+        {
+            return inputList.Select(item => item.ToString()).ToList();
+        }
+
     }
 
 }
