@@ -36,21 +36,9 @@ namespace WPF_MangaScrapper.Models
 
         private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var combobox = sender as ComboBox;
 
-  
-                var combobox = sender as ComboBox;
-
-                //// prevent performance issues
-                combobox.SelectionChanged -= ComboBoxSelectionChanged;
-            //// end
-
-
-
-           
-                GalleryPage.GalleryPageCONTEXT.DisplayChapter(combobox.SelectedItem);
-
-            
-
+            GalleryPage.GalleryPageCONTEXT.DisplayChapter(combobox.SelectedItem);
 
         }
 

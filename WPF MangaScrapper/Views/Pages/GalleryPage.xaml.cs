@@ -106,19 +106,19 @@ namespace WPF_MangaScrapper.Views.Pages
                     List<string> stringTitleList = ConvertToStringList(titleList);
 
                 // Create a ComboBox object
-                    var comboBoxController = PageController.PageControllerContext.ControllerComboBox;
+                ComboBoxController comboBoxController = new ComboBoxController();
 
                     // Use the ComboBox object to access the properties and methods of the underlying ComboBox object
                     comboBoxController.ItemsSource = stringTitleList;
 
                 // Unsubscribe from the SelectionChanged event before changing the SelectedIndex
-                comboBoxController.SelectionChanged -= ComboBoxSelectionChanged;
+                 comboBoxController.UnsubscribeFromSelectionChanged();
 
                     int indexTitle = stringTitleList.IndexOf(currentTitle.ToString());
                     comboBoxController.SelectedIndex = indexTitle;
 
                 // Resubscribe to the SelectionChanged event
-                comboBoxController.SelectionChanged += ComboBoxSelectionChanged;
+                comboBoxController.SubscribeToSelectionChanged();
 
 
                 #endregion
@@ -150,13 +150,7 @@ namespace WPF_MangaScrapper.Views.Pages
         }
 
 
-        private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var combobox = sender as ComboBox;
-
-            GalleryPageCONTEXT.DisplayChapter(combobox.SelectedItem);
-
-        }
+  
 
         // This method converts an IEnumerable<object> to a List<string>
         public List<string> ConvertToStringList(IEnumerable<object> inputList)
