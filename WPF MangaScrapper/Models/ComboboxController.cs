@@ -14,6 +14,20 @@ namespace WPF_MangaScrapper.Models
 {
     public class ComboBoxController
     {
+
+        private static  ComboBoxController instance { get; set; }
+
+       public static ComboBoxController GetInstance() {
+
+            if (instance == null) { instance = new ComboBoxController(); }
+        
+        return instance;
+        }
+
+        private ComboBoxController() { }
+
+
+
         // This property represents the ItemsSource property of the underlying ComboBox object
         public IEnumerable ItemsSource
         {
@@ -36,9 +50,10 @@ namespace WPF_MangaScrapper.Models
 
         private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            UnsubscribeFromSelectionChanged();
             var combobox = sender as ComboBox;
 
-            UnsubscribeFromSelectionChanged();
+           
 
             GalleryPage.GalleryPageCONTEXT.DisplayChapter(combobox.SelectedItem);
 
