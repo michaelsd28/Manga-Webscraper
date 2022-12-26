@@ -9,9 +9,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using WPF_MangaScrapper.Models;
 using System;
-using System.Threading;
 using System.Text.Json;
-using MongoDB.Driver.Core.Misc;
 using System.Text.RegularExpressions;
 
 namespace WPF_MangaScrapper.Services
@@ -30,6 +28,14 @@ namespace WPF_MangaScrapper.Services
         public static async Task<IEnumerable<object>?> GetElementsAsync(string url, string query, string? attribute = null)
         {
             Debug.WriteLine($"GetElementsAsync:: -> url:: {url} -> query:: {query} -> attribute:: {attribute}");
+
+            // gets the url 
+            Uri uri = new Uri(url);
+            //gets the domain and domain will be "www.example.com"
+            string baseUrl = uri.Scheme + "://" + uri.Host + ":" + uri.Port;
+
+            Debug.WriteLine($"baseUrl:: {baseUrl}");
+            
 
             IEnumerable<String?>? elementsSelected = null;
 
@@ -57,15 +63,30 @@ namespace WPF_MangaScrapper.Services
                 
                 else
                     elementsSelected = document.QuerySelectorAll(query).Select(m => m.GetAttribute(attribute)).Take(50);
-                
 
-
-
-
-                foreach (var element in elementsSelected)
+                // Loop through each element and add the domain if it is missing
+                elementsSelected = elementsSelected.Select(element =>
                 {
-                    Debug.WriteLine($"GetElementsAsync element:: {element}");
-                }
+                
+                           Debug.WriteLine($"Processing element: {element}");
+
+                    // Check if the element is a relative URL (i.e. it doesn't have a domain)
+                    if (!element.StartsWith("http"))
+                    {
+                        // If the element is a relative URL, add the base URL as the domain
+                        string updatedElement = baseUrl + element;
+                        return updatedElement;
+
+                    }
+                    else {
+                        return element;
+                    }
+
+
+
+                });
+
+    
 
 
             }

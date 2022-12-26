@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Threading;
-using WPF_MangaScrapper.Services;
 using WPF_MangaScrapper.Views.Components.Gallery;
 using WPF_MangaScrapper.Views.Pages;
 
