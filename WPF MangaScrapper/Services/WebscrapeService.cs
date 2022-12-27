@@ -62,31 +62,27 @@ namespace WPF_MangaScrapper.Services
                     elementsSelected = document.QuerySelectorAll(query).Select(m => RemoveSpaces(m.TextContent.Replace("\n", "")).Trim()   ).Take(50);
                 
                 else
-                    elementsSelected = document.QuerySelectorAll(query).Select(m => m.GetAttribute(attribute)).Take(50);
+                    elementsSelected = document.QuerySelectorAll(query)
+                              .Select(element => element.GetAttribute(attribute))
+                              .Take(50)
+                              .Select(element =>
+                              {
+                                  Debug.WriteLine($"Processing element: {element}");
 
-                // Loop through each element and add the domain if it is missing
-                elementsSelected = elementsSelected.Select(element =>
-                {
-                
-                           Debug.WriteLine($"Processing element: {element}");
-
-                    // Check if the element is a relative URL (i.e. it doesn't have a domain)
-                    if (!element.StartsWith("http"))
-                    {
-                        // If the element is a relative URL, add the base URL as the domain
-                        string updatedElement = baseUrl + element;
-                        return updatedElement;
-
-                    }
-                    else {
-                        return element;
-                    }
+                                  // Check if the element is a relative URL (i.e. it doesn't have a domain)
+                                  if (!element.StartsWith("http"))
+                                  {
+                                      // If the element is a relative URL, add the base URL as the domain
+                                      string updatedElement = baseUrl + element;
+                                      return updatedElement;
+                                  }
+                                  else
+                                  {
+                                      return element;
+                                  }
+                              });
 
 
-
-                });
-
-    
 
 
             }
